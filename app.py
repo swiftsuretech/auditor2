@@ -1,4 +1,5 @@
 import dash
+import plotly.graph_objects as go
 import plotly.express as px
 import dash_core_components as dcc
 import dash_table as dt
@@ -12,21 +13,46 @@ import re
 pio.templates.default = "seaborn"
 logo = base64.b64encode(open("logos/cii-logo.png", 'rb').read()).decode('ascii')
 df = pd.read_csv("./testData/chatter.csv")
+users = df.username.unique()
+randText = html.I(className="fas fa-quote-left fa-2x fa-pull-left text-white")
+
 app = dash.Dash("__name__")
 
 navbar = dbc.Row(
     dbc.Col(
         dbc.NavbarSimple(
             children=[
+                dbc.NavItem(randText),
                 dbc.NavItem(dbc.NavLink("Settings", href="#")),
                 dbc.NavItem(dbc.NavLink("Logout", href='#'))
             ],
-            brand="Chatter Logger",
+            brand="Chatter Audit",
             brand_href="#",
             color="primary",
             fluid=True,
             dark=True,
         ), width=12
+    )
+)
+
+x = df['transactionTime']
+fig = go.Figure(data=[go.Histogram(x=x, xbins=dict(
+    size=604800000),
+                                   autobinx=False)])
+fig.update_layout(
+    xaxis_title_text='Query Date',
+    yaxis_title_text='Number of Queries',
+    bargap=0.1,
+    barmode='stack'
+)
+
+bighist = dbc.Row(
+    dbc.Col(
+        dcc.Graph(
+            figure=fig,
+            id="bighist",
+        )
+        , width={"size": 12}
     )
 )
 
@@ -63,7 +89,18 @@ dtable = dbc.Row(
     )
 )
 
-app.layout = html.Div([navbar, histo, dtable])
+drop1 = dbc.Row(
+    dbc.Col(
+        dcc.Dropdown(
+            options=[{"label": i, "value": i} for i in users],
+            multi=True,
+            placeholder="Select Users to Filter by"
+        )
+        , width={'size': 4}
+    )
+)
+
+app.layout = html.Div([navbar, bighist, drop1, dtable])
 
 if __name__ == "__main__":
     app.run_server(debug=True)
