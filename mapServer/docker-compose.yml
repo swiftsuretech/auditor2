@@ -1,0 +1,9 @@
+version: '3'
+services:
+  mapserver:
+    image: 'klokantech/openmaptiles-server'
+    container_name: 'mapserver'
+    volumes:
+    - '/var/lib/docker/openmaptiles:/data'
+    ports:
+    - '8080:80'
