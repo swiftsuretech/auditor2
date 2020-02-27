@@ -1,0 +1,19 @@
+histo = dbc.Row(
+    [
+        # dbc.Col(
+        #     html.Div(
+        #         html.Img(src='data:image/png;base64,{}'.format(logo), height=100)
+        #     ),
+        #     width={"size": 2, "offset": 1}
+        # ),
+        dbc.Col(
+            dcc.Graph(
+                id="main-histogram",
+                figure=px.histogram(df, x=df['transactionTime'],
+                                    color=df['username'],
+                                    labels={"transactionTime": "Query Time",
+                                            "username": "User"}),
+            )
+            , width={"size": 10, 'offset': 1})
+    ]
+)
