@@ -8,6 +8,8 @@ import base64
 import pandas as pd
 import plotly.io as pio
 import re
+from dash.dependencies import Input, Output, State
+import plotly.express as px
 
 pio.templates.default = "seaborn"
 logo = base64.b64encode(open("assets/logos/cii-logo.png", 'rb').read()).decode('ascii')
@@ -23,8 +25,8 @@ navbar = dbc.Row(
     dbc.Col(
         dbc.NavbarSimple(
             children=[
-                dbc.NavItem(dbc.NavLink(html.I(className="fas fa-tools fa-lg text-white"), href="#")),
-                dbc.NavItem(dbc.NavLink(html.I(className="fas fa-sign-out-alt fa-lg text-white"), href="#")),
+                dbc.NavItem(dbc.NavLink(html.I(className="fal fa-cogs fa-lg text-white"), href="#")),
+                dbc.NavItem(dbc.NavLink(html.I(className="fal fa-sign-out-alt fa-lg text-white"), href="#")),
             ],
             brand="Chatter Auditor",
             brand_href="#",
@@ -122,7 +124,12 @@ drop1 = dbc.Row(
         dbc.Col(
             dbc.Card(
                 [
-                    dbc.CardHeader("Filter by User"),
+                    dbc.CardHeader(
+                        [
+                            html.I(className="fal fa-filter fa-lg text-black"),
+                            html.I("  Filter by Operator"),
+                        ]
+                    ),
                     dbc.CardBody(
                         dcc.Dropdown(
                             options=[{"label": i, "value": i} for i in users],
@@ -137,7 +144,12 @@ drop1 = dbc.Row(
         dbc.Col(
             dbc.Card(
                 [
-                    dbc.CardHeader("Filter by Platform"),
+                    dbc.CardHeader(
+                        [
+                            html.I(className="fal fa-filter fa-lg text-black"),
+                            html.I("  Filter by Platform"),
+                        ]
+                    ),
                     dbc.CardBody(
                         dcc.Dropdown(
                             options=[{"label": i, "value": i} for i in platforms],
@@ -154,9 +166,13 @@ drop1 = dbc.Row(
 
 ## Define the platform Pie Chart
 
-pie = go.Figure(
-    data=[go.Pie(labels=platforms, values=[2, 4, 5, 6, 8], hole=0.5)]
-)
+# pie = go.Figure(
+#     data=[go.Pie(labels=df.platform.unique(), values=[10,2,4,5,16,7,43], hole=0.65)],
+# )
+
+
+pie = px.pie(df, names='platform')
+
 
 platring = dbc.Row(
     dbc.Col(
@@ -164,20 +180,22 @@ platring = dbc.Row(
             [
                 dbc.CardHeader(
                     [
-                        html.I(className="fab fa-apple fa-lg text-black"),
-                        html.I("  Platform")
-                    ]),
-            dbc.CardBody(
-                dcc.Graph(
-                    figure=pie,
-                    id="platring",
-                    style={'height': 350},
+                        html.I(className="fal fa-lg fa-photo-video"),
+                        html.I("&nbsp;&nbsp;&nbsp;Platform")
+                    ]
+                ),
+                dbc.CardBody(
+                    dcc.Graph(
+                        figure=pie,
+                        id="platring",
+                        style={'height': 350, 'padding': 0},
+                    ),
+                    style={'margin-top': '0rem'},
                 )
-            )
-]
-)
-, width = {"size": 4, "offset": 1}
-)
+            ]
+        )
+        , width={"size": 4, "offset": 1}
+    )
 )
 
 app.layout = html.Div(
