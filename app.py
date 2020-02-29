@@ -1,5 +1,6 @@
 import dash
 import plotly.graph_objects as go
+from dash.dependencies import Input, Output
 import dash_core_components as dcc
 import dash_table as dt
 import dash_html_components as html
@@ -10,51 +11,53 @@ import plotly.io as pio
 import re
 import plotly.express as px
 
-pio.templates.default = "seaborn"
+pio.templates.default = "simple_white"
 logo = base64.b64encode(open("assets/logos/cii-logo.png", 'rb').read()).decode('ascii')
 df = pd.read_csv("./testData/chatter.csv", parse_dates=['transactionTime'])
 df['dayOfWeek'] = df['transactionTime'].dt.day_name()
+df['hour'] = df['transactionTime'].dt.hour
 users = df.username.unique()
 platforms = df.platform.unique()
+ip = df.ip.unique()
 diagMargins = dict(t=10, b=10, l=10, r=10)
 x = df['transactionTime']
 app = dash.Dash("__name__")
 app.title = "Chatter Auditor"
 sp = html.Br()
 
-title = dbc.Row(
+sidebar = html.Div(
+    children=[
+        html.H5(
+            dbc.Row(
+                children=[
+                    dbc.Col(className="fal fa-comment-check text-white fa-2x",
+                            width='25%',
+                            style={'padding': '5px'}),
+                    dbc.Col("GOSSIP AUDITOR",
+                            width='50%',
+                            style={}),
+                ],
+                style={'color': 'white', 'align': 'center', 'width': 'auto'}
+            ),
+        ),
+    ],
+)
+
+navbar = dbc.Navbar(
     [
-        html.H1(html.Pre("   ")),
-        html.I(className="fal fa-user-chart fa-lg",
-               style={"font-size": "65px"}),
-        html.H1(html.Pre("[Main Dashboard]", className='body',
-                         style={"color": "#777777",
-                                'margin-top': '0.4rem'
-                                }
-                         )
-                )
-    ]
+        html.A(
+            dbc.Row(
+                align="center",
+                no_gutters=True,
+            ),
+            href="#",
+        ),
+    ],
+    color="light",
+    dark=True,
 )
 
-## Define the Nav Bar
-
-navbar = dbc.Row(
-    dbc.Col(
-        dbc.NavbarSimple(
-            children=[
-                dbc.NavItem(dbc.NavLink(html.I(className="fal fa-cogs fa-lg"), href="#")),
-                dbc.NavItem(dbc.NavLink(html.I(className="fal fa-sign-out-alt fa-lg"), href="#")),
-            ],
-            brand="Chatter Auditor",
-            brand_href="#",
-            color="primary",
-            fluid=True,
-            dark=True,
-        ), width=12
-    )
-)
-
-## Define Activity Histogram
+# Define Activity Histogram
 
 firstDate = df.transactionTime.min()
 lastDate = df.transactionTime.max()
@@ -72,7 +75,7 @@ hist2.update_layout(
     legend_title="Operator"
 )
 
-histDay = px.histogram(df, y=df["dayOfWeek"], orientation='h',
+histDay = px.histogram(df, y=df["dayOfWeek"], orientation='h', x=df['hour'],
                        labels={'Monday': 'Mon', 'Tuesday': 'Tue',
                                'Wednesday': 'Wed', 'Thursday': 'Thu',
                                'Friday': 'Fri', 'Saturday': 'Sat',
@@ -80,8 +83,8 @@ histDay = px.histogram(df, y=df["dayOfWeek"], orientation='h',
 
 histDay.update_layout(
     height=350,
-    xaxis_title_text='Day of Week',
-    yaxis_title_text='Number of Queries',
+    xaxis_title_text='Number of Queries',
+    yaxis_title_text='Day of Week',
     bargap=0.3,
     barmode='stack',
     margin=diagMargins,
@@ -105,12 +108,13 @@ bighist = dbc.Row(
                         dcc.Graph(
                             figure=hist2,
                             id="bighist",
+                            config={'displayModeBar': False}
                         )
                     ]
                 )
             ]
-        )
-        , width={"size": 12}
+        ),
+        width={"size": 12}
     )
 )
 
@@ -133,12 +137,12 @@ littlehist = dbc.Row(
                     ]
                 )
             ]
-        )
-        , width={"size": 4}
+        ),
+        width={"size": 4}
     )
 )
 
-## Define the Data Table
+# Define the Data Table
 
 dtable = dbc.Row(
     dbc.Col(
@@ -172,21 +176,21 @@ dtable = dbc.Row(
                         ],
                         id="dtable",
                         columns=[{"name": i, "id": i} for i in df.columns if
-                                 not re.search('^lat.*|^long.*|^polygon|^usernames|^start|^end', i)],
+                                 not re.search('^lat.*|^long.*|^polygon|^usernames|^start|^end|^day|^id|^hour', i)],
                         data=df.to_dict('records'),
                         page_action="native",
                         page_size=10,
                         sort_action="native",
-                    )
-                    , style={'margin-top': '0rem'}
+                    ),
+                    style={'margin-top': '0rem'}
                 )
             ]
-        )
-        , width={'size': 12},
+        ),
+        width={'size': 12},
     )
 )
 
-## Define the User Dropdown
+# Define the User Dropdown
 
 drop1 = dbc.Row(
     [
@@ -201,14 +205,16 @@ drop1 = dbc.Row(
                     ),
                     dbc.CardBody(
                         dcc.Dropdown(
+                            id="user-filter",
                             options=[{"label": i, "value": i} for i in users],
                             multi=True,
+                            value=users,
                             placeholder="Select Users to Filter by"
                         )
                     )
                 ]
-            )
-            , width={'size': 4}
+            ),
+            width={'size': 4}
         ),
         dbc.Col(
             dbc.Card(
@@ -223,12 +229,13 @@ drop1 = dbc.Row(
                         dcc.Dropdown(
                             options=[{"label": i, "value": i} for i in platforms],
                             multi=True,
+                            value=platforms,
                             placeholder="Select Users to Filter by"
                         )
                     )
                 ]
-            )
-            , width={'size': 4}
+            ),
+            width={'size': 4}
         ),
         dbc.Col(
             dbc.Card(
@@ -241,19 +248,20 @@ drop1 = dbc.Row(
                     ),
                     dbc.CardBody(
                         dcc.Dropdown(
-                            options=[{"label": i, "value": i} for i in users],
+                            options=[{"label": i, "value": i} for i in ip],
                             multi=True,
+                            value=ip,
                             placeholder="Select IP Address to Filter by"
                         )
                     )
                 ]
-            )
-            , width={'size': 4}
+            ),
+            width={'size': 4}
         ),
     ]
 )
 
-## Define the platform Pie Chart
+# Define the platform Pie Chart
 
 
 pieplat = px.pie(df, names='platform', hole=0.6)
@@ -288,8 +296,8 @@ platring = dbc.Row(
                         style={'margin-top': '0rem'},
                     )
                 ]
-            )
-            , width={"size": 4}
+            ),
+            width={"size": 4}
         ),
         dbc.Col(
             dbc.Card(
@@ -311,15 +319,15 @@ platring = dbc.Row(
                         style={'margin-top': '0rem'},
                     )
                 ]
-            )
-            , width={"size": 4}
+            ),
+            width={"size": 4}
         ),
         dbc.Col(
             dbc.Card(
                 [
                     dbc.CardHeader(
                         [
-                            html.I(className="fal fa-lg fa-chart-bar"),
+                            html.I(className="fal fa-calendar-alt"),
                             html.I(" Queries by Week Day")
                         ]
                     ),
@@ -336,26 +344,71 @@ platring = dbc.Row(
                         style={'margin-top': '0rem'},
                     )
                 ]
-            )
-            , width={"size": 4}
+            ),
+            width={"size": 4}
         ),
     ]
 )
 
 app.layout = html.Div(
     children=[
-        navbar,
-        html.Div(
-            [title],
-            style={'width': '100%', "padding": "10px", "background-color": "#F7F7F7"}
+        dbc.Row(
+            children=[
+                dbc.Col(
+                    html.Div(
+                        [
+                            html.Img(src='assets/logos/atom.svg',
+                                     style={'height': '60px',
+                                            'padding': '13px',
+                                            'float': 'left'}),
+                            html.H4("Gossip Auditor",
+                                    style={'padding': '17px',
+                                           'color': 'white'}),
+                        ],
+                        style={'vertical-align': 'middle'}
+                    ),
+                    width=2,
+                    style={'background-color': '#2C3E50'}
+                ),
+                dbc.Col(
+                    children=[
+                        html.Div(
+                            html.H3("[Main Dashboard]"),
+                            style={'padding': '20px'}
+                        ),
+                        html.Div(
+                            [sp, drop1, sp, bighist, sp, platring, sp, dtable, sp],
+                            style={'width': '90%', 'margin': 'auto'}
+                        ),
+                    ],
+                ),
+            ],
         ),
-        html.Div(
-            [sp, drop1, sp, bighist, sp, platring, sp, dtable, sp],
-            style={'width': '85%', 'margin': 'auto'}
-        )
-    ]
-    , style={'overflow-x': 'hidden'}
+    ],
+    style={'overflow-x': 'hidden'}
 )
+
+
+@app.callback(
+
+    Output(component_id='bighist', component_property='figure'),
+    [Input('user-filter', 'value')]
+)
+def filter_big_histogram(options):
+    if not options:
+        options = users
+    df_updated = px.histogram(df[df['username'].isin(options)], x="transactionTime", color="username", nbins=spread)
+    df_updated.update_layout(
+        height=350,
+        xaxis_title_text='Query Date',
+        yaxis_title_text='Number of Queries',
+        bargap=0.1,
+        barmode='stack',
+        margin=diagMargins,
+        legend_title="Operator"
+    )
+    return df_updated
+
 
 if __name__ == "__main__":
     app.run_server(debug=True)
