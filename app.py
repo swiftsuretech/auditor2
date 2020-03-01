@@ -3,13 +3,14 @@ import dash_html_components as html
 import dash_bootstrap_components as dbc
 import pandas as pd
 import plotly.express as px
-from sidebar import Sidebar
-from navbar import Navbar
-from ringrow import Ringrow
-from filterrow import Filterrow
-from mainhist import Mainhist
-from settings import *
-from table import Dtable
+from navbars.sidebar import Sidebar
+from navbars.navbar import Navbar
+from dashboard.ringrow import Ringrow
+from dashboard.filterrow import Filterrow
+from dashboard.mainhist import Mainhist
+from dashboard.table import Dtable
+from settings.settings import *
+
 
 df = pd.read_csv("./testData/chatter.csv", parse_dates=['transactionTime'])
 df['dayOfWeek'] = df['transactionTime'].dt.day_name()

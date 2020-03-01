@@ -6,7 +6,7 @@ def Sidebar():
     sidebar = dbc.Col(
         html.Div(
             [
-                html.Img(src='assets/logos/atom.svg',
+                html.Img(src='../assets/logos/atom.svg',
                          style={'height': '60px',
                                 'padding': '15px',
                                 'float': 'left'}),
