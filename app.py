@@ -1,7 +1,6 @@
 from dash.dependencies import Input, Output
 import dash_html_components as html
 import dash_bootstrap_components as dbc
-import pandas as pd
 import plotly.express as px
 from navbars.sidebar import Sidebar
 from navbars.navbar import Navbar
@@ -10,19 +9,15 @@ from dashboard.filterrow import Filterrow
 from dashboard.mainhist import Mainhist
 from dashboard.table import Dtable
 from settings.settings import *
+from builddataframe import DataSet
 
 
-df = pd.read_csv("./testData/chatter.csv", parse_dates=['transactionTime'])
-df['dayOfWeek'] = df['transactionTime'].dt.day_name()
-df['hour'] = df['transactionTime'].dt.hour
-users = df.username.unique()
-platforms = df.platform.unique()
-ip = df.ip.unique()
-x = df['transactionTime']
-sp = html.Br()
-firstDate = df.transactionTime.min()
-lastDate = df.transactionTime.max()
-spread = (lastDate - firstDate).days // 7
+data = DataSet()
+df = data.df
+spread = data.spread
+users = data.users
+platforms = data.platforms
+ip = data.ip
 sidebar = Sidebar()
 navbar = Navbar()
 dtable = Dtable(df)
@@ -54,13 +49,24 @@ app.layout = html.Div(
 
 @app.callback(
     Output(component_id='bighist', component_property='figure'),
-    [Input('user-filter', 'value')]
+    [
+        Input('operator-filter', 'value'),
+        Input('ip-filter', 'value'),
+        Input('platform-filter', 'value')
+    ]
 )
-def filter_big_histogram(options):
-    if not options:
-        df_updated = px.histogram(df, x="transactionTime", color="username", nbins=spread)
+def filter_big_histogram(user_filter, ip_filter, platform_filter):
+    if not user_filter:
+        user_filter = '.*'
+    if not ip_filter:
+        ip_filter = '.*'
+    if not platform_filter:
+        platform_filter = '.*'
+    newdf, new_spread = data.filter(user_filter, ip_filter, platform_filter)
+    if newdf.empty:
+        df_updated = px.histogram(newdf)
     else:
-        df_updated = px.histogram(df[df['username'] == options], x="transactionTime", color="username", nbins=spread)
+        df_updated = px.histogram(newdf, x='transactionTime', nbins=new_spread, color='username')
     df_updated.update_layout(
         height=350,
         xaxis_title_text='Query Date',

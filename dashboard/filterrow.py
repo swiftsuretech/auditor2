@@ -17,7 +17,7 @@ def Filterrow(users, platforms, ip):
                         ),
                         dbc.CardBody(
                             dcc.Dropdown(
-                                id="user-filter",
+                                id="operator-filter",
                                 options=[{"label": i, "value": i} for i in users],
                                 multi=False,
                                 placeholder="Select Operator to Filter by"
@@ -38,6 +38,7 @@ def Filterrow(users, platforms, ip):
                         ),
                         dbc.CardBody(
                             dcc.Dropdown(
+                                id='platform-filter',
                                 options=[{"label": i, "value": i} for i in platforms],
                                 multi=False,
                                 placeholder="Select Platform to Filter by"
@@ -58,6 +59,7 @@ def Filterrow(users, platforms, ip):
                         ),
                         dbc.CardBody(
                             dcc.Dropdown(
+                                id='ip-filter',
                                 options=[{"label": i, "value": i} for i in ip],
                                 multi=False,
                                 placeholder="Select IP Address to Filter by"
