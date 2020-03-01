@@ -1,5 +1,4 @@
 import reverse_geocoder as rg
-import pandas as pd
 
 
 def reverse_geo(lat, long):

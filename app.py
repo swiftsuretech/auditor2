@@ -10,6 +10,7 @@ import pandas as pd
 import plotly.io as pio
 import re
 import plotly.express as px
+from sidebar import Sidebar
 
 pio.templates.default = "simple_white"
 logo = base64.b64encode(open("assets/logos/cii-logo.png", 'rb').read()).decode('ascii')
@@ -22,39 +23,29 @@ ip = df.ip.unique()
 diagMargins = dict(t=10, b=10, l=10, r=10)
 x = df['transactionTime']
 app = dash.Dash("__name__")
-app.title = "Chatter Auditor"
+app.title = "Gossip Auditor 2"
 sp = html.Br()
 
-sidebar = html.Div(
-    children=[
-        html.H5(
-            dbc.Row(
-                children=[
-                    dbc.Col(className="fal fa-comment-check text-white fa-2x",
-                            width='25%',
-                            style={'padding': '5px'}),
-                    dbc.Col("GOSSIP AUDITOR",
-                            width='50%',
-                            style={}),
-                ],
-                style={'color': 'white', 'align': 'center', 'width': 'auto'}
-            ),
-        ),
-    ],
-)
+
+sidebar = Sidebar()
 
 navbar = dbc.Navbar(
-    [
-        html.A(
-            dbc.Row(
-                align="center",
-                no_gutters=True,
+    children=[
+        dbc.Row(
+            dbc.Col(
+                html.H4(
+                    children=[
+                        html.I(className="fal fa-analytics"),
+                        html.I(" Main Dashboard", style={'font-style': 'italic', 'padding': '10px'})
+                    ],
+                ),
             ),
-            href="#",
+            style={'padding-top': '12px'}
         ),
     ],
     color="light",
     dark=True,
+    style={'height': '60px', 'border-bottom': '1px solid rgba(0, 0, 0, 0.125)'}
 )
 
 # Define Activity Histogram
@@ -207,9 +198,8 @@ drop1 = dbc.Row(
                         dcc.Dropdown(
                             id="user-filter",
                             options=[{"label": i, "value": i} for i in users],
-                            multi=True,
-                            value=users,
-                            placeholder="Select Users to Filter by"
+                            multi=False,
+                            placeholder="Select Operator to Filter by"
                         )
                     )
                 ]
@@ -228,9 +218,8 @@ drop1 = dbc.Row(
                     dbc.CardBody(
                         dcc.Dropdown(
                             options=[{"label": i, "value": i} for i in platforms],
-                            multi=True,
-                            value=platforms,
-                            placeholder="Select Users to Filter by"
+                            multi=False,
+                            placeholder="Select Platform to Filter by"
                         )
                     )
                 ]
@@ -249,8 +238,7 @@ drop1 = dbc.Row(
                     dbc.CardBody(
                         dcc.Dropdown(
                             options=[{"label": i, "value": i} for i in ip],
-                            multi=True,
-                            value=ip,
+                            multi=False,
                             placeholder="Select IP Address to Filter by"
                         )
                     )
@@ -354,33 +342,16 @@ app.layout = html.Div(
     children=[
         dbc.Row(
             children=[
-                dbc.Col(
-                    html.Div(
-                        [
-                            html.Img(src='assets/logos/atom.svg',
-                                     style={'height': '60px',
-                                            'padding': '13px',
-                                            'float': 'left'}),
-                            html.H4("Gossip Auditor",
-                                    style={'padding': '17px',
-                                           'color': 'white'}),
-                        ],
-                        style={'vertical-align': 'middle'}
-                    ),
-                    width=2,
-                    style={'background-color': '#2C3E50'}
-                ),
+                sidebar,
                 dbc.Col(
                     children=[
-                        html.Div(
-                            html.H3("[Main Dashboard]"),
-                            style={'padding': '20px'}
-                        ),
+                        navbar,
                         html.Div(
                             [sp, drop1, sp, bighist, sp, platring, sp, dtable, sp],
                             style={'width': '90%', 'margin': 'auto'}
                         ),
                     ],
+                    style={'padding': '0px'}
                 ),
             ],
         ),
@@ -396,8 +367,9 @@ app.layout = html.Div(
 )
 def filter_big_histogram(options):
     if not options:
-        options = users
-    df_updated = px.histogram(df[df['username'].isin(options)], x="transactionTime", color="username", nbins=spread)
+        df_updated = px.histogram(df, x="transactionTime", color="username", nbins=spread)
+    else:
+        df_updated = px.histogram(df[df['username'] == options], x="transactionTime", color="username", nbins=spread)
     df_updated.update_layout(
         height=350,
         xaxis_title_text='Query Date',
