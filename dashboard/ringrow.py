@@ -46,14 +46,16 @@ def Ringrow(df):
                             ]
                         ),
                         dbc.CardBody(
-                            dcc.Graph(
-                                figure=pieplat,
-                                id='ring_plat',
-                                style={'height': 250, 'padding': 0},
-                                config={
-                                    'displayModeBar': False}
-                            ),
-                            style={'margin-top': '0rem'},
+                            dcc.Loading(
+                                dcc.Graph(
+                                    figure=pieplat,
+                                    id='ring_plat',
+                                    style={'height': 250, 'padding': 0},
+                                    config={
+                                        'displayModeBar': False}
+                                ),
+                                style={'margin-top': '0rem'},
+                            )
                         )
                     ]
                 ),
@@ -69,14 +71,16 @@ def Ringrow(df):
                             ]
                         ),
                         dbc.CardBody(
-                            dcc.Graph(
-                                figure=pieuser,
-                                id="ring_user",
-                                style={'height': 250, 'padding': 0},
-                                config={
-                                    'displayModeBar': False}
-                            ),
-                            style={'margin-top': '0rem'},
+                            dcc.Loading(
+                                dcc.Graph(
+                                    figure=pieuser,
+                                    id="ring_user",
+                                    style={'height': 250, 'padding': 0},
+                                    config={
+                                        'displayModeBar': False}
+                                ),
+                                style={'margin-top': '0rem'},
+                            )
                         )
                     ]
                 ),
@@ -92,16 +96,18 @@ def Ringrow(df):
                             ]
                         ),
                         dbc.CardBody(
-                            [
-                                dcc.Graph(
-                                    figure=histDay,
-                                    id="ring_day",
-                                    style={'height': 250, 'padding': 0},
-                                    config={
-                                        'displayModeBar': False}
-                                )
-                            ],
-                            style={'margin-top': '0rem'},
+                            dcc.Loading(
+                                [
+                                    dcc.Graph(
+                                        figure=histDay,
+                                        id="ring_day",
+                                        style={'height': 250, 'padding': 0},
+                                        config={
+                                            'displayModeBar': False}
+                                    )
+                                ],
+                                style={'margin-top': '0rem'},
+                            )
                         )
                     ]
                 ),

@@ -23,17 +23,19 @@ def Mainhist(df, spread):
                     dbc.CardHeader(
                         [
                             html.I(className="fal fa-lg fa-chart-bar"),
-                            html.I(" Queries by Week")
+                            html.I(" Queries by Week"),
                         ]
                     ),
                     dbc.CardBody(
-                        [
-                            dcc.Graph(
-                                figure=mainhist,
-                                id="bighist",
-                                config={'displayModeBar': False}
-                            )
-                        ]
+                        dcc.Loading(
+                            [
+                                dcc.Graph(
+                                    figure=mainhist,
+                                    id="bighist",
+                                    config={'displayModeBar': False}
+                                )
+                            ]
+                        )
                     )
                 ]
             ),
