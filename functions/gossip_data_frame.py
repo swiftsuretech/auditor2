@@ -13,14 +13,15 @@ class DataSet:
         self.users = self.df.username.unique()
         self.df['dayOfWeek'] = self.df['transactionTime'].dt.day_name()
         self.df['hour'] = self.df['transactionTime'].dt.hour
+        self.count = len(self.df.axes[0])
 
     def filter(self, user_filter, ip_filter, plat_filter, start_pick, end_pick):
         newdf = self.df[
             (self.df.platform.str.contains(plat_filter)) &
             (self.df.username.str.contains(user_filter)) &
             (self.df.ip.str.contains(ip_filter)) &
-            (self.df.transactionTime > start_pick) &
-            (self.df.transactionTime < end_pick)
+            (self.df.transactionTime > pd.Timestamp(start_pick)) &
+            (self.df.transactionTime < pd.Timestamp(end_pick))
             ]
         self.last_date = newdf.transactionTime.max()
         self.first_date = newdf.transactionTime.min()
@@ -28,4 +29,5 @@ class DataSet:
         self.spread = ((self.last_date - self.first_date).days // 7) + 1
         self.df['dayOfWeek'] = self.df['transactionTime'].dt.day_name()
         self.df['hour'] = self.df['transactionTime'].dt.hour
-        return newdf, self.spread
+        self.count = len(newdf.axes[0])
+        return newdf, self.spread, self.count

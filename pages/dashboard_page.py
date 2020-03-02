@@ -14,12 +14,13 @@ spread = data.spread
 users = data.users
 platforms = data.platforms
 ip = data.ip
+count = data.count
 
 dtable = Dtable(df)
 ringrow = Ringrow(df)
 mainhist = Mainhist(df, spread)
 filterrow = Filterrow(users, platforms, ip)
-timerow = Timerow(df, start_date, end_date)
+timerow = Timerow(df, start_date, end_date, count)
 
 Dashboard_Page = html.Div(
         [sp, filterrow, sp, timerow, sp,

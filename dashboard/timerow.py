@@ -2,12 +2,11 @@ import dash_bootstrap_components as dbc
 import dash_html_components as html
 import plotly.express as px
 import dash_core_components as dcc
-from datetime import datetime as dt
 
 diagMargins = dict(t=10, b=10, l=10, r=10)
 
 
-def Timerow(df, start_date, end_date):
+def Timerow(df, start_date, end_date, count):
     hist_day = px.histogram(df, y=df["dayOfWeek"], orientation='h', x=df['hour'],
                             labels={'Monday': 'Mon', 'Tuesday': 'Tue',
                                     'Wednesday': 'Wed', 'Thursday': 'Thu',
@@ -95,31 +94,58 @@ def Timerow(df, start_date, end_date):
                 width={"size": 4, 'order': 3}
             ),
             dbc.Col(
-                dbc.Card(
-                    [
-                        dbc.CardHeader(
-                            [
-                                html.I(className="fal fa-alarm-clock"),
-                                html.I(" Time Select")
-                            ]
-                        ),
-                        dbc.CardBody(
-                            html.Div(
-                                children=[
-                                    html.P('Choose a start and end date to filter the data'),
-                                    dcc.DatePickerRange(
-                                        id='date-picker-range',
-                                        display_format='DD/MM/YY',
-                                        start_date=start_date,
-                                        end_date=end_date,
-                                        end_date_placeholder_text='Select a date!',
-                                    ),
-                                ],
-                                style={'text-align': 'center'},
+                children=[
+                    dbc.Card(
+                        [
+                            dbc.CardHeader(
+                                [
+                                    html.I(className="fal fa-alarm-clock"),
+                                    html.I(" Time Select")
+                                ]
                             ),
-                        )
-                    ]
-                ),
+                            dbc.CardBody(
+                                html.Div(
+                                    children=[
+                                        html.P('Choose a start and end date to filter the data'),
+                                        dcc.DatePickerRange(
+                                            id='date-picker-range',
+                                            display_format='DD/MM/YY',
+                                            start_date=start_date,
+                                            end_date=end_date,
+                                            end_date_placeholder_text='Select a date!',
+                                        ),
+                                    ],
+                                    style={'text-align': 'center'},
+                                ),
+                            )
+                        ]
+                    ),
+                    html.Br(),
+                    dbc.Card(
+                        [
+                            dcc.Loading(
+                                dbc.CardBody(
+                                    html.Div(
+                                        children=[
+                                            html.P(
+                                                html.H2(
+                                                    children=[
+                                                        html.I(className="fal fa-lg fa-cabinet-filing"),
+                                                        html.I(' '),
+                                                        html.I(count,
+                                                               id='counter'),
+                                                        html.I(" Records")
+                                                    ]
+                                                )
+                                            ),
+                                        ],
+                                        style={'text-align': 'center', 'height': '99px', 'padding': '20px'},
+                                    ),
+                                ),
+                            ),
+                        ]
+                    ),
+                ],
                 width={"size": 4, 'order': 2}
             ),
         ]

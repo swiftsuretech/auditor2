@@ -14,6 +14,7 @@ def register_callbacks(app, data):
             Output('bighist', 'figure'),
             Output('day_hist', 'figure'),
             Output('hour_hist', 'figure'),
+            Output('counter', 'children')
         ],
         [
             Input('operator-filter', 'value'),
@@ -32,7 +33,7 @@ def register_callbacks(app, data):
             platform_filter = '.*'
         start_pick = dt.strptime(start_pick, '%Y-%m-%d').date()
         end_pick = dt.strptime(end_pick, '%Y-%m-%d').date()
-        newdf, new_spread = data.filter(user_filter, ip_filter, platform_filter, start_pick, end_pick)
+        newdf, new_spread, counter = data.filter(user_filter, ip_filter, platform_filter, start_pick, end_pick)
 
         hist_day = px.histogram(newdf, y=newdf["dayOfWeek"], orientation='h', x=newdf['dayOfWeek'])
         hist_day.update_layout(
@@ -94,7 +95,7 @@ def register_callbacks(app, data):
             legend_title="Operator"
         )
 
-        return pieip, data_table, pieuser, pieplat, df_updated, hist_day, hist_hour
+        return pieip, data_table, pieuser, pieplat, df_updated, hist_day, hist_hour, counter
 
     # @app.callback(
     #     Output("hist_collapse", "is_open"),
