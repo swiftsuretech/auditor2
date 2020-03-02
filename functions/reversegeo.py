@@ -14,7 +14,7 @@ def reverse_geo(lat, long):
     return city
 
 
-# df = pd.read_csv("./testData/chatter.csv")
+# df = pd.read_csv("./testdata/chatter.csv")
 # for index, row in df.iterrows():
 #     df['city'] = reverse_geo(row['lat1'], row['long1'])
 #

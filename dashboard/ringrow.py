@@ -17,23 +17,11 @@ def Ringrow(df):
         margin=diagMargins,
     )
 
-    histDay = px.histogram(df, y=df["dayOfWeek"], orientation='h', x=df['hour'],
-                           labels={'Monday': 'Mon', 'Tuesday': 'Tue',
-                                   'Wednesday': 'Wed', 'Thursday': 'Thu',
-                                   'Friday': 'Fri', 'Saturday': 'Sat',
-                                   'Sunday': 'Sun'})
-
-    histDay.update_layout(
-        height=350,
-        xaxis_title_text='Number of Queries',
-        yaxis_title_text='Day of Week',
-        bargap=0.3,
-        barmode='stack',
+    pieip = px.pie(df, names='ip', hole=0.6)
+    pieip.update_layout(
         margin=diagMargins,
-        yaxis=dict(categoryorder='array',
-                   categoryarray=['Sunday', 'Saturday', 'Friday', 'Thursday', 'Wednesday',
-                                  'Tuesday', 'Monday'])
-    )
+    ),
+
     ringrow = dbc.Row(
         [
             dbc.Col(
@@ -59,7 +47,7 @@ def Ringrow(df):
                         )
                     ]
                 ),
-                width={"size": 4}
+                width={"size": 4, 'order': 2}
             ),
             dbc.Col(
                 dbc.Card(
@@ -84,23 +72,23 @@ def Ringrow(df):
                         )
                     ]
                 ),
-                width={"size": 4}
+                width={"size": 4, 'order': 1}
             ),
             dbc.Col(
                 dbc.Card(
                     [
                         dbc.CardHeader(
                             [
-                                html.I(className="fal fa-calendar-alt"),
-                                html.I(" Queries by Week Day")
+                                html.I(className="fal fa-lg fa-desktop-alt"),
+                                html.I(" IP Addresses")
                             ]
                         ),
                         dbc.CardBody(
                             dcc.Loading(
                                 [
                                     dcc.Graph(
-                                        figure=histDay,
-                                        id="ring_day",
+                                        figure=pieip,
+                                        id="ring_ip",
                                         style={'height': 250, 'padding': 0},
                                         config={
                                             'displayModeBar': False}
@@ -111,7 +99,7 @@ def Ringrow(df):
                         )
                     ]
                 ),
-                width={"size": 4}
+                width={"size": 4, 'order': 3}
             ),
         ]
     )
