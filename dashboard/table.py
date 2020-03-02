@@ -42,6 +42,7 @@ def Dtable(df):
                             page_action="native",
                             page_size=10,
                             sort_action="native",
+                            row_selectable='single',
                         ),
                         style={'margin-top': '0rem'}
                     )

@@ -1,5 +1,4 @@
 from dash.dependencies import Input, Output
-import dash_html_components as html
 import dash_bootstrap_components as dbc
 import plotly.express as px
 from navbars.sidebar import Sidebar
@@ -9,8 +8,7 @@ from dashboard.filterrow import Filterrow
 from dashboard.mainhist import Mainhist
 from dashboard.table import Dtable
 from settings.settings import *
-from builddataframe import DataSet
-
+from gossip_data_frame import DataSet
 
 data = DataSet()
 df = data.df
@@ -48,14 +46,20 @@ app.layout = html.Div(
 
 
 @app.callback(
-    Output(component_id='bighist', component_property='figure'),
+    [
+        Output('ring_day', 'figure'),
+        Output('dtable', 'data'),
+        Output('ring_user', 'figure'),
+        Output('ring_plat', 'figure'),
+        Output('bighist', 'figure'),
+    ],
     [
         Input('operator-filter', 'value'),
         Input('ip-filter', 'value'),
-        Input('platform-filter', 'value')
+        Input('platform-filter', 'value'),
     ]
 )
-def filter_big_histogram(user_filter, ip_filter, platform_filter):
+def update_dashboard(user_filter, ip_filter, platform_filter):
     if not user_filter:
         user_filter = '.*'
     if not ip_filter:
@@ -63,6 +67,32 @@ def filter_big_histogram(user_filter, ip_filter, platform_filter):
     if not platform_filter:
         platform_filter = '.*'
     newdf, new_spread = data.filter(user_filter, ip_filter, platform_filter)
+
+    hist_day = px.histogram(newdf, y=newdf["dayOfWeek"], orientation='h', x=newdf['dayOfWeek'])
+    hist_day.update_layout(
+        height=250,
+        xaxis_title_text='Number of Queries',
+        yaxis_title_text='Day of Week',
+        bargap=0.3,
+        barmode='stack',
+        margin=diagMargins,
+        yaxis=dict(categoryorder='array',
+                   categoryarray=['Sunday', 'Saturday', 'Friday', 'Thursday', 'Wednesday',
+                                  'Tuesday', 'Monday'])
+    )
+
+    data_table = newdf.to_dict('records')
+
+    pieuser = px.pie(newdf, names='username', hole=0.6)
+    pieuser.update_layout(
+        margin=diagMargins,
+    )
+
+    pieplat = px.pie(newdf, names='platform', hole=0.6)
+    pieplat.update_layout(
+        margin=diagMargins,
+    )
+
     if newdf.empty:
         df_updated = px.histogram(newdf)
     else:
@@ -76,7 +106,8 @@ def filter_big_histogram(user_filter, ip_filter, platform_filter):
         margin=diagMargins,
         legend_title="Operator"
     )
-    return df_updated
+
+    return hist_day, data_table, pieuser, pieplat, df_updated
 
 
 if __name__ == "__main__":

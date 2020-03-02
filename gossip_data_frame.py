@@ -23,4 +23,6 @@ class DataSet:
         self.first_date = self.df.transactionTime.min()
         self.t_times = self.df['transactionTime']
         self.spread = (self.last_date - self.first_date).days // 7
+        self.df['dayOfWeek'] = self.df['transactionTime'].dt.day_name()
+        self.df['hour'] = self.df['transactionTime'].dt.hour
         return newdf, self.spread

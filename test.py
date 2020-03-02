@@ -1,4 +1,4 @@
-from builddataframe import DataSet
+from gossip_data_frame import DataSet
 
 test = DataSet()
 

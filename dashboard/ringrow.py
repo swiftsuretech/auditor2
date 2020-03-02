@@ -48,7 +48,7 @@ def Ringrow(df):
                         dbc.CardBody(
                             dcc.Graph(
                                 figure=pieplat,
-                                id="platring",
+                                id='ring_plat',
                                 style={'height': 250, 'padding': 0},
                                 config={
                                     'displayModeBar': False}
@@ -71,7 +71,7 @@ def Ringrow(df):
                         dbc.CardBody(
                             dcc.Graph(
                                 figure=pieuser,
-                                id="userring",
+                                id="ring_user",
                                 style={'height': 250, 'padding': 0},
                                 config={
                                     'displayModeBar': False}
@@ -95,7 +95,7 @@ def Ringrow(df):
                             [
                                 dcc.Graph(
                                     figure=histDay,
-                                    id="histogramDay",
+                                    id="ring_day",
                                     style={'height': 250, 'padding': 0},
                                     config={
                                         'displayModeBar': False}
