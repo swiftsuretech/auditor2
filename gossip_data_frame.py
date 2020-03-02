@@ -20,7 +20,8 @@ class DataSet:
             (self.df.username.str.contains(user_filter)) &
             (self.df.ip.str.contains(ip_filter))
             ]
-        self.first_date = self.df.transactionTime.min()
+        self.last_date = newdf.transactionTime.max()
+        self.first_date = newdf.transactionTime.min()
         self.t_times = self.df['transactionTime']
         self.spread = (self.last_date - self.first_date).days // 7
         self.df['dayOfWeek'] = self.df['transactionTime'].dt.day_name()
