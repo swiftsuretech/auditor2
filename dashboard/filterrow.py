@@ -3,7 +3,7 @@ import dash_html_components as html
 import dash_bootstrap_components as dbc
 
 
-def Filterrow(users, platforms, ip):
+def build_filter_row(users, platforms, ip):
     filterrow = dbc.Row(
         [
             dbc.Col(

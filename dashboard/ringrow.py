@@ -21,7 +21,7 @@ def build_ring_row(df):
         margin=diagMargins,
     ),
 
-    rind_row = dbc.Row(
+    ring_row = dbc.Row(
         [
             dbc.Col(
                 dbc.Card(
@@ -102,4 +102,4 @@ def build_ring_row(df):
             ),
         ]
     )
-    return rind_row
+    return ring_row

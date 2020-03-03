@@ -4,7 +4,7 @@ import plotly.express as px
 from settings.settings import *
 
 
-def Mainhist(df, spread):
+def build_main_histogram(df, spread):
     mainhist = px.histogram(df, x="transactionTime", color="username", nbins=spread)
     mainhist.update_layout(**main_hist_settings)
     bighist = dbc.Row(

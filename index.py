@@ -1,5 +1,5 @@
 import dash
-from pages.dashboard_page import data, Dashboard_Page
+from pages.dashboard_page import Dashboard, d
 import dash_bootstrap_components as dbc
 from callbacks.callbacks import register_callbacks
 from navbars.sidebar import Sidebar
@@ -11,7 +11,7 @@ app.title = "GossipAuditor2"
 
 sidebar = Sidebar()
 navbar = Navbar()
-dashboard = Dashboard_Page
+dashboard = Dashboard()
 
 app.layout = html.Div(
     children=[
@@ -25,7 +25,7 @@ app.layout = html.Div(
                 dbc.Col(
                     children=[
                         dbc.Row(
-                            dashboard
+                            dashboard.page
                         ),
                     ],
                     width={'size': 10, 'offset': 2}
@@ -37,7 +37,7 @@ app.layout = html.Div(
     style={'overflow-x': 'hidden'}
 )
 
-register_callbacks(app, data)
+register_callbacks(app, d)
 
 if __name__ == "__main__":
     app.run_server(debug=True)

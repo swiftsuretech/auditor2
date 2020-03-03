@@ -5,7 +5,7 @@ import dash_core_components as dcc
 from settings.settings import hist_day_settings, hist_hour_settings
 
 
-def Timerow(df, start_date, end_date, count):
+def build_time_row(df, start_date, end_date, count):
     hist_day = px.histogram(df, y=df["dayOfWeek"], orientation='h', x=df['hour'],)
 
     hist_day.update_layout(**hist_day_settings),

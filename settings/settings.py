@@ -2,7 +2,7 @@ import plotly.io as pio
 import dash_html_components as html
 
 pio.templates.default = "simple_white"
-sp = html.Br()
+space = html.Br()
 diagMargins = dict(t=10, b=10, l=10, r=10)
 
 main_hist_settings = {'height': 250, 'xaxis_title_text': 'Query Date', 'yaxis_title_text': 'Number of Queries',

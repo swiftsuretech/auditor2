@@ -4,7 +4,7 @@ import dash_html_components as html
 import re
 
 
-def Dtable(df):
+def build_data_table(df):
     dtable = dbc.Row(
         dbc.Col(
             dbc.Card(
