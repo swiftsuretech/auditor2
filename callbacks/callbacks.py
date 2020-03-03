@@ -52,6 +52,7 @@ def register_callbacks(app, data):
             ip_filter = '.*'
         if not platform_filter:
             platform_filter = '.*'
+
         # Start and End times from the date picker are returned as strings. We will need to convert them to date
         # objects to work
         start_pick = dt.strptime(start_pick, '%Y-%m-%d').date()
