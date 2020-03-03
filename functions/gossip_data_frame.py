@@ -26,7 +26,7 @@ class DataSet:
     in neat buckets. We also send back a record count to display on a card for
     additional eye candy"""
     def __init__(self):
-        self.df = pd.read_csv("testdata/chatter.csv", parse_dates=['transactionTime'])
+        self.df = pd.read_csv("../testdata/chatter.csv", parse_dates=['transactionTime'])
         self.last_date = self.df.transactionTime.max().date()
         self.first_date = self.df.transactionTime.min().date()
         self.t_times = self.df['transactionTime']

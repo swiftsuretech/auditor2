@@ -118,7 +118,7 @@ def build_time_row(df, start_date, end_date, count):
                                             html.P(
                                                 html.H2(
                                                     children=[
-                                                        html.I(className="fal fa-lg fa-cabinet-filing"),
+                                                        html.I(className="fal fa-lg fa-file-search"),
                                                         html.I(' '),
                                                         html.I(count,
                                                                id='counter'),

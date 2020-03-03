@@ -17,7 +17,6 @@ from functions.gossip_data_frame import DataSet
 # Also pull in some settings
 from settings.settings import space, html
 
-
 # Instantiate our initial, unfiltered dataset
 d = DataSet()
 
