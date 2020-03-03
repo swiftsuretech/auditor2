@@ -1,5 +1,5 @@
 """
-*** Auditor2 by Dave Whitehouse | CGI Data Engineer | CII IDOT Team ***
+Auditor2 by Dave Whitehouse | CGI Data Engineer | CII IDOT Team
 """
 
 
@@ -7,7 +7,7 @@ import dash_html_components as html
 import dash_bootstrap_components as dbc
 
 
-def Sidebar():
+def build_sidebar():
     sidebar = html.Div(
             [
                 html.Img(src='../assets/logos/atom.svg',

@@ -1,16 +1,15 @@
 """
-*** Auditor2 by Dave Whitehouse | CGI Data Engineer | CII IDOT Team ***
+Auditor2 by Dave Whitehouse | CGI Data Engineer | CII IDOT Team
 """
 
-
-
+# Import Libraries
 import dash_bootstrap_components as dbc
 import dash_html_components as html
 import dash_core_components as dcc
 from datetime import datetime as dt
 
 
-def Navbar():
+def build_navbar():
     navbar = html.Div(
         dbc.Navbar(
             children=[
@@ -46,7 +45,6 @@ def Navbar():
             color="light",
             dark=True,
             style={'height': '60px', 'border-bottom': '1px solid rgba(0, 0, 0, 0.125)'},
-            # fixed="top",
         ),
     ),
     return navbar

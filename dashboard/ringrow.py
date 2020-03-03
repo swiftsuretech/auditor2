@@ -1,5 +1,5 @@
 """
-*** Auditor2 by Dave Whitehouse | CGI Data Engineer | CII IDOT Team ***
+Auditor2 by Dave Whitehouse | CGI Data Engineer | CII IDOT Team
 Build out the 'ring' row of our dashboard. This consists of 3 rows, all of which are simple pie charts to
 show the breakdown of operators, platforms and IP addresses for the current dataset. This  module is
 mainly an exercise in layout.

@@ -1,5 +1,5 @@
 """
-*** Auditor2 by Dave Whitehouse | CGI Data Engineer | CII IDOT Team ***
+Auditor2 by Dave Whitehouse | CGI Data Engineer | CII IDOT Team
 A simple function to return a nearest major city given a lat and long. The reverse_geocoder library
 is an external library. In this instance it has a database of all world major cities with a population
 gt 10,000 people so should be adequate for our use case.

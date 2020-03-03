@@ -1,5 +1,5 @@
 """
-*** Auditor2 by Dave Whitehouse | CGI Data Engineer | CII IDOT Team ***
+Auditor2 by Dave Whitehouse | CGI Data Engineer | CII IDOT Team
 Build out the 'time' row of our dashboard. This consists of 4 cards. 2 are histograms showing the number
 of queries by hour of day and the other by day of week. This is a safeguard to ensure that there is no
 out of hours funny business. The middle column has 2 x columns. The top one is a date picker and the lower

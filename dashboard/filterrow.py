@@ -1,13 +1,16 @@
 """
-*** Auditor2 by Dave Whitehouse | CGI Data Engineer | CII IDOT Team ***
+Auditor2 by Dave Whitehouse | CGI Data Engineer | CII IDOT Team
 Builds our row of 3 x filters for the Dashboard to allow the user to navigate the data. This is a simple layout
 that returns a Bootstrap container ready to drop into a row of the dashboard.
 """
 
-#   Import some Dash libraries
+# Import some Dash libraries
 import dash_core_components as dcc
 import dash_html_components as html
 import dash_bootstrap_components as dbc
+
+# Define the filter icon
+filter_icon = "fal fa-filter fa-lg text-black"
 
 
 def build_filter_row(users, platforms, ip):
@@ -21,7 +24,7 @@ def build_filter_row(users, platforms, ip):
                     [
                         dbc.CardHeader(
                             [
-                                html.I(className="fal fa-filter fa-lg text-black"),
+                                html.I(className=filter_icon),
                                 html.I("  Filter by Operator"),
                             ]
                         ),
@@ -49,7 +52,7 @@ def build_filter_row(users, platforms, ip):
                     [
                         dbc.CardHeader(
                             [
-                                html.I(className="fal fa-filter fa-lg text-black"),
+                                html.I(className=filter_icon),
                                 html.I("  Filter by Platform"),
                             ]
                         ),
@@ -70,7 +73,7 @@ def build_filter_row(users, platforms, ip):
                     [
                         dbc.CardHeader(
                             [
-                                html.I(className="fal fa-filter fa-lg text-black"),
+                                html.I(className=filter_icon),
                                 html.I("  Filter by IP Address"),
                             ]
                         ),

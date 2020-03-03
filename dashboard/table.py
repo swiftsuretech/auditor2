@@ -1,5 +1,5 @@
 """
-*** Auditor2 by Dave Whitehouse | CGI Data Engineer | CII IDOT Team ***
+Auditor2 by Dave Whitehouse | CGI Data Engineer | CII IDOT Team
 Build out our Data table for the Dashboard. Returns Bootstrap row with the table rendered across the whole
 Dashboard page in a card style.
 """

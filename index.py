@@ -1,5 +1,5 @@
 """
-*** Auditor2 by Dave Whitehouse | CGI Data Engineer | CII IDOT Team ***
+Auditor2 by Dave Whitehouse | CGI Data Engineer | CII IDOT Team
 Run the app from here. Defines a flask application based upon the dash framework. There are 3 x key parts:
 1 - Instantiate a dash app called app.
 2 - Define a layout.
@@ -13,8 +13,8 @@ import dash
 from pages.dashboard_page import Dashboard, d
 import dash_bootstrap_components as dbc
 from callbacks.callbacks import register_callbacks
-from navbars.sidebar import Sidebar
-from navbars.navbar import Navbar
+from navbars.sidebar import build_sidebar
+from navbars.navbar import build_navbar
 import dash_html_components as html
 
 # Instantiate our App and give it a name
@@ -22,8 +22,8 @@ app = dash.Dash("__name__")
 app.title = "GossipAuditor2"
 
 # Grab our main layout components
-sidebar = Sidebar()
-navbar = Navbar()
+sidebar = build_sidebar()
+navbar = build_navbar()
 dashboard = Dashboard()
 
 # Define our layout

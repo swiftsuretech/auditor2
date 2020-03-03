@@ -1,5 +1,5 @@
 """
-*** Auditor2 by Dave Whitehouse | CGI Data Engineer | CII IDOT Team ***
+Auditor2 by Dave Whitehouse | CGI Data Engineer | CII IDOT Team
 Defines a Dashboard Class consisting of an html Div with all the dashboard widgets laid out in order.
 We divide the dashboard page into rows. There's a row of filters, a wide row with a time / activity
 histogram, a row of pie charts and a row of time related widgets. Finally there is a data table.
