@@ -1,4 +1,5 @@
 """
+*** Auditor2 by Dave Whitehouse | CGI Data Engineer | CII IDOT Team ***
 Define the DataSet class and filter method. We init a dataset consisting of the whole dataset,
 currently from our test data directory in .csv format. We use pandas to build a dataframe
 which will make our lives easier for mungeinig operations

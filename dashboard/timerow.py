@@ -1,19 +1,35 @@
+"""
+*** Auditor2 by Dave Whitehouse | CGI Data Engineer | CII IDOT Team ***
+Build out the 'time' row of our dashboard. This consists of 4 cards. 2 are histograms showing the number
+of queries by hour of day and the other by day of week. This is a safeguard to ensure that there is no
+out of hours funny business. The middle column has 2 x columns. The top one is a date picker and the lower
+one is card to show the number of records in the current set. This is mainly an exercise in layout.
+"""
+
+# Import our Dash libraries
 import dash_bootstrap_components as dbc
 import dash_html_components as html
 import plotly.express as px
 import dash_core_components as dcc
+
+# Pull in some externalised settings for re-usable layout.
 from settings.settings import hist_day_settings, hist_hour_settings
 
 
 def build_time_row(df, start_date, end_date, count):
-    hist_day = px.histogram(df, y=df["dayOfWeek"], orientation='h', x=df['hour'],)
+    """Build a row of widgets. Takes dataframe, start date, end date and record count as arguments"""
 
+    # Instantiate our day histogram in vertical format.
+    hist_day = px.histogram(df, y=df["dayOfWeek"], orientation='h', x=df['hour'], )
+    # Pull the layout dictionary from settings and apply.
     hist_day.update_layout(**hist_day_settings),
 
-    hist_hour = px.histogram(df, y=df["hour"], orientation='h', x=df['hour'],)
+    # Same as above but for the hour histogram.
+    hist_hour = px.histogram(df, y=df["hour"], orientation='h', x=df['hour'], )
     hist_hour.update_layout(**hist_hour_settings),
 
-    timerow = dbc.Row(
+    # Define the Bootstrap container that represents the entire row.
+    time_row = dbc.Row(
         [
             dbc.Col(
                 dbc.Card(
@@ -122,4 +138,4 @@ def build_time_row(df, start_date, end_date, count):
             ),
         ]
     )
-    return timerow
+    return time_row

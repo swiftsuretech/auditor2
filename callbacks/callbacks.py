@@ -1,5 +1,5 @@
 """
-GossipAudtor2/Dave Whitehouse/
+*** Auditor2 by Dave Whitehouse | CGI Data Engineer | CII IDOT Team ***
 This is the callbacks module. It monitors pre-defined widgets for changes - normally in the form of
 filters and carries out the required functions to update defined widgets, normally dashboard type items.
 

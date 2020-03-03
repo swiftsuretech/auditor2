@@ -1,3 +1,14 @@
+"""
+*** Auditor2 by Dave Whitehouse | CGI Data Engineer | CII IDOT Team ***
+Run the app from here. Defines a flask application based upon the dash framework. There are 3 x key parts:
+1 - Instantiate a dash app called app.
+2 - Define a layout.
+3 - Run the server.
+I have put the callbacks in a separate file to avoid clutter. I call these callback with a function called
+"register_callbacks"
+"""
+
+# Import our Dash bits and pieces and some settings etc.
 import dash
 from pages.dashboard_page import Dashboard, d
 import dash_bootstrap_components as dbc
