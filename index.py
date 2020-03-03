@@ -7,7 +7,7 @@ from navbars.navbar import Navbar
 import dash_html_components as html
 
 app = dash.Dash("__name__")
-app.title = "Gossip Auditor 2"
+app.title = "GossipAuditor2"
 
 sidebar = Sidebar()
 navbar = Navbar()

@@ -6,7 +6,7 @@ from settings.settings import *
 
 def Mainhist(df, spread):
     mainhist = px.histogram(df, x="transactionTime", color="username", nbins=spread)
-    mainhist.update_layout(**main_hist_settins)
+    mainhist.update_layout(**main_hist_settings)
     bighist = dbc.Row(
         dbc.Col(
             dbc.Card(
@@ -34,7 +34,7 @@ def Mainhist(df, spread):
                                 [
                                     dcc.Graph(
                                         figure=mainhist,
-                                        id="bighist",
+                                        id="big_histogram",
                                         config={'displayModeBar': False}
                                     )
                                 ]

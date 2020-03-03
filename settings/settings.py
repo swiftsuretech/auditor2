@@ -5,7 +5,7 @@ pio.templates.default = "simple_white"
 sp = html.Br()
 diagMargins = dict(t=10, b=10, l=10, r=10)
 
-main_hist_settins = {'height': 250, 'xaxis_title_text': 'Query Date', 'yaxis_title_text': 'Number of Queries',
+main_hist_settings = {'height': 250, 'xaxis_title_text': 'Query Date', 'yaxis_title_text': 'Number of Queries',
                      'bargap': 0.1, 'barmode': 'stack', 'margin': diagMargins,
                      'legend_title': 'Operator'}
 

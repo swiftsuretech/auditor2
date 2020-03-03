@@ -2,27 +2,26 @@ import dash_bootstrap_components as dbc
 import dash_html_components as html
 import plotly.express as px
 import dash_core_components as dcc
+from settings.settings import diagMargins
 
-diagMargins = dict(t=10, b=10, l=10, r=10)
 
-
-def Ringrow(df):
-    pieplat = px.pie(df, names='platform', hole=0.6)
-    pieplat.update_layout(
+def build_ring_row(df):
+    pie_platform = px.pie(df, names='platform', hole=0.6)
+    pie_platform.update_layout(
         margin=diagMargins,
     )
 
-    pieuser = px.pie(df, names='username', hole=0.6)
-    pieuser.update_layout(
+    pie_user = px.pie(df, names='username', hole=0.6)
+    pie_user.update_layout(
         margin=diagMargins,
     )
 
-    pieip = px.pie(df, names='ip', hole=0.6)
-    pieip.update_layout(
+    pie_ip = px.pie(df, names='ip', hole=0.6)
+    pie_ip.update_layout(
         margin=diagMargins,
     ),
 
-    ringrow = dbc.Row(
+    rind_row = dbc.Row(
         [
             dbc.Col(
                 dbc.Card(
@@ -36,7 +35,7 @@ def Ringrow(df):
                         dbc.CardBody(
                             dcc.Loading(
                                 dcc.Graph(
-                                    figure=pieplat,
+                                    figure=pie_platform,
                                     id='ring_plat',
                                     style={'height': 250, 'padding': 0},
                                     config={
@@ -61,7 +60,7 @@ def Ringrow(df):
                         dbc.CardBody(
                             dcc.Loading(
                                 dcc.Graph(
-                                    figure=pieuser,
+                                    figure=pie_user,
                                     id="ring_user",
                                     style={'height': 250, 'padding': 0},
                                     config={
@@ -87,7 +86,7 @@ def Ringrow(df):
                             dcc.Loading(
                                 [
                                     dcc.Graph(
-                                        figure=pieip,
+                                        figure=pie_ip,
                                         id="ring_ip",
                                         style={'height': 250, 'padding': 0},
                                         config={
@@ -103,4 +102,4 @@ def Ringrow(df):
             ),
         ]
     )
-    return ringrow
+    return rind_row

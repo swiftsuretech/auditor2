@@ -1,4 +1,4 @@
-from dashboard.ringrow import Ringrow
+from dashboard.ringrow import build_ring_row
 from dashboard.filterrow import Filterrow
 from dashboard.timerow import Timerow
 from dashboard.mainhist import Mainhist
@@ -17,13 +17,13 @@ ip = data.ip
 count = data.count
 
 dtable = Dtable(df)
-ringrow = Ringrow(df)
-mainhist = Mainhist(df, spread)
-filterrow = Filterrow(users, platforms, ip)
-timerow = Timerow(df, start_date, end_date, count)
+ring_row = build_ring_row(df)
+main_histogram = Mainhist(df, spread)
+filter_row = Filterrow(users, platforms, ip)
+time_row = Timerow(df, start_date, end_date, count)
 
 Dashboard_Page = html.Div(
-        [sp, filterrow, sp, timerow, sp,
-         mainhist, sp, ringrow, sp, dtable, sp],
-        style={'width': '90%', 'margin': 'auto'}
+    [sp, filter_row, sp, time_row, sp,
+     main_histogram, sp, ring_row, sp, dtable, sp],
+    style={'width': '90%', 'margin': 'auto'}
 )
