@@ -21,7 +21,7 @@ def reverse_geo(lat, long):
             city = value
         elif key == "cc":
             cc = value.lower()
-    return city
+    return city, cc
 
 
 """

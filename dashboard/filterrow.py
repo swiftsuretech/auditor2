@@ -13,6 +13,11 @@ import dash_bootstrap_components as dbc
 filter_icon = "fal fa-filter fa-lg text-black"
 
 
+def build_columns(topic):
+    """Takes a list of unique entities and returns them as a KV pair with the same name"""
+    return [{"label": i, "value": i} for i in topic]
+
+
 def build_filter_row(users, platforms, ip):
     """Builds out a Bootstrap container containing 3 x dropdown filters. The filters are populated by providing
     a list of unique values for that particular filter. The function takes 3 x arguments; list of unique operator
@@ -35,7 +40,7 @@ def build_filter_row(users, platforms, ip):
                                 id="operator-filter",
                                 # List comprehension to drop all values of users as options
                                 # for the user to select.
-                                options=[{"label": i, "value": i} for i in users],
+                                options=build_columns(users),
                                 # We only want our user to be able to select a single filter
                                 # to keep things simple.
                                 multi=False,
@@ -59,7 +64,7 @@ def build_filter_row(users, platforms, ip):
                         dbc.CardBody(
                             dcc.Dropdown(
                                 id='platform-filter',
-                                options=[{"label": i, "value": i} for i in platforms],
+                                options=build_columns(platforms),
                                 multi=False,
                                 placeholder="Select Platform to Filter by"
                             )
@@ -80,7 +85,7 @@ def build_filter_row(users, platforms, ip):
                         dbc.CardBody(
                             dcc.Dropdown(
                                 id='ip-filter',
-                                options=[{"label": i, "value": i} for i in ip],
+                                options=build_columns(ip),
                                 multi=False,
                                 placeholder="Select IP Address to Filter by"
                             )

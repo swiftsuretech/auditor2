@@ -10,6 +10,7 @@ from datetime import datetime as dt
 
 
 def build_navbar():
+    """Builds out the Navigation Bar at the top of the page"""
     navbar = html.Div(
         dbc.Navbar(
             children=[

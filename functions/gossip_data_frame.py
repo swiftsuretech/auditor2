@@ -13,6 +13,11 @@ import pandas as pd
 #  in memory. We can consider either paging data or restricting user to only 3 months worth
 
 
+def calculate_spread(end, start):
+    """works out the number of weeks between 2 x dates to provide accurate binning"""
+    return ((end - start).days // 7) + 1
+
+
 class DataSet:
     """This is the DataSet class. It builds a dataframe and does some other bits.
     It returns a dataframe as df as well as some other useful variables. These
@@ -25,7 +30,7 @@ class DataSet:
         self.last_date = self.df.transactionTime.max().date()
         self.first_date = self.df.transactionTime.min().date()
         self.t_times = self.df['transactionTime']
-        self.spread = ((self.last_date - self.first_date).days // 7) + 1
+        self.spread = calculate_spread(self.last_date, self.first_date)
         self.ip = self.df.ip.unique()
         self.platforms = self.df.platform.unique()
         self.users = self.df.username.unique()
@@ -47,6 +52,6 @@ class DataSet:
             ]
         self.last_date = filtered_data_frame.transactionTime.max()
         self.first_date = filtered_data_frame.transactionTime.min()
-        self.spread = ((self.last_date - self.first_date).days // 7) + 1
+        self.spread = calculate_spread(self.last_date, self.first_date)
         self.count = len(filtered_data_frame.axes[0])
         return filtered_data_frame, self.spread, self.count
