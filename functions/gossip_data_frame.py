@@ -25,9 +25,6 @@ class DataSet:
             ]
         self.last_date = newdf.transactionTime.max()
         self.first_date = newdf.transactionTime.min()
-        self.t_times = self.df['transactionTime']
         self.spread = ((self.last_date - self.first_date).days // 7) + 1
-        self.df['dayOfWeek'] = self.df['transactionTime'].dt.day_name()
-        self.df['hour'] = self.df['transactionTime'].dt.hour
         self.count = len(newdf.axes[0])
         return newdf, self.spread, self.count

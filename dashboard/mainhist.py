@@ -1,5 +1,4 @@
 import dash_core_components as dcc
-import dash_html_components as html
 import dash_bootstrap_components as dbc
 import plotly.express as px
 from settings.settings import *
@@ -7,15 +6,7 @@ from settings.settings import *
 
 def Mainhist(df, spread):
     mainhist = px.histogram(df, x="transactionTime", color="username", nbins=spread)
-    mainhist.update_layout(
-        height=250,
-        xaxis_title_text='Query Date',
-        yaxis_title_text='Number of Queries',
-        bargap=0.1,
-        barmode='stack',
-        margin=diagMargins,
-        legend_title="Operator"
-    )
+    mainhist.update_layout(**main_hist_settins)
     bighist = dbc.Row(
         dbc.Col(
             dbc.Card(

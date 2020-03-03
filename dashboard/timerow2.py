@@ -2,16 +2,57 @@ import dash_bootstrap_components as dbc
 import dash_html_components as html
 import plotly.express as px
 import dash_core_components as dcc
-from settings.settings import hist_day_settings, hist_hour_settings
 
 
-def Timerow(df, start_date, end_date, count):
-    hist_day = px.histogram(df, y=df["dayOfWeek"], orientation='h', x=df['hour'],)
+day_hist_settings = [350, 'Number of Queries', 'Day of Week', 0.3, 'stack', dict(t=10, b=10, l=10, r=10),
+                   dict(categoryorder='array',
+                        categoryarray=['Sunday', 'Saturday', 'Friday', 'Thursday', 'Wednesday',
+                                       'Tuesday', 'Monday'])
+                   ]
+day_hist_params = ['height', 'xaxis_title_text', 'yaxis_title_text', 'bargap', 'barmode', 'margin',
+                   'yaxis']
 
-    hist_day.update_layout(**hist_day_settings),
+class Timerow:
+    def __init__(self, df, start_date, end_date, count):
+        '''Instantiate a Timerow class. This is a formatted row containing 4 cards:
+        A day histogram - Showing which days searches took place
+        An hour histogram - Showing the hours the searches took place
+        Additionally, there is a column of 2 rows; the first being a data selector
+        and the second, an info card showing the number of records returned.
+        '''
+        # Instantiate day histogram
+        self.hist_day = px.histogram(df, y=df["dayOfWeek"], orientation='h', x=df['hour'],
+                                     labels={'Monday': 'Mon', 'Tuesday': 'Tue',
+                                             'Wednesday': 'Wed', 'Thursday': 'Thu',
+                                             'Friday': 'Fri', 'Saturday': 'Sat',
+                                             'Sunday': 'Sun'})
+        # Style the day histogram
+        self.hist_day.update_layout(
+            height=350,
+            xaxis_title_text='Number of Queries',
+            yaxis_title_text='Day of Week',
+            bargap=0.3,
+            barmode='stack',
+            margin=diagMargins,
+            yaxis=dict(categoryorder='array',
+                       categoryarray=['Sunday', 'Saturday', 'Friday', 'Thursday', 'Wednesday',
+                                      'Tuesday', 'Monday'])
+        )
 
-    hist_hour = px.histogram(df, y=df["hour"], orientation='h', x=df['hour'],)
-    hist_hour.update_layout(**hist_hour_settings),
+        # Instantiate the hour histogram
+        self.hist_hour = px.histogram(df, y=df["hour"], orientation='h', x=df['hour'])
+        # Style the hour histogram
+        self.hist_hour.update_layout(
+            height=350,
+            xaxis_title_text='Number of Queries',
+            yaxis_title_text='Hour of Day',
+            bargap=0.3,
+            barmode='stack',
+            margin=diagMargins,
+            yaxis_type='category',
+            yaxis=dict(categoryorder='array',
+                       categoryarray=[i for i in range(24, -1, -1)])
+        )
 
     timerow = dbc.Row(
         [
@@ -122,4 +163,3 @@ def Timerow(df, start_date, end_date, count):
             ),
         ]
     )
-    return timerow
