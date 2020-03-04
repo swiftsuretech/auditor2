@@ -26,7 +26,7 @@ class DataSet:
     in neat buckets. We also send back a record count to display on a card for
     additional eye candy"""
     def __init__(self):
-        self.df = pd.read_csv("../testdata/chatter.csv", parse_dates=['transactionTime'])
+        self.df = pd.read_csv("testdata/chatter.csv", parse_dates=['transactionTime'])
         self.last_date = self.df.transactionTime.max().date()
         self.first_date = self.df.transactionTime.min().date()
         self.t_times = self.df['transactionTime']
@@ -55,3 +55,4 @@ class DataSet:
         self.spread = calculate_spread(self.last_date, self.first_date)
         self.count = len(filtered_data_frame.axes[0])
         return filtered_data_frame, self.spread, self.count
+

@@ -21,7 +21,7 @@ class Record:
             # We got a result. Populate our attributes.
             polygon = str(self.result.polygon)
             # Define a regex to capture our lat and long
-            search_str = r'(?:POLYGON \(\()([0-9.]{3,})(?:\, )([0-9.]{3,})'
+            search_str = r'(?:POLYGON \(\()([0-9.\-]{3,})(?:\, )([0-9.\-]{3,})'
             self.lat, self.long = re.search(search_str, polygon).group(1), re.search(search_str, polygon).group(2)
             # Set also a nearest city and country code.
             self.city, self.cc = geo.reverse_geo(self.lat, self.long)
@@ -30,5 +30,5 @@ class Record:
             self.lat = self.long = self.city = self.cc = None
 
 
-# test = Record(222)
-# print(test.lat, test.long, test.city, test.cc)
+test = Record(220)
+print(test.lat, test.long, test.city, test.cc)
