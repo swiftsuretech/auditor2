@@ -13,7 +13,7 @@ from dashboard.filterrow import build_filter_row
 from dashboard.timerow import build_time_row
 from dashboard.mainhist import build_main_histogram
 from dashboard.table import build_data_table
-from functions.gossip_data_frame import DataSet
+from functions.get_all_records import DataSet
 # Also pull in some settings
 from settings.settings import space, html
 

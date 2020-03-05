@@ -10,7 +10,11 @@ import pandas as pd
 
 # TODO - Need to implement data ingestion from Elastic for production
 # TODO - Consider how much data we can work with
-#  in memory. We can consider either paging data or restricting user to only 3 months worth
+#  in memory. We can consider either paging data or restricting user to only 3 months worth?
+
+test_data = ["testdata/chatter.csv", "../testdata/chatter.csv"]
+# Show the full dataframe for debugging
+pd.set_option('display.max_columns', None)
 
 
 def calculate_spread(end, start):
@@ -25,8 +29,15 @@ class DataSet:
     as well as the spread of days to calculate how we should lay out our histograms
     in neat buckets. We also send back a record count to display on a card for
     additional eye candy"""
+
     def __init__(self):
-        self.df = pd.read_csv("testdata/chatter.csv", parse_dates=['transactionTime'])
+        # The test data sits in a 'testdata' folder. Depending on where this module is imported
+        # to, this may cause an exception. We have defined a list after the import statement for
+        # both relative options to get round this.
+        try:
+            self.df = pd.read_csv(test_data[0], parse_dates=['transactionTime', 'startTime', 'endTime'])
+        except FileNotFoundError:
+            self.df = pd.read_csv(test_data[1], parse_dates=['transactionTime', 'startTime', 'endTime'])
         self.last_date = self.df.transactionTime.max().date()
         self.first_date = self.df.transactionTime.min().date()
         self.t_times = self.df['transactionTime']
@@ -55,4 +66,3 @@ class DataSet:
         self.spread = calculate_spread(self.last_date, self.first_date)
         self.count = len(filtered_data_frame.axes[0])
         return filtered_data_frame, self.spread, self.count
-

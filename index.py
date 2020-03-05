@@ -4,13 +4,14 @@ Run the app from here. Defines a flask application based upon the dash framework
 1 - Instantiate a dash app called app.
 2 - Define a layout.
 3 - Run the server.
-I have put the callbacks in a separate file to avoid clutter. I call these callback with a function called
+Callbacks are put in a separate file to avoid clutter. I call these callback with a function called
 "register_callbacks"
 """
 
 # Import our Dash bits and pieces and some settings etc.
 import dash
 from pages.dashboard_page import Dashboard, d
+from pages.single_record_page import SingleRecord
 import dash_bootstrap_components as dbc
 from callbacks.callbacks import register_callbacks
 from navbars.sidebar import build_sidebar
@@ -20,11 +21,14 @@ import dash_html_components as html
 # Instantiate our App and give it a name
 app = dash.Dash("__name__")
 app.title = "GossipAuditor2"
+app.config.suppress_callback_exceptions = True
 
 # Grab our main layout components
 sidebar = build_sidebar()
 navbar = build_navbar()
-dashboard = Dashboard()
+#dash_page = Dashboard()
+single_page = SingleRecord()
+
 
 # Define our layout
 app.layout = html.Div(
@@ -42,7 +46,7 @@ app.layout = html.Div(
                     children=[
                         dbc.Row(
                             # Drop in the Dashboard page
-                            dashboard.page
+                            single_page.page
                         ),
                     ],
                     # As the sidebar is 2 / 12 we set the content page to 10 / 12 and offset it by 2 / 12

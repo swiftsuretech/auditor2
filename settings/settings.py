@@ -32,3 +32,11 @@ hist_hour_settings = {'height': 250, 'xaxis_title_text': y_axis_title,
                       'margin': diagMargins, 'yaxis_type': 'category',
                       'yaxis': dict(categoryorder='array',
                                     categoryarray=[i for i in range(24, -1, -1)])}
+
+field_mapping = dict({'id': 'Record Number', 'username': 'Operator', 'ip': 'IP Address',
+                      'transactionTime': 'Query Time', 'startTime': 'Search From',
+                      'endTime': 'Search To', 'authorizationID': 'Flight Plan', 'platform': 'Platform',
+                      'usernames': 'User Names', 'day': 'Search Day', 'polygon': 'Search Area',
+                      'dayOfWeek': 'Search Day of Week', 'hour': 'Search Hour', 'lat': 'Latitude',
+                      'long': 'Longitude', 'city': 'Nearest City', 'cc': 'Country Code',
+                      'transactionDate': 'Query Date', 'geo': 'geo'})

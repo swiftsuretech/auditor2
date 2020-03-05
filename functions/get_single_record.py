@@ -1,13 +1,15 @@
 """
 Auditor2 by Dave Whitehouse | CGI Data Engineer | CII IDOT Team
 Here we attempt to retrieve a single record or 'flight plan'. Takes a record ID argument and attempts
-to return a single record. If successful, it will enrich the returned data with some useful attributes,
-Namely, a nearest City and Country Code.
+to return a single record in a dictionary. If successful, it will enrich the returned dictionary with
+some useful attributes, namely, a nearest City and Country Code.
 """
+# TODO When we switch to Elastic production data, we may be more efficient crafting a query for
+#   a single record than loading up a dataframe just to filter it for a single record.
 
 # Import our libraries:
-import functions.gossip_data_frame as gdf
-import functions.reversegeo as geo
+import functions.get_all_records as gdf
+import functions.get_reverse_geo as geo
 import re
 
 
@@ -15,20 +17,33 @@ class Record:
     """A single record from the dataset with existing attributes enriched with further geo information"""
 
     def __init__(self, record_id):
-        # TODO check the production dataset for field header. This may be incorrect
-        self.result = gdf.DataSet().df[(gdf.DataSet().df.id == record_id)]
-        if len(self.result):
+        # TODO check the production dataset for field headers. This is likely incorrect
+        df = gdf.DataSet().df[(gdf.DataSet().df.id == record_id)]
+        if len(df):
             # We got a result. Populate our attributes.
-            polygon = str(self.result.polygon)
+            polygon = str(df['polygon'])
             # Define a regex to capture our lat and long
             search_str = r'(?:POLYGON \(\()([0-9.\-]{3,})(?:\, )([0-9.\-]{3,})'
-            self.lat, self.long = re.search(search_str, polygon).group(1), re.search(search_str, polygon).group(2)
+            lat, long = re.search(search_str,
+                                  polygon).group(1), re.search(search_str, polygon).group(2)
             # Set also a nearest city and country code.
-            self.city, self.cc = geo.reverse_geo(self.lat, self.long)
+            city, cc = geo.reverse_geo(lat, long)
+            df['lat'] = lat
+            df['transactionDate'] = df['transactionTime'].dt.date
+            df['transactionTime'] = df['transactionTime'].dt.time
+            df['long'] = long
+            df['city'] = city
+            df['cc'] = cc
+            # Now the dataset is complete, turn it into a dictionary as it's only a single record.
+            self.dict = df.to_dict(orient='list')
+            self.dict['transactionDate'] = self.dict['transactionDate'][0].strftime('%d/%m/%Y')
+            self.dict['startTime'] = self.dict['startTime'][0].strftime('%d/%m/%Y')
+            self.dict['endTime'] = self.dict['endTime'][0].strftime('%d/%m/%Y')
+            self.dict['geo'] = 'Search Area'
+            self.dict['city'] = str(self.dict['city'][0]) + ', ' + str(self.dict['cc'][0]).upper()
+            self.found = True
         else:
-            # We didn't find a record. Return nulls instead of throwing an exception.
-            self.lat = self.long = self.city = self.cc = None
+            # We didn't find a record. Set the 'found' attribute to False.
+            self.found = False
 
-
-test = Record(220)
-print(test.lat, test.long, test.city, test.cc)
+# TODO - This module will need reworking as ES will return a json blob (dictionary)

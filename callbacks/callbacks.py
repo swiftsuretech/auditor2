@@ -58,7 +58,7 @@ def register_callbacks(app, data):
         start_pick = dt.strptime(start_pick, '%Y-%m-%d').date()
         end_pick = dt.strptime(end_pick, '%Y-%m-%d').date()
 
-        # Call the 'filter' method of the data object (gossip_data_frame.py). Send our list of filters
+        # Call the 'filter' method of the data object (get_all_records.py). Send our list of filters
         # and return our new dataset and some other variables that include the number of distinct days and
         # record count from our newly filtered data frame.
         new_data_frame, new_spread, counter = data.filter(user_filter, ip_filter, platform_filter, start_pick, end_pick)
