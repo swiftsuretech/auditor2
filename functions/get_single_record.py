@@ -18,7 +18,7 @@ class Record:
 
     def __init__(self, authid):
         # TODO check the production dataset for field headers. This is likely incorrect
-        df = gdf.DataSet().df[(gdf.DataSet().df.authorizationID == authid)]
+        df = gdf.DataSet().df[(gdf.DataSet().df.id == authid)]
         if len(df):
             # We got a result. Populate our attributes.
             polygon = str(df['polygon'])

@@ -5,11 +5,12 @@ This function build out the side navigation bar of the app.
 
 import dash_html_components as html
 import dash_core_components as dcc
-from functions.get_all_records import FlightPlanList
+from functions.get_all_records import FlightPlanList, DataSet
 import dash_bootstrap_components as dbc
 
 # Build a dictionary of labels and values to populate our search box.
 flight_plan_list = [{'label': item, 'value': item} for item in FlightPlanList().df]
+flight_plan_list2 = [{'label': label, 'value': value} for value, label in DataSet().flight_plan_dict.items()]
 
 button_class = "btn btn-dark btn-block bg-primary border-0 text-left mb-1"
 button_style = {'font-size': '16px', 'border': 'none'}
@@ -47,7 +48,7 @@ def build_sidebar():
             # Search bar
             dbc.Row(
                 dbc.Col(
-                    dcc.Dropdown(id='sidebar_search', options=flight_plan_list,
+                    dcc.Dropdown(id='sidebar_search', options=flight_plan_list2,
                                  placeholder='Quick Search', style={'color': 'black'})
                 ),
                 className="row justify-content-center"
@@ -62,7 +63,6 @@ def build_sidebar():
                 ],
                 style={'padding-left': '10px', 'padding-right': '10px'},
             ),
-
 
             # Navigation Buttons
             html.Div(
@@ -117,6 +117,8 @@ def build_sidebar():
                             style=button_style, className=button_class
                         )
                     ),
+                    # Hidden input
+                    dcc.Input(value=None, type='number', id='test', style={'display': 'none'}),
                 ],
                 style={'padding-left': '10px'}
             ),

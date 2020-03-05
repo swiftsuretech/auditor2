@@ -26,13 +26,35 @@ from settings.settings import main_hist_settings, diagMargins, hist_day_settings
 def register_callbacks(app, data):
     """Set all of the callbacks into a function so they can be imported into relevant pages. This is to prevent clutter
     and keep the page files clean"""
+
+    @app.callback(
+        Output('show-record-from-table', 'disabled'),
+        [Input('dtable', 'selected_row_ids')]
+    )
+    def disable_button(selected):
+        """Disable the 'show record' button if there's no row selected in the table"""
+        if selected is None:
+            return True
+        else:
+            return False
+
+    @app.callback(
+        Output('test', 'value'),
+        [Input('show-record-from-table', 'n_clicks')],
+        [State('dtable', 'selected_row_ids')]
+    )
+    def show_table_record(n_clicks, table_val):
+        """test"""
+        return table_val[0]
+
     @app.callback(
         Output('main_page', 'children'),
         [Input('btn_dashboard', 'n_clicks'),
          Input('btn_flightplan', 'n_clicks'),
-         Input('sidebar_search', 'value')]
+         Input('sidebar_search', 'value'),
+         Input('test', 'value')]
     )
-    def load_page(dash_click, flight_click, authid):
+    def load_page(dash_click, flight_click, authid, table_val): #, show_click, table_val):
         """Returns the relevant page if user clicks a menu button"""
         ctx = dash.callback_context
         btn_id = ctx.triggered[0]['prop_id'].split('.')[0]
@@ -40,13 +62,15 @@ def register_callbacks(app, data):
             return Dashboard().page
         elif btn_id == 'btn_flightplan':
             return SelectRecordPage().page
+        elif btn_id == 'test':
+            return SingleRecordPage(table_val).page
         elif btn_id == 'sidebar_search':
             if authid:
                 return SingleRecordPage(authid).page
             else:
                 return SelectRecordPage().page
         else:
-            return html.Div('Start Up')
+            return Dashboard().page
 
     @app.callback(
         # Define our getters and setters

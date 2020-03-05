@@ -59,10 +59,15 @@ def build_data_table(df):
                             row_selectable='single',
                         ),
                         style={'margin-top': '0rem'}
-                    )
+                    ),
+                    dbc.CardFooter(
+                        children=[
+                            dbc.Button('View Flight Plan', id='show-record-from-table', disabled=True),
+                        ],
+                    ),
                 ]
             ),
-            width={'size': 12},
+            width={'size': 12}
         )
     )
     return dtable

@@ -48,7 +48,7 @@ app.layout = html.Div(
                 dbc.Col(
                     children=[
                         dbc.Row(
-                                id='main_page',
+                            id='main_page',
                         ),
                     ],
                     # As the sidebar is 2 / 12 we set the content page to 10 / 12 and offset it by 2 / 12

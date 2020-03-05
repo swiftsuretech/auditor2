@@ -46,6 +46,7 @@ class DataSet:
         self.platforms = self.df.platform.unique()
         self.users = self.df.username.unique()
         self.flight_plans = self.df.authorizationID.unique()
+        self.flight_plan_dict = pd.Series(self.df.authorizationID.values, index=self.df.id).to_dict()
         self.df['dayOfWeek'] = self.df['transactionTime'].dt.day_name()
         self.df['hour'] = self.df['transactionTime'].dt.hour
         self.count = len(self.df.axes[0])
@@ -71,6 +72,7 @@ class DataSet:
 
 class FlightPlanList:
     """Return a list of all flight plans as an object"""
+
     def __init__(self):
         try:
             self.df = pd.read_csv(test_data[0])
