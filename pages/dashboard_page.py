@@ -35,6 +35,6 @@ class Dashboard:
 
     def __init__(self):
         self.page = html.Div(
-            [space, filter_row, space, time_row, space,
+            [space, space, filter_row, space, time_row, space,
              main_histogram, space, ring_row, space, data_table, space],
             style={'width': '90%', 'margin': 'auto'})

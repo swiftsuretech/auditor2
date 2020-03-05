@@ -16,9 +16,9 @@ import re
 class Record:
     """A single record from the dataset with existing attributes enriched with further geo information"""
 
-    def __init__(self, record_id):
+    def __init__(self, authid):
         # TODO check the production dataset for field headers. This is likely incorrect
-        df = gdf.DataSet().df[(gdf.DataSet().df.id == record_id)]
+        df = gdf.DataSet().df[(gdf.DataSet().df.authorizationID == authid)]
         if len(df):
             # We got a result. Populate our attributes.
             polygon = str(df['polygon'])

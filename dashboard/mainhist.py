@@ -25,7 +25,7 @@ def build_main_histogram(df, spread):
                 [
                     dbc.CardHeader(
                         [
-                            html.I(className="fal fa-lg fa-chart-bar"),
+                            html.I(className="fal mr-2 fa-lg fa-chart-bar"),
                             html.I(" Queries by Week"),
                         ],
                         style={'height': '50px'},

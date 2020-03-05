@@ -43,7 +43,7 @@ def build_ring_row(df):
                     [
                         dbc.CardHeader(
                             [
-                                html.I(className="fal fa-lg fa-photo-video"),
+                                html.I(className="fal mr-2 fa-lg fa-photo-video"),
                                 html.I(" Platform")
                             ]
                         ),
@@ -67,7 +67,7 @@ def build_ring_row(df):
                     [
                         dbc.CardHeader(
                             [
-                                html.I(className="fal fa-lg fa-users"),
+                                html.I(className="fal mr-2 fa-lg fa-users"),
                                 html.I(" Operators")
                             ]
                         ),
@@ -91,7 +91,7 @@ def build_ring_row(df):
                     [
                         dbc.CardHeader(
                             [
-                                html.I(className="fal fa-lg fa-desktop-alt"),
+                                html.I(className="fal mr-2 fa-lg fa-desktop-alt"),
                                 html.I(" IP Addresses")
                             ]
                         ),

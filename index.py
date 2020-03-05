@@ -11,12 +11,14 @@ Callbacks are put in a separate file to avoid clutter. I call these callback wit
 # Import our Dash bits and pieces and some settings etc.
 import dash
 from pages.dashboard_page import Dashboard, d
-from pages.single_record_page import SingleRecord
+from pages.single_record_page import SingleRecordPage
 import dash_bootstrap_components as dbc
+import dash_core_components as dcc
 from callbacks.callbacks import register_callbacks
 from navbars.sidebar import build_sidebar
 from navbars.navbar import build_navbar
 import dash_html_components as html
+from pages.select_record_page import SelectRecordPage
 
 # Instantiate our App and give it a name
 app = dash.Dash("__name__")
@@ -26,8 +28,8 @@ app.config.suppress_callback_exceptions = True
 # Grab our main layout components
 sidebar = build_sidebar()
 navbar = build_navbar()
-#dash_page = Dashboard()
-single_page = SingleRecord()
+# dash_page = Dashboard()
+# single_page = SingleRecordPage()
 
 
 # Define our layout
@@ -40,13 +42,13 @@ app.layout = html.Div(
                     # scroll with the rest of the page
                     sidebar,
                     width={'size': 2},
-                    style={'background-color': '#2C3E50', 'position': 'fixed', 'height': '100%'}
+                    className="bg-primary text-white",
+                    style={'position': 'fixed', 'height': '100%'}
                 ),
                 dbc.Col(
                     children=[
                         dbc.Row(
-                            # Drop in the Dashboard page
-                            single_page.page
+                                id='main_page',
                         ),
                     ],
                     # As the sidebar is 2 / 12 we set the content page to 10 / 12 and offset it by 2 / 12

@@ -36,7 +36,7 @@ def build_time_row(df, start_date, end_date, count):
                     [
                         dbc.CardHeader(
                             [
-                                html.I(className="fal fa-lg fa-calendar-alt"),
+                                html.I(className="fal mr-2 fa-lg fa-calendar-alt"),
                                 html.I(" Activity Days")
                             ]
                         ),
@@ -61,7 +61,7 @@ def build_time_row(df, start_date, end_date, count):
                     [
                         dbc.CardHeader(
                             [
-                                html.I(className="fal fa-lg fa-user-clock"),
+                                html.I(className="fal mr-2 fa-lg fa-user-clock"),
                                 html.I(" Activity Hours")
                             ]
                         ),
@@ -87,7 +87,7 @@ def build_time_row(df, start_date, end_date, count):
                         [
                             dbc.CardHeader(
                                 [
-                                    html.I(className="fal fa-alarm-clock"),
+                                    html.I(className="fal mr-2 fa-alarm-clock"),
                                     html.I(" Time Select")
                                 ]
                             ),
@@ -118,7 +118,7 @@ def build_time_row(df, start_date, end_date, count):
                                             html.P(
                                                 html.H2(
                                                     children=[
-                                                        html.I(className="fal fa-lg fa-file-search"),
+                                                        html.I(className="fal mr-2 fa-lg fa-file-search"),
                                                         html.I(' '),
                                                         html.I(count,
                                                                id='counter'),

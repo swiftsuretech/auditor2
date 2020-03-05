@@ -45,6 +45,7 @@ class DataSet:
         self.ip = self.df.ip.unique()
         self.platforms = self.df.platform.unique()
         self.users = self.df.username.unique()
+        self.flight_plans = self.df.authorizationID.unique()
         self.df['dayOfWeek'] = self.df['transactionTime'].dt.day_name()
         self.df['hour'] = self.df['transactionTime'].dt.hour
         self.count = len(self.df.axes[0])
@@ -66,3 +67,13 @@ class DataSet:
         self.spread = calculate_spread(self.last_date, self.first_date)
         self.count = len(filtered_data_frame.axes[0])
         return filtered_data_frame, self.spread, self.count
+
+
+class FlightPlanList:
+    """Return a list of all flight plans as an object"""
+    def __init__(self):
+        try:
+            self.df = pd.read_csv(test_data[0])
+        except FileNotFoundError:
+            self.df = pd.read_csv(test_data[1])
+        self.df = self.df.authorizationID.to_list()

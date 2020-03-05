@@ -10,7 +10,7 @@ import dash_html_components as html
 import dash_bootstrap_components as dbc
 
 # Define the filter icon
-filter_icon = "fal fa-filter fa-lg text-black"
+filter_icon = "fal mr-2 fa-filter fa-lg text-black"
 
 
 def build_columns(topic):

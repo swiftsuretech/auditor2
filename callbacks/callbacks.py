@@ -10,9 +10,14 @@ of that object to set or get.
 # TODO - Do we need any error trapping in this module?
 
 # Import external libraries
-from dash.dependencies import Output, Input
+from dash.dependencies import Output, Input, State
+import dash_html_components as html
 import plotly.express as px
 from datetime import datetime as dt
+import dash
+from pages.single_record_page import SingleRecordPage
+from pages.select_record_page import SelectRecordPage
+from pages.dashboard_page import Dashboard
 
 # Import some externalised settings
 from settings.settings import main_hist_settings, diagMargins, hist_day_settings, hist_hour_settings
@@ -21,6 +26,28 @@ from settings.settings import main_hist_settings, diagMargins, hist_day_settings
 def register_callbacks(app, data):
     """Set all of the callbacks into a function so they can be imported into relevant pages. This is to prevent clutter
     and keep the page files clean"""
+    @app.callback(
+        Output('main_page', 'children'),
+        [Input('btn_dashboard', 'n_clicks'),
+         Input('btn_flightplan', 'n_clicks'),
+         Input('sidebar_search', 'value')]
+    )
+    def load_page(dash_click, flight_click, authid):
+        """Returns the relevant page if user clicks a menu button"""
+        ctx = dash.callback_context
+        btn_id = ctx.triggered[0]['prop_id'].split('.')[0]
+        if btn_id == 'btn_dashboard':
+            return Dashboard().page
+        elif btn_id == 'btn_flightplan':
+            return SelectRecordPage().page
+        elif btn_id == 'sidebar_search':
+            if authid:
+                return SingleRecordPage(authid).page
+            else:
+                return SelectRecordPage().page
+        else:
+            return html.Div('Start Up')
+
     @app.callback(
         # Define our getters and setters
         [
