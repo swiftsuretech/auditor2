@@ -8,6 +8,10 @@ Some Settings that apply / might in the future apply to numerous modules
 import plotly.io as pio
 import dash_html_components as html
 
+# Define our Map server
+# TODO this will need changing to the production Map Server
+map_server = "http://docker:8080/styles/klokantech-basic/{z}/{x}/{y}.png"
+
 # Define a template for visualisations.
 pio.templates.default = "simple_white"
 space = html.Br()

@@ -18,6 +18,7 @@ import dash
 from pages.single_record_page import SingleRecordPage
 from pages.select_record_page import SelectRecordPage
 from pages.dashboard_page import Dashboard
+from pages.generate_audit import AuditForm
 
 # Import some externalised settings
 from settings.settings import main_hist_settings, diagMargins, hist_day_settings, hist_hour_settings
@@ -26,6 +27,14 @@ from settings.settings import main_hist_settings, diagMargins, hist_day_settings
 def register_callbacks(app, data):
     """Set all of the callbacks into a function so they can be imported into relevant pages. This is to prevent clutter
     and keep the page files clean"""
+
+    @app.callback(
+        Output('percent-readout', 'children'),
+        [Input('audit-percentage', 'value')]
+    )
+    def update_percentage(percent):
+        """Update the percentage label when you move the slider"""
+        return str(percent) + '%'
 
     @app.callback(
         Output('show-record-from-table', 'disabled'),
@@ -52,9 +61,10 @@ def register_callbacks(app, data):
         [Input('btn_dashboard', 'n_clicks'),
          Input('btn_flightplan', 'n_clicks'),
          Input('sidebar_search', 'value'),
+         Input('btn_new_audit', 'n_clicks'),
          Input('test', 'value')]
     )
-    def load_page(dash_click, flight_click, authid, table_val): #, show_click, table_val):
+    def load_page(dash_click, flight_click, authid, new_audit_click, table_val):  # , show_click, table_val):
         """Returns the relevant page if user clicks a menu button"""
         ctx = dash.callback_context
         btn_id = ctx.triggered[0]['prop_id'].split('.')[0]
@@ -64,6 +74,8 @@ def register_callbacks(app, data):
             return SelectRecordPage().page
         elif btn_id == 'test':
             return SingleRecordPage(table_val).page
+        elif btn_id == 'btn_new_audit':
+            return AuditForm().page
         elif btn_id == 'sidebar_search':
             if authid:
                 return SingleRecordPage(authid).page

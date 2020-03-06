@@ -35,9 +35,11 @@ class DataSet:
         # to, this may cause an exception. We have defined a list after the import statement for
         # both relative options to get round this.
         try:
-            self.df = pd.read_csv(test_data[0], parse_dates=['transactionTime', 'startTime', 'endTime'])
+            self.df = pd.read_csv(test_data[0], dayfirst=True,
+                                  parse_dates=['transactionTime', 'startTime', 'endTime'])
         except FileNotFoundError:
-            self.df = pd.read_csv(test_data[1], parse_dates=['transactionTime', 'startTime', 'endTime'])
+            self.df = pd.read_csv(test_data[1], dayfirst=True,
+                                  parse_dates=['transactionTime', 'startTime', 'endTime'])
         self.last_date = self.df.transactionTime.max().date()
         self.first_date = self.df.transactionTime.min().date()
         self.t_times = self.df['transactionTime']

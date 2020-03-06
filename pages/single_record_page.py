@@ -9,6 +9,7 @@ This defines the static layout with an initial record, 'r', which is returned by
 # Import our libraries
 from settings.settings import space, html, field_mapping
 from functions.get_single_record import Record
+from functions.build_map import MapBox
 import dash_bootstrap_components as dbc
 
 # Some reusable styling:
@@ -46,14 +47,14 @@ def build_card(card_lists, r):
     title = html.I(card_lists[1])
     card = html.Div(
         children=[
-            dbc.CardHeader(title, style={'text-align': 'center', 'padding': '0px'}),
-            dbc.CardBody(all_rows, className='border-bottom', style={'margin': '3px'})
+            dbc.CardHeader(title, style={'text-align': 'center', 'padding': '0px'}, className='border-top'),
+            dbc.CardBody(all_rows, style={'margin': '3px', 'height': '100%'})
         ],
     )
     return card
 
 
-def build_geo(flag, r):
+def build_geo(flag, r, polygon):
     """This will build out and return the right hand side column of the page which will show the
     flag of the record nation and the tile map displaying the polygon(s)"""
     card = html.Div(
@@ -81,11 +82,8 @@ def build_geo(flag, r):
                 style={'text-align': 'center', 'padding': '0px'}
             ),
             dbc.CardBody(
-                children=[
-                    html.H3("Placeholder"),
-                ],
-                className="border-bottom",
-            ),
+                MapBox(polygon).map
+            )
         ]
     )
     return card
@@ -102,6 +100,7 @@ class SingleRecordPage:
         if not r.found:
             print('Record not found')
             exit()
+        polygon = r.dict['polygon'][0]
         # Change the filed names to something easier on the eye. The mapping file is in settings.py
         r.dict = dict((field_mapping[key], value) for key, value in r.dict.items())
         # Build a url reference to a flag that sits in the 'flags' directory in our site assets
@@ -119,14 +118,14 @@ class SingleRecordPage:
                                     build_card(query_card, r),
                                     build_card(geo_card, r),
                                 ],
-                                style={'padding': '0px'},
+                                style={'padding': '0px', 'height': '100%'},
                             ),
-                            width=5
+                            width=5,
                         ),
                         dbc.Col(
                             dbc.Card(
                                 children=[
-                                    build_geo(country_flag, r)
+                                    build_geo(country_flag, r, polygon),
                                 ],
                                 style={'padding': '0px', 'height': '100%'},
                             ),

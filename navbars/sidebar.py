@@ -91,12 +91,12 @@ def build_sidebar():
                             style=button_style, className=button_class
                         )
                     ),
-                    separator,
                 ],
                 style={'padding-left': '10px', 'padding-right': '10px'}
             ),
             html.Div(
                 children=[
+                    separator,
                     dbc.Row(
                         "Audit Functions",
                         id='lbl_audit', style=button_style, className='text-secondary'
