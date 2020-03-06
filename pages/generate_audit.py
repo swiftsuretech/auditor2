@@ -127,7 +127,7 @@ class AuditForm:
                                             dbc.Button('Generate', className='mr-2', id='btn-generate-audit',
                                                        style={'float': 'right'}),
                                         ],
-                                    )
+                                    ),
                                 ],
                             ),
                             width={'size': 4, 'offset': 4}
@@ -135,6 +135,7 @@ class AuditForm:
                     ],
                     form=True,
                 ),
+                html.Div("nothing", id='audit-stat')
             ],
             style={'width': '90%', 'margin': 'auto'},
 

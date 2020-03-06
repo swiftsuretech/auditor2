@@ -11,6 +11,7 @@ class SelectRecordPage:
         self.page = html.Div(
             children=[
                 html.Br(),
+                html.Br(),
                 dbc.Row(
                     dbc.Col(
                         html.Div(
@@ -28,7 +29,7 @@ class SelectRecordPage:
                                 ],
                             ),
                         ),
-                        width={'size': 12, 'offset': 2}
+                        width={'size': 6, 'offset': 2}
                     ),
                 ),
             ],

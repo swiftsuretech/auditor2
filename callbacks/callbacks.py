@@ -19,6 +19,8 @@ from pages.single_record_page import SingleRecordPage
 from pages.select_record_page import SelectRecordPage
 from pages.dashboard_page import Dashboard
 from pages.generate_audit import AuditForm
+from functions.build_an_audit import Audit
+from functions.modal_template import Modal
 
 # Import some externalised settings
 from settings.settings import main_hist_settings, diagMargins, hist_day_settings, hist_hour_settings
@@ -27,6 +29,33 @@ from settings.settings import main_hist_settings, diagMargins, hist_day_settings
 def register_callbacks(app, data):
     """Set all of the callbacks into a function so they can be imported into relevant pages. This is to prevent clutter
     and keep the page files clean"""
+
+    @app.callback(
+        Output('modal-open', 'is_open'),
+        [Input('close-modal', 'n_clicks')]
+    )
+    def close_modal(click):
+        """Close the modal"""
+        if click:
+            return False
+        return True
+
+    @app.callback(
+        [Output('audit-stat', 'children'),
+         Output('modal', 'children')],
+        [Input('btn-generate-audit', 'n_clicks')],
+        [State('audit-date-picker-start', 'date'),
+         State('audit-date-picker-end', 'date'),
+         State('audit-percentage', 'value'),
+         ]
+    )
+    def initiate_audit(gen_audit, start, end, percent):
+        """Instantiate an audit object with start date, end date and percentage arguments"""
+        audit = Audit(start, end, percent)
+        ctx = dash.callback_context
+        btn_id = ctx.triggered[0]['prop_id'].split('.')[0]
+        # if btn_id == 'btn-generate-audit':
+        return btn_id, Modal(header='Audit Creation', body=audit.status).modal
 
     @app.callback(
         Output('percent-readout', 'children'),
@@ -68,6 +97,9 @@ def register_callbacks(app, data):
         """Returns the relevant page if user clicks a menu button"""
         ctx = dash.callback_context
         btn_id = ctx.triggered[0]['prop_id'].split('.')[0]
+        if ctx.triggered[0]['value'] is None:
+            # The app is newly loaded. Define the start page
+            return Dashboard().page
         if btn_id == 'btn_dashboard':
             return Dashboard().page
         elif btn_id == 'btn_flightplan':
@@ -81,6 +113,7 @@ def register_callbacks(app, data):
                 return SingleRecordPage(authid).page
             else:
                 return SelectRecordPage().page
+        # Another event has been triggered which we have not captured.
         else:
             return Dashboard().page
 

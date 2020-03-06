@@ -7,12 +7,12 @@ which will make our lives easier for mungeinig operations
 
 # Import Pandas
 import pandas as pd
+from settings.settings import test_data
 
 # TODO - Need to implement data ingestion from Elastic for production
 # TODO - Consider how much data we can work with
 #  in memory. We can consider either paging data or restricting user to only 3 months worth?
 
-test_data = ["testdata/chatter.csv", "../testdata/chatter.csv"]
 # Show the full dataframe for debugging
 pd.set_option('display.max_columns', None)
 

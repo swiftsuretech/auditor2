@@ -13,6 +13,7 @@ import dash
 from pages.dashboard_page import Dashboard, d
 from pages.single_record_page import SingleRecordPage
 import dash_bootstrap_components as dbc
+from functions.modal_template import Modal
 import dash_core_components as dcc
 from callbacks.callbacks import register_callbacks
 from navbars.sidebar import build_sidebar
@@ -45,6 +46,7 @@ app.layout = html.Div(
                     className="bg-primary text-white",
                     style={'position': 'fixed', 'height': '100%'}
                 ),
+                html.Div(id='modal'),
                 dbc.Col(
                     children=[
                         dbc.Row(

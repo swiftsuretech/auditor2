@@ -104,8 +104,16 @@ def build_sidebar():
                     dbc.Row(
                         dbc.Button(
                             (html.I(className='fal fa-lge fa-fw fa-clipboard-check mr-2'),
-                             " Generate Audit"),
+                             " Generate an Audit"),
                             id='btn_new_audit',
+                            style=button_style, className=button_class
+                        )
+                    ),
+                    dbc.Row(
+                        dbc.Button(
+                            (html.I(className='fal fa-lge fa-fw fa-business-time mr-2'),
+                             " My Audits"),
+                            id='btn_my_audits',
                             style=button_style, className=button_class
                         )
                     ),
