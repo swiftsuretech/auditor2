@@ -9,8 +9,11 @@ import dash_core_components as dcc
 import dash_html_components as html
 import dash_bootstrap_components as dbc
 
-# Define the filter icon
-filter_icon = "fal mr-2 fa-filter fa-lg text-black"
+
+class FilterRow:
+    """Returns the filtering row as class object"""
+    def __init__(self, user, platform, ip):
+        self.row = build_filter_row(user, platform, ip)
 
 
 def build_columns(topic):
@@ -22,6 +25,7 @@ def build_filter_row(users, platforms, ip):
     """Builds out a Bootstrap container containing 3 x dropdown filters. The filters are populated by providing
     a list of unique values for that particular filter. The function takes 3 x arguments; list of unique operator
     name, list of unique platform names and list of unique IP addresses."""
+    filter_icon = "fal mr-2 fa-filter fa-lg text-black"
     filter_row = dbc.Row(
         [
             dbc.Col(

@@ -38,6 +38,8 @@ app.layout = html.Div(
     children=[
         dbc.Row(
             children=[
+                # A placeholder for our modal
+                html.Div(id='modal'),
                 dbc.Col(
                     # Sidebar will be 2 / 12 of the page in Bootstrap format. We'll fix the position so it doesn't
                     # scroll with the rest of the page
@@ -46,11 +48,10 @@ app.layout = html.Div(
                     className="bg-primary text-white",
                     style={'position': 'fixed', 'height': '100%'}
                 ),
-                html.Div(id='modal'),
                 dbc.Col(
                     children=[
                         dbc.Row(
-                            id='main_page',
+                                id='main_page',
                         ),
                     ],
                     # As the sidebar is 2 / 12 we set the content page to 10 / 12 and offset it by 2 / 12

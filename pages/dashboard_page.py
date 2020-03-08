@@ -9,7 +9,7 @@ This defines the static layout with an initial dataset, 'd', which is returned b
 
 # Import our functions - generally set out in row modules in the dashboard directory.
 from dashboard.ringrow import build_ring_row
-from dashboard.filterrow import build_filter_row
+from dashboard.filterrow import FilterRow
 from dashboard.timerow import build_time_row
 from dashboard.mainhist import build_main_histogram
 from dashboard.table import build_data_table
@@ -24,7 +24,7 @@ d = DataSet()
 data_table = build_data_table(d.df)
 ring_row = build_ring_row(d.df)
 main_histogram = build_main_histogram(d.df, d.spread)
-filter_row = build_filter_row(d.users, d.platforms, d.ip)
+filter_row = FilterRow(d.users, d.platforms, d.ip).row
 time_row = build_time_row(d.df, d.first_date, d.last_date, d.count)
 
 

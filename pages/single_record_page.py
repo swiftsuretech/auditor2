@@ -41,7 +41,7 @@ def build_card(card_lists, r):
     all_rows = list()
     for item in card_lists[0]:
         col_left = dbc.Col(html.B(item), width=4, className="border-right", style={'margin': '0px'})
-        col_right = dbc.Col(html.P(r.dict[item], style={'color': 'blue', 'margin': '0px'}), width=8)
+        col_right = dbc.Col(html.P(r.dict[item], className="text-info", style={'margin': '0px'}), width=8)
         single_row = dbc.Row([col_left, col_right], style={'padding': '2px', 'margin': '0px'})
         all_rows.append(single_row)
     title = html.I(card_lists[1])
@@ -70,8 +70,8 @@ def build_geo(flag, r, polygon):
                     html.Img(src=flag, width=40, className='border', style={
                         'text-align': 'center', 'float': 'right'}),
                     html.H3("Flight Plan:", style={'float': 'left'}),
-                    html.Pre('         ', style={'float': 'left'}),
-                    html.H3(r.dict['Flight Plan'], style={'float': 'center'}),
+                    html.Pre('             ', style={'float': 'left'}),
+                    html.H3(r.dict['Flight Plan'], style={'float': 'center'}, className='text-info'),
                 ],
                 className="border-bottom"
             ),

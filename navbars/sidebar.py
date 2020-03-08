@@ -7,6 +7,8 @@ import dash_html_components as html
 import dash_core_components as dcc
 from functions.get_all_records import FlightPlanList, DataSet
 import dash_bootstrap_components as dbc
+import os
+import os.path
 
 # Build a dictionary of labels and values to populate our search box.
 flight_plan_list = [{'label': item, 'value': item} for item in FlightPlanList().df]
@@ -19,6 +21,12 @@ separator = html.Hr(style={'color': '#95a5a6', 'background-color': '#95a5a6', 'p
 
 def build_sidebar():
     """Build the sidebar of the app."""
+    # Count the number of audits ready to go. If there are none, we can make the notification badge invisible
+    file_count = len([name for name in os.listdir('audits/generated')])
+    if file_count == 0:
+        badge_show = 'invisible'
+    else:
+        badge_show = 'visible ml-2'
     sidebar = html.Div(
         children=[
             # Logo and app name
@@ -104,7 +112,7 @@ def build_sidebar():
                     dbc.Row(
                         dbc.Button(
                             (html.I(className='fal fa-lge fa-fw fa-clipboard-check mr-2'),
-                             " Generate an Audit"),
+                             " Generate New Audit"),
                             id='btn_new_audit',
                             style=button_style, className=button_class
                         )
@@ -112,7 +120,8 @@ def build_sidebar():
                     dbc.Row(
                         dbc.Button(
                             (html.I(className='fal fa-lge fa-fw fa-business-time mr-2'),
-                             " My Audits"),
+                             " My Audits",
+                             dbc.Badge(file_count, color='danger', className=badge_show, id='audit-count')),
                             id='btn_my_audits',
                             style=button_style, className=button_class
                         )
@@ -128,7 +137,7 @@ def build_sidebar():
                     # Hidden input
                     dcc.Input(value=None, type='number', id='test', style={'display': 'none'}),
                 ],
-                style={'padding-left': '10px'}
+                style={'padding-left': '10px', 'padding-right': '10px'}
             ),
         ],
         style={'margin': '20px'}

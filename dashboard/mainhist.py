@@ -39,7 +39,7 @@ def build_main_histogram(df, spread):
                                     id="big_histogram",
                                     config={'displayModeBar': False}
                                 )
-                            ]
+                            ],
                         ),
                     )
                 ]

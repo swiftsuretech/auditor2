@@ -3,11 +3,12 @@ Auditor2 by Dave Whitehouse | CGI Data Engineer | CII IDOT Team
 Builds a Form to generate a new audit
 """
 
-import dash
 import dash_bootstrap_components as dbc
 import dash_html_components as html
 import dash_core_components as dcc
 from datetime import datetime as dt, timedelta
+
+separator = html.Hr(style={'color': '#95a5a6', 'background-color': '#95a5a6', 'padding': 0})
 
 
 class AuditForm:
@@ -26,7 +27,7 @@ class AuditForm:
                                 children=[
                                     dbc.CardHeader(
                                         children=[
-                                            html.I(className="fal fa-lg fa-clipboard-list-check mr-2"),
+                                            html.I(className="fal fa-lg fa-clipboard-check mr-2"),
                                             html.I("Generate a New Audit")
                                         ]
                                     ),
@@ -34,11 +35,10 @@ class AuditForm:
                                         children=[
                                             dbc.Col(
                                                 children=[
-
                                                     dbc.FormGroup(
                                                         [
-                                                            html.I(className="fal mr-2 fa-lg fa-calendar-times",
-                                                                   style={'color': 'grey'}),
+                                                            # html.I(className="fal mr-2 fa-lg fa-calendar-times",
+                                                            #      style={'color': 'grey'}),
                                                             html.I("Select the date range you wish to check",
                                                                    style={'color': 'grey'}),
                                                         ]
@@ -67,13 +67,12 @@ class AuditForm:
                                                     ),
                                                     dbc.FormGroup(
                                                         [
-                                                            html.I(className="fal mr-2 fa-lg fa-percent",
-                                                                   style={'color': 'grey'}),
+                                                            # html.I(className="fal mr-2 fa-lg fa-percent",
+                                                            #      style={'color': 'grey'}),
                                                             html.I("Percentage of Flight Plans to Check",
                                                                    style={'color': 'grey'}, className="mr-5"),
                                                         ]
                                                     ),
-
                                                     dbc.FormGroup(
                                                         [
                                                             dcc.Slider(
@@ -102,8 +101,8 @@ class AuditForm:
 
                                                     dbc.FormGroup(
                                                         [
-                                                            html.I(className="fal mr-2 fa-lg fa-sticky-note",
-                                                                   style={'color': 'grey'}),
+                                                            # html.I(className="fal mr-2 fa-lg fa-sticky-note",
+                                                            #     style={'color': 'grey'}),
                                                             html.I("Note", style={'color': 'grey'}),
                                                         ]
                                                     ),
@@ -135,8 +134,6 @@ class AuditForm:
                     ],
                     form=True,
                 ),
-                html.Div("nothing", id='audit-stat')
             ],
             style={'width': '90%', 'margin': 'auto'},
-
         )

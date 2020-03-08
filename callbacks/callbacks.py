@@ -21,6 +21,8 @@ from pages.dashboard_page import Dashboard
 from pages.generate_audit import AuditForm
 from functions.build_an_audit import Audit
 from functions.modal_template import Modal
+import os
+import os.path
 
 # Import some externalised settings
 from settings.settings import main_hist_settings, diagMargins, hist_day_settings, hist_hour_settings
@@ -31,31 +33,38 @@ def register_callbacks(app, data):
     and keep the page files clean"""
 
     @app.callback(
+        [Output('audit-count', 'children'),
+         Output('audit-count', 'className')],
+        [Input('btn-generate-audit', 'n_clicks')]
+    )
+    def update_audit_count_badge(click):
+        """Update the count badge on the sidebar"""
+        file_count = len([name for name in os.listdir('audits/generated')]) + 1
+        return file_count, 'visible ml-2'
+
+    @app.callback(
         Output('modal-open', 'is_open'),
         [Input('close-modal', 'n_clicks')]
     )
     def close_modal(click):
-        """Close the modal"""
+        """Close the modal when user hits the button"""
         if click:
             return False
         return True
 
     @app.callback(
-        [Output('audit-stat', 'children'),
-         Output('modal', 'children')],
+        Output('modal', 'children'),
         [Input('btn-generate-audit', 'n_clicks')],
         [State('audit-date-picker-start', 'date'),
          State('audit-date-picker-end', 'date'),
          State('audit-percentage', 'value'),
+         State('audit-notes', 'value'),
          ]
     )
-    def initiate_audit(gen_audit, start, end, percent):
+    def initiate_audit(gen_audit, start, end, percent, note):
         """Instantiate an audit object with start date, end date and percentage arguments"""
-        audit = Audit(start, end, percent)
-        ctx = dash.callback_context
-        btn_id = ctx.triggered[0]['prop_id'].split('.')[0]
-        # if btn_id == 'btn-generate-audit':
-        return btn_id, Modal(header='Audit Creation', body=audit.status).modal
+        audit = Audit(start, end, percent, note)
+        return Modal(header='Audit Creation', body=audit.status).modal
 
     @app.callback(
         Output('percent-readout', 'children'),
