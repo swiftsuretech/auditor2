@@ -10,7 +10,8 @@ import dash_html_components as html
 
 # Define our Map server
 # TODO this will need changing to the production Map Server
-map_server = "http://docker:8080/styles/klokantech-basic/{z}/{x}/{y}.png"
+# map_server = "http://docker:8080/styles/klokantech-basic/{z}/{x}/{y}.png"
+map_server = "http://localhost:8080/styles/klokantech-basic/{z}/{x}/{y}.png"
 test_data = ["testdata/chatter.csv", "../testdata/chatter.csv"]
 
 # Define a template for visualisations.

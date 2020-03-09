@@ -21,7 +21,7 @@ def build_data_table(df):
                     dbc.CardHeader(
                         [
                             html.I(className="fal mr-2 fa-lg fa-table"),
-                            html.I(" Queries Table")
+                            html.I(" Flight Plans")
                         ]
                     ),
                     dbc.CardBody(

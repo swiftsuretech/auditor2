@@ -1,24 +1,20 @@
-histo = dbc.Row(
-    [
-        # dbc.Col(
-        #     html.Div(
-        #         html.Img(src='data:image/png;base64,{}'.format(logo), height=100)
-        #     ),
-        #     width={"size": 2, "offset": 1}
-        # ),
-        dbc.Col(
-            dcc.Graph(
-                id="main-histogram",
-                figure=px.histogram(df, x=df['transactionTime'],
-                                    color=df['username'],
-                                    labels={"transactionTime": "Query Time",
-                                            "username": "User"}),
+test = html.Div(
+    dbc.Card(
+        children=[
+            dbc.CardHeader(
+                html.H5("Audit Generated on 09-03-2020 at 13:20")
+            ),
+            dbc.CardBody(
+                children =[
+                    html.P("Search Start: 01/11/2019"),
+                    html.P("Search End: 09/03/2020"),
+                    html.P("Audit Percentage: 9"),
+                    ]
+            ),
+            dbc.CardFooter(
+                dbc.Button("Carry out Audit", className="float-right, color='danger'")
             )
-            , width={"size": 10, 'offset': 1})
-    ]
+        ],
+        ,className=\"m-5\, float-left",
+    ),
 )
-
-
-### Using Font-Awesome
-
-randText = html.I(className="fas fa-quote-left fa-2x fa-pull-left text-white")

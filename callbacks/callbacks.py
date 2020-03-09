@@ -19,6 +19,7 @@ from pages.single_record_page import SingleRecordPage
 from pages.select_record_page import SelectRecordPage
 from pages.dashboard_page import Dashboard
 from pages.generate_audit import AuditForm
+from pages.my_audits import MyAudits
 from functions.build_an_audit import Audit
 from functions.modal_template import Modal
 import os
@@ -100,9 +101,10 @@ def register_callbacks(app, data):
          Input('btn_flightplan', 'n_clicks'),
          Input('sidebar_search', 'value'),
          Input('btn_new_audit', 'n_clicks'),
-         Input('test', 'value')]
+         Input('test', 'value'),
+         Input('btn_my_audits', 'n_clicks')]
     )
-    def load_page(dash_click, flight_click, authid, new_audit_click, table_val):  # , show_click, table_val):
+    def load_page(dash_click, flight_click, authid, new_audit_click, table_val, my_audit__click):
         """Returns the relevant page if user clicks a menu button"""
         ctx = dash.callback_context
         btn_id = ctx.triggered[0]['prop_id'].split('.')[0]
@@ -117,6 +119,8 @@ def register_callbacks(app, data):
             return SingleRecordPage(table_val).page
         elif btn_id == 'btn_new_audit':
             return AuditForm().page
+        elif btn_id == 'btn_my_audits':
+            return MyAudits().page
         elif btn_id == 'sidebar_search':
             if authid:
                 return SingleRecordPage(authid).page

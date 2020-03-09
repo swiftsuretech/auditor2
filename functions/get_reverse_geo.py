@@ -12,7 +12,6 @@ import reverse_geocoder as rg
 def reverse_geo(lat, long):
     """Accepts a valid lat and long and returns the nearest major city with a population greater
     than 10,000 people."""
-    global city, cc
     coordinates = (lat, long)
     results = rg.search(coordinates)
 

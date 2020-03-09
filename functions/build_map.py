@@ -9,7 +9,6 @@ from settings.settings import map_server
 import dash_core_components as dcc
 import dash_html_components as html
 
-
 # TODO multi polygon plotting
 
 
@@ -40,7 +39,9 @@ class MapBox:
             mapbox={
                 'style': "stamen-terrain",
                 'center': {'lon': cent_lon, 'lat': cent_lat},
-                'zoom': 5},
+                'zoom': 7,
+                "pitch": 60,
+            },
             margin={"r": 0, "t": 0, "l": 0, "b": 0},
             showlegend=False)
         self.map = html.Div(

@@ -43,8 +43,8 @@ class Audit:
             selection = self.df.id.tolist()
             selection = dict(zip(selection, ['gen' for i in selection]))
             timestamp = dt.now().timestamp()
-            self.filename = 'audits/generated/G_AUDIT-{}-{}-{}.json'.format(self.start, self.end,
-                                                                                  percentage)
+            self.filename = 'audits/generated/G_AUDIT|{}|{}|{}|{}.json'.format(timestamp, self.start, self.end,
+                                                                            percentage)
             self.audit_file = json.dumps({"filename": self.filename, "status": "gen", "timestamp": timestamp,
                                           "note": self.note,
                                           "start": self.start, "end": self.end, "percentage": percentage,
