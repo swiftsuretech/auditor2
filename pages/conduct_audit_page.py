@@ -9,8 +9,17 @@ blob containing some high level details of the audit, as well as the plans selec
 # Import our libraries
 from settings.settings import space, html, field_mapping
 from functions.get_single_record import Record
+from functions.get_all_records import DataSet
 from functions.build_map import MapBox
+from functions.count_audits import return_audit_ids
 import dash_bootstrap_components as dbc
+
+
+def get_dataset():
+    print(return_audit_ids())
+
+
+test = get_dataset()
 
 # Some reusable styling:
 header_style = {'margin-bottom': '5px', 'margin-top': '5px'}

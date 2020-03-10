@@ -3,8 +3,7 @@ Auditor2 by Dave Whitehouse | CGI Data Engineer | CII IDOT Team
 Presents a page to illustrate all audits that have been created buy not yet conducted
 """
 
-# Import Libraries:
-from functions.count_audits import Audits
+# Import Libraries:from functions.count_audits import Audits
 import dash_html_components as html
 import dash_bootstrap_components as dbc
 import dash_core_components as dcc

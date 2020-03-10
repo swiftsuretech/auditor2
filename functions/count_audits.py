@@ -29,6 +29,14 @@ def clear_out_audits():
             os.remove(f)
 
 
+def return_audit_ids():
+    try:
+        audit = os.listdir('..audits/generated')
+        return audit
+    except:
+        pass
+
+
 def count_generated_audits():
     try:
         return len([name for name in os.listdir('audits/generated')])

@@ -71,6 +71,12 @@ class DataSet:
         self.count = len(filtered_data_frame.axes[0])
         return filtered_data_frame, self.spread, self.count
 
+    def audit_filter(self, record_filter):
+        """Returns a recordset based upon records selected for audit"""
+        filtered_data_frame = self.df[self.df.id in record_filter]
+        self.count = len(filtered_data_frame.axes[0])
+        return filtered_data_frame, self.count
+
 
 class FlightPlanList:
     """Return a list of all flight plans as an object"""
