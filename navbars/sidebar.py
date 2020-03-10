@@ -136,6 +136,8 @@ def build_sidebar():
                     ),
                     # Hidden input
                     dcc.Input(value=None, type='number', id='test', style={'display': 'none'}),
+                    # A placeholder for reload 'My Audits' page
+                    html.Div(' ', id='change-page'),
                 ],
                 style={'padding-left': '10px', 'padding-right': '10px'}
             ),

@@ -4,7 +4,7 @@ Defines a Dashboard Class consisting of an html Div with all the dashboard widge
 We divide the dashboard page into rows. There's a row of filters, a wide row with a time / activity
 histogram, a row of pie charts and a row of time related widgets. Finally there is a data table.
 This defines the static layout with an initial dataset, 'd', which is returned by instantiating a
-'DataSet' object. Interactivity is built out in the callbacks.py module.
+'DataSet' object. Interactivity is built out in the functional_callbacks.py module.
 """
 
 # Import our functions - generally set out in row modules in the dashboard directory.

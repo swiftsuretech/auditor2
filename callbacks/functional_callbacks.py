@@ -22,26 +22,16 @@ from pages.generate_audit import AuditForm
 from pages.my_audits import MyAudits
 from functions.build_an_audit import Audit
 from functions.modal_template import Modal
-import os
-import os.path
+from pages.conduct_audit_page import AuditPage
+from dash.exceptions import PreventUpdate
 
 # Import some externalised settings
 from settings.settings import main_hist_settings, diagMargins, hist_day_settings, hist_hour_settings
 
 
-def register_callbacks(app, data):
+def register_functional_callbacks(app, data):
     """Set all of the callbacks into a function so they can be imported into relevant pages. This is to prevent clutter
     and keep the page files clean"""
-
-    @app.callback(
-        [Output('audit-count', 'children'),
-         Output('audit-count', 'className')],
-        [Input('btn-generate-audit', 'n_clicks')]
-    )
-    def update_audit_count_badge(click):
-        """Update the count badge on the sidebar"""
-        file_count = len([name for name in os.listdir('audits/generated')]) + 1
-        return file_count, 'visible ml-2'
 
     @app.callback(
         Output('modal-open', 'is_open'),
@@ -102,7 +92,8 @@ def register_callbacks(app, data):
          Input('sidebar_search', 'value'),
          Input('btn_new_audit', 'n_clicks'),
          Input('test', 'value'),
-         Input('btn_my_audits', 'n_clicks')]
+         Input('btn_my_audits', 'n_clicks')
+         ]
     )
     def load_page(dash_click, flight_click, authid, new_audit_click, table_val, my_audit__click):
         """Returns the relevant page if user clicks a menu button"""

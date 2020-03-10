@@ -16,7 +16,7 @@ import os.path
 class MyAudits:
     def __init__(self):
         au = Audits()
-        gen = au.generated
+        gen = au.generated_count
         if gen == 1:
             aud_corrected = 'audit'
             have_corrected = 'has'
@@ -91,7 +91,7 @@ def generate_new_audit_cards():
                      '],'
                      'className=\"ml-5 mt-5 float-left\",'
                      ')'
-                     .format(count + 1, audit_date, audit_time, start, stop, percent, count + 1))
+                     .format(count + 1, audit_date, audit_time, start, stop, percent, count))
         if card:
             card += (', ' + str(this_card))
         else:
