@@ -7,7 +7,6 @@ In our case, The main dashboard has a number of widgets and filters. The watch f
 callback decorator as 'Inputs'. The inputs and outputs take takes 2 x arguments; the objectID and the value
 of that object to set or get.
 """
-# TODO - Do we need any error trapping in this module?
 
 # Import external libraries
 from dash.dependencies import Output, Input, State
@@ -15,6 +14,8 @@ import dash_html_components as html
 import plotly.express as px
 from datetime import datetime as dt
 import dash
+import os
+import os.path
 from pages.single_record_page import SingleRecordPage
 from pages.select_record_page import SelectRecordPage
 from pages.dashboard_page import Dashboard
@@ -32,6 +33,17 @@ from settings.settings import main_hist_settings, diagMargins, hist_day_settings
 def register_functional_callbacks(app, data):
     """Set all of the callbacks into a function so they can be imported into relevant pages. This is to prevent clutter
     and keep the page files clean"""
+
+    @app.callback(
+        [Output('audit-count', 'children'),
+         Output('audit-count', 'className'),
+         Output('change-page', 'children')],
+        [Input('btn-generate-audit', 'n_clicks')]
+    )
+    def update_audit_count_badge(click):
+        """Update the count badge on the sidebar"""
+        file_count = len([name for name in os.listdir('audits/generated')]) + 1
+        return file_count, 'visible ml-2', 'audit_page'
 
     @app.callback(
         Output('modal-open', 'is_open'),
@@ -55,7 +67,10 @@ def register_functional_callbacks(app, data):
     def initiate_audit(gen_audit, start, end, percent, note):
         """Instantiate an audit object with start date, end date and percentage arguments"""
         audit = Audit(start, end, percent, note)
-        return Modal(header='Audit Creation', body=audit.status).modal
+        if not audit.proceed:
+            return Modal(header='Audit Creation', body=audit.status).modal
+        else:
+            return None
 
     @app.callback(
         Output('percent-readout', 'children'),
@@ -77,7 +92,7 @@ def register_functional_callbacks(app, data):
             return False
 
     @app.callback(
-        Output('test', 'value'),
+        Output('placeholder', 'value'),
         [Input('show-record-from-table', 'n_clicks')],
         [State('dtable', 'selected_row_ids')]
     )
@@ -91,7 +106,7 @@ def register_functional_callbacks(app, data):
          Input('btn_flightplan', 'n_clicks'),
          Input('sidebar_search', 'value'),
          Input('btn_new_audit', 'n_clicks'),
-         Input('test', 'value'),
+         Input('placeholder', 'value'),
          Input('btn_my_audits', 'n_clicks')
          ]
     )
@@ -106,12 +121,12 @@ def register_functional_callbacks(app, data):
             return Dashboard().page
         elif btn_id == 'btn_flightplan':
             return SelectRecordPage().page
-        elif btn_id == 'test':
+        elif btn_id == 'placeholder':
             return SingleRecordPage(table_val).page
         elif btn_id == 'btn_new_audit':
             return AuditForm().page
         elif btn_id == 'btn_my_audits':
-            return MyAudits().page
+            return AuditPage().page
         elif btn_id == 'sidebar_search':
             if authid:
                 return SingleRecordPage(authid).page

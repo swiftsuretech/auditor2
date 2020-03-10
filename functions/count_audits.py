@@ -15,6 +15,20 @@ class Audits:
         self.generated_list = build_generated_audits()
 
 
+def clear_out_audits():
+    """Bin all the incomplete audits"""
+    try:
+        path = '../audits/generated'
+        files = [path + '/' + name for name in os.listdir(path)]
+        for f in files:
+            os.remove(f)
+    except FileNotFoundError:
+        path = 'audits/generated'
+        files = [path + '/' + name for name in os.listdir(path)]
+        for f in files:
+            os.remove(f)
+
+
 def count_generated_audits():
     try:
         return len([name for name in os.listdir('audits/generated')])
@@ -34,3 +48,6 @@ def build_generated_audits():
         return {str(count): file for count, file in enumerate(os.listdir('audits/generated'))}
     except FileNotFoundError:
         return {str(count): file for count, file in enumerate(os.listdir('../audits/generated'))}
+
+
+clear_out_audits()

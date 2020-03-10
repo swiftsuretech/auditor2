@@ -93,7 +93,7 @@ class AuditPage:
     """Generates our Single Record layout. Build the data card from the sub cards created
     in the build_card function"""
 
-    def __init__(self, authid='DEV-7-2019'):
+    def __init__(self, authid=7):
         # Pull our record by instantiating the 'Record" class with a record ID argument.
         r = Record(authid)
         # Ensure that we return a record, otherwise trap the error gracefully.

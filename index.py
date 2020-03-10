@@ -15,7 +15,6 @@ from pages.single_record_page import SingleRecordPage
 import dash_bootstrap_components as dbc
 from functions.modal_template import Modal
 import dash_core_components as dcc
-from callbacks.audit_callbacks import register_audit_callbacks
 from callbacks.functional_callbacks import register_functional_callbacks
 from navbars.sidebar import build_sidebar
 from navbars.navbar import build_navbar
@@ -30,10 +29,9 @@ app.config.suppress_callback_exceptions = True
 
 # Grab our main layout components
 sidebar = build_sidebar()
-navbar = build_navbar()
+# navbar = build_navbar()
 # dash_page = Dashboard()
 # single_page = SingleRecordPage()
-
 
 # Define our layout
 app.layout = html.Div(
@@ -69,7 +67,6 @@ app.layout = html.Div(
 
 # I put the callbacks in a separate file to avoid clutter. It needs to be called with the app and data object to work
 register_functional_callbacks(app, d)
-register_audit_callbacks(app, d)
 
 # Fire the bad boy up here. If 'debug=True' is set as an argument you get debug info when running the app
 # TODO disable debug mode before production

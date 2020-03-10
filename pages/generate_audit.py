@@ -1,6 +1,6 @@
 """
 Auditor2 by Dave Whitehouse | CGI Data Engineer | CII IDOT Team
-Builds a Form to generate a new audit
+Builds a Form to generate a new audit.
 """
 
 import dash_bootstrap_components as dbc

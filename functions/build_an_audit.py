@@ -9,6 +9,7 @@ import pandas as pd
 from settings.settings import test_data
 from datetime import datetime as dt
 import json
+from functions.count_audits import clear_out_audits
 
 
 class Audit:
@@ -37,9 +38,12 @@ class Audit:
         self.df = filtered_data_frame.sample(n=self.audit_count)
         if self.audit_count < 1:
             self.status = 'Your search has yielded no results. Either increase the date range or percentage'
+            self.proceed = False
         else:
             self.status = ['The audit has now been built. There were {} flight plans found between selected dates \
             . {} of them have been selected for audit.'.format(self.total_count, self.audit_count)]
+            # Clear out all the stray audit files in the 'audit/generated' directory we only want 1 in here.
+            clear_out_audits()
             selection = self.df.id.tolist()
             selection = dict(zip(selection, ['gen' for i in selection]))
             timestamp = dt.now().timestamp()
@@ -52,3 +56,4 @@ class Audit:
             f = open(self.filename, 'w+')
             f.write(self.audit_file)
             f.close()
+            self.proceed = True
