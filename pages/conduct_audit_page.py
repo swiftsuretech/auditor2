@@ -119,11 +119,11 @@ class AuditPage:
                 html.Br(),
                 html.Br(),
                 html.H4('Audit Page'),
-                html.Br(),
+                dbc.Progress(id="audit-progress", color='info', className='m-3'),
                 dbc.Row(
                     dbc.Col(
                         children=[
-                            dbc.Button('Approve', id='btn-audit-approve', color='success'),
+                            dbc.Button('Approve', id='btn-audit-approve', color='success', className='mr-2'),
                             dbc.Button('Reject', id='btn-audit-reject', color='danger'),
                         ],
                         className='mb-3'
@@ -149,6 +149,7 @@ class AuditPage:
                                 ],
                                 style={'padding': '0px', 'height': '100%'},
                             ),
+                            width=7,
                         )
                     ],
                 ),

@@ -7,6 +7,7 @@ import dash_html_components as html
 import dash_core_components as dcc
 from functions.get_all_records import FlightPlanList, DataSet
 import dash_bootstrap_components as dbc
+from functions.count_audits import return_audit_ids
 import os
 import os.path
 
@@ -137,9 +138,10 @@ def build_sidebar():
                     # Hidden inputs
                     dcc.Input(value=None, type='number', id='placeholder', style={'display': 'none'}),
                     # A placeholder for reload 'My Audits' page
-                    html.Div(' ', id='change-page'),
+                    html.Div(id='change-page'),
                     html.Div(id='audit_num'),
                     html.Div(id='audit_item'),
+                    html.Div(id='reset')
                 ],
                 style={'padding-left': '10px', 'padding-right': '10px'}
             ),
