@@ -13,15 +13,14 @@ from functions.get_all_records import DataSet
 from functions.build_map import MapBox
 from functions.count_audits import return_audit_ids
 import dash_bootstrap_components as dbc
+from functions import get_all_records
 
+# There should be a single audit file in the 'audits/generated' directory, the return_audit_ids function
+# will read it in as a json and extract a list of indexes of the flight plans we need to audit as well
+# as a count
+audit_ids, id_count = return_audit_ids()
 
-def get_dataset():
-    print(return_audit_ids())
-
-
-test = get_dataset()
-
-# Some reusable styling:
+# Define some styling variables as we are going to iteratively build out our page
 header_style = {'margin-bottom': '5px', 'margin-top': '5px'}
 
 # Define our cards here. list[0] is the list of headers, [1] is the font awesome icon and
@@ -100,9 +99,9 @@ def build_geo(flag, r, polygon):
 
 class AuditPage:
     """Generates our Single Record layout. Build the data card from the sub cards created
-    in the build_card function"""
+    in the build_card function. First we load up the first audit selected item."""
 
-    def __init__(self, authid=7):
+    def __init__(self, authid=return_audit_ids()[0][0]):
         # Pull our record by instantiating the 'Record" class with a record ID argument.
         r = Record(authid)
         # Ensure that we return a record, otherwise trap the error gracefully.
@@ -114,11 +113,22 @@ class AuditPage:
         r.dict = dict((field_mapping[key], value) for key, value in r.dict.items())
         # Build a url reference to a flag that sits in the 'flags' directory in our site assets
         country_flag = 'assets/flags/' + str(r.dict['Country Code'][0]) + '.svg'
+        self.order = 0
         self.page = html.Div(
             children=[
                 html.Br(),
                 html.Br(),
                 html.H4('Audit Page'),
+                html.Br(),
+                dbc.Row(
+                    dbc.Col(
+                        children=[
+                            dbc.Button('Approve', id='btn-audit-approve', color='success'),
+                            dbc.Button('Reject', id='btn-audit-reject', color='danger'),
+                        ],
+                        className='mb-3'
+                    ),
+                ),
                 dbc.Row(
                     children=[
                         dbc.Col(

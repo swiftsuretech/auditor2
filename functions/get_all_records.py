@@ -73,7 +73,7 @@ class DataSet:
 
     def audit_filter(self, record_filter):
         """Returns a recordset based upon records selected for audit"""
-        filtered_data_frame = self.df[self.df.id in record_filter]
+        filtered_data_frame = self.df[self.df.id.isin(record_filter)]
         self.count = len(filtered_data_frame.axes[0])
         return filtered_data_frame, self.count
 

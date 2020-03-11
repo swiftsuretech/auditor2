@@ -16,6 +16,7 @@ from datetime import datetime as dt
 import dash
 import os
 import os.path
+from functions.count_audits import return_audit_ids
 from pages.single_record_page import SingleRecordPage
 from pages.select_record_page import SelectRecordPage
 from pages.dashboard_page import Dashboard
@@ -25,6 +26,7 @@ from functions.build_an_audit import Audit
 from functions.modal_template import Modal
 from pages.conduct_audit_page import AuditPage
 from dash.exceptions import PreventUpdate
+from functions.count_audits import return_audit_ids
 
 # Import some externalised settings
 from settings.settings import main_hist_settings, diagMargins, hist_day_settings, hist_hour_settings
@@ -33,6 +35,32 @@ from settings.settings import main_hist_settings, diagMargins, hist_day_settings
 def register_functional_callbacks(app, data):
     """Set all of the callbacks into a function so they can be imported into relevant pages. This is to prevent clutter
     and keep the page files clean"""
+
+    @app.callback(
+        [Output('audit_item', 'children'),
+         Output('audit_num', 'children')],
+        [Input('btn_my_audits', 'n_clicks'),
+         Input('btn-audit-approve', 'n_clicks'),
+         Input('btn-audit-reject', 'n_clicks')]
+    )
+    def identify_next_audit(do_audit_click, audit_approve, audit_reject):
+        """When we are conducting an audit, we will write the index of the next audit item required
+        into a hidden div in the sidebar. This will be a callback item from its state"""
+        ctx = dash.callback_context
+        btn_id_audit = ctx.triggered[0]['prop_id'].split('.')[0]
+        if not audit_approve:
+            audit_approve = 0
+        if not audit_reject:
+            audit_reject = 0
+        total_clicks = int(audit_approve) + int(audit_reject)
+        # if ctx.triggered[0]['value'] is None:
+        #     return return_audit_ids()[0][0], 0
+        if btn_id_audit == 'btn_my_audits':
+            return return_audit_ids()[0][0], 0
+        elif btn_id_audit == 'btn-audit-approve':
+            return return_audit_ids()[0][total_clicks], total_clicks
+        elif btn_id_audit == 'btn-audit-reject':
+            return return_audit_ids()[0][total_clicks], total_clicks
 
     @app.callback(
         [Output('audit-count', 'children'),
@@ -107,10 +135,12 @@ def register_functional_callbacks(app, data):
          Input('sidebar_search', 'value'),
          Input('btn_new_audit', 'n_clicks'),
          Input('placeholder', 'value'),
-         Input('btn_my_audits', 'n_clicks')
+         Input('btn_my_audits', 'n_clicks'),
+         Input('audit_item', 'children')
          ]
     )
-    def load_page(dash_click, flight_click, authid, new_audit_click, table_val, my_audit__click):
+    def load_page(dash_click, flight_click, authid, new_audit_click,
+                  table_val, my_audit__click, audit_next):
         """Returns the relevant page if user clicks a menu button"""
         ctx = dash.callback_context
         btn_id = ctx.triggered[0]['prop_id'].split('.')[0]
@@ -119,6 +149,8 @@ def register_functional_callbacks(app, data):
             return Dashboard().page
         if btn_id == 'btn_dashboard':
             return Dashboard().page
+        elif btn_id == 'audit_item':
+            return AuditPage(authid=audit_next).page
         elif btn_id == 'btn_flightplan':
             return SelectRecordPage().page
         elif btn_id == 'placeholder':

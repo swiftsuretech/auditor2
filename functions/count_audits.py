@@ -6,6 +6,7 @@ These functions count the number of audits in the 'audit folder. These can be cl
 
 import os
 import os.path
+import json
 
 
 class Audits:
@@ -31,10 +32,16 @@ def clear_out_audits():
 
 def return_audit_ids():
     try:
-        audit = os.listdir('..audits/generated')
-        return audit
-    except:
-        pass
+        audit = [name for name in os.listdir('audits/generated')][0]
+        path = 'audits/generated/'
+    except FileNotFoundError:
+        audit = [name for name in os.listdir('../audits/generated')][0]
+        path = '../audits/generated/'
+    audit_file = open(path + audit)
+    audit_list = json.load(audit_file)['selection']
+    ids = [int(key) for key in audit_list]
+    count = len(ids)
+    return ids, count
 
 
 def count_generated_audits():
@@ -56,6 +63,3 @@ def build_generated_audits():
         return {str(count): file for count, file in enumerate(os.listdir('audits/generated'))}
     except FileNotFoundError:
         return {str(count): file for count, file in enumerate(os.listdir('../audits/generated'))}
-
-
-clear_out_audits()
