@@ -37,47 +37,6 @@ def register_functional_callbacks(app, data):
     and keep the page files clean"""
 
     @app.callback(
-        [Output('audit_item', 'children'),
-         Output('audit_num', 'children'),
-         Output('audit-progress', 'value')],
-        [Input('btn_my_audits', 'n_clicks'),
-         Input('btn-audit-approve', 'n_clicks'),
-         Input('btn-audit-reject', 'n_clicks')],
-        [State('main_page', 'children'),
-         State('audit_num', 'children'),
-         State('reset', 'children')]
-    )
-    def identify_next_audit(do_audit_click, audit_approve, audit_reject, page_change, prev, reset):
-        """When we are conducting an audit, we will write the index of the next audit item required
-        into a hidden div in the sidebar. This will be a callback item from its state"""
-        ctx = dash.callback_context
-        btn_id_audit = ctx.triggered[0]['prop_id'].split('.')[0]
-        next_rec = int(prev or 0) + 1
-        prev = prev or 1
-        print(prev, return_audit_ids()[1])
-        progress = (prev / return_audit_ids()[1]) * 100
-        if reset == 1:
-            return return_audit_ids()[0][0], 0, progress
-        # if btn_id_audit == 'btn_my_audits':
-        #     return return_audit_ids()[0][0], 0
-        if btn_id_audit == 'btn-audit-approve':
-            # TODO here is where the IndexError will occur if we reach end of the recordset
-            return return_audit_ids()[0][next_rec], next_rec, progress
-        if btn_id_audit == 'btn-audit-reject':
-            # TODO here is where the IndexError will occur if we reach end of the recordset
-            return return_audit_ids()[0][next_rec], next_rec, progress
-
-    @app.callback(
-        [Output('audit-count', 'children'),
-         Output('audit-count', 'className')],
-        [Input('btn-generate-audit', 'n_clicks')]
-    )
-    def update_audit_count_badge(click):
-        """Update the count badge on the sidebar"""
-        file_count = len([name for name in os.listdir('audits/generated')]) + 1
-        return file_count, 'visible ml-2'
-
-    @app.callback(
         Output('modal-open', 'is_open'),
         [Input('close-modal', 'n_clicks')]
     )
@@ -133,45 +92,41 @@ def register_functional_callbacks(app, data):
         return table_val[0]
 
     @app.callback(
-        [Output('main_page', 'children'),
-         Output('reset', 'children')],
+        Output('main_page', 'children'),
         [Input('btn_dashboard', 'n_clicks'),
          Input('btn_flightplan', 'n_clicks'),
          Input('sidebar_search', 'value'),
          Input('btn_new_audit', 'n_clicks'),
          Input('placeholder', 'value'),
-         Input('btn_my_audits', 'n_clicks'),
          Input('audit_item', 'children')
          ]
     )
     def load_page(dash_click, flight_click, authid, new_audit_click,
-                  table_val, my_audit__click, audit_next):
+                  table_val, audit_next):
         """Returns the relevant page if user clicks a menu button"""
         ctx = dash.callback_context
         btn_id = ctx.triggered[0]['prop_id'].split('.')[0]
         if ctx.triggered[0]['value'] is None:
             # The app is newly loaded. Define the start page
-            return Dashboard().page, 0
+            return Dashboard().page
         if btn_id == 'btn_dashboard':
-            return Dashboard().page, 0
+            return Dashboard().page
         elif btn_id == 'audit_item':
-            return AuditPage(authid=audit_next).page, 0
+            return AuditPage(authid=audit_next).page
         elif btn_id == 'btn_flightplan':
-            return SelectRecordPage().page, 0
+            return SelectRecordPage().page
         elif btn_id == 'placeholder':
-            return SingleRecordPage(table_val).page, 0
+            return SingleRecordPage(table_val).page
         elif btn_id == 'btn_new_audit':
-            return AuditForm().page, 1
-        elif btn_id == 'btn_my_audits':
-            return AuditPage().page, 1
+            return AuditForm().page
         elif btn_id == 'sidebar_search':
             if authid:
-                return SingleRecordPage(authid).page, 0
+                return SingleRecordPage(authid).page
             else:
-                return SelectRecordPage().page, 0
+                return SelectRecordPage().page
         # Another event has been triggered which we have not captured.
         else:
-            return Dashboard().page, 0
+            return Dashboard().page
 
     @app.callback(
         # Define our getters and setters

@@ -118,15 +118,15 @@ def build_sidebar():
                             style=button_style, className=button_class
                         )
                     ),
-                    dbc.Row(
-                        dbc.Button(
-                            (html.I(className='fal fa-lge fa-fw fa-business-time mr-2'),
-                             " My Audits",
-                             dbc.Badge(file_count, color='danger', className=badge_show, id='audit-count')),
-                            id='btn_my_audits',
-                            style=button_style, className=button_class
-                        )
-                    ),
+                    # dbc.Row(
+                    #     dbc.Button(
+                    #         (html.I(className='fal fa-lge fa-fw fa-business-time mr-2'),
+                    #          " My Audits",
+                    #          dbc.Badge(file_count, color='danger', className=badge_show, id='audit-count')),
+                    #         id='btn_my_audits',
+                    #         style=button_style, className=button_class
+                    #     )
+                    # ),
                     dbc.Row(
                         dbc.Button(
                             (html.I(className='fal fa-lge fa-fw fa-cabinet-filing mr-2'),

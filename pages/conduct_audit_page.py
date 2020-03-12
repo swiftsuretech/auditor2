@@ -115,15 +115,17 @@ class AuditPage:
         country_flag = 'assets/flags/' + str(r.dict['Country Code'][0]) + '.svg'
         self.order = 0
         self.page = html.Div(
+            id='audit-page',
             children=[
                 html.Br(),
                 html.Br(),
                 html.H4('Audit Page'),
-                dbc.Progress(id="audit-progress", color='info', className='m-3'),
+                dbc.Progress(id='audit-progress', color='info', className='m-3'),
                 dbc.Row(
                     dbc.Col(
                         children=[
-                            dbc.Button('Approve', id='btn-audit-approve', color='success', className='mr-2'),
+                            dbc.Button('Approve', id='btn-audit-approve', color='success',
+                                       className='mr-2'),
                             dbc.Button('Reject', id='btn-audit-reject', color='danger'),
                         ],
                         className='mb-3'
