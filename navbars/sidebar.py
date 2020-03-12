@@ -36,7 +36,7 @@ def build_sidebar():
                     children=[
                         html.Img(src='../assets/logos/atom.svg', style={'height': '40px', 'vertical-align': 'middle',
                                                                         'float': 'left', 'padding-left': '7px'}),
-                        html.Span(html.H4("GossipAuditor2"),
+                        html.Span(html.H4("ChatterAuditor2"),
                                   style={'color': 'white', 'float': 'left', 'margin-top': '7px',
                                          'margin-left': '15px'},
                                   ),
@@ -118,15 +118,6 @@ def build_sidebar():
                             style=button_style, className=button_class
                         )
                     ),
-                    # dbc.Row(
-                    #     dbc.Button(
-                    #         (html.I(className='fal fa-lge fa-fw fa-business-time mr-2'),
-                    #          " My Audits",
-                    #          dbc.Badge(file_count, color='danger', className=badge_show, id='audit-count')),
-                    #         id='btn_my_audits',
-                    #         style=button_style, className=button_class
-                    #     )
-                    # ),
                     dbc.Row(
                         dbc.Button(
                             (html.I(className='fal fa-lge fa-fw fa-cabinet-filing mr-2'),
@@ -139,7 +130,7 @@ def build_sidebar():
                     dcc.Input(value=None, type='number', id='placeholder', style={'display': 'none'}),
                     # A placeholder for reload 'My Audits' page
                     html.Div(id='change-page'),
-                    html.Div(id='audit_num'),
+                    html.Div(id='reset-flag'),
                     html.Div(id='audit_item'),
                     html.Div(id='reset')
                 ],

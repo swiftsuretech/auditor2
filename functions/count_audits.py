@@ -37,6 +37,8 @@ def return_audit_ids():
     except FileNotFoundError:
         audit = [name for name in os.listdir('../audits/generated')][0]
         path = '../audits/generated/'
+    except IndexError:
+        return 0, 0
     audit_file = open(path + audit)
     audit_list = json.load(audit_file)['selection']
     ids = [int(key) for key in audit_list]

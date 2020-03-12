@@ -19,12 +19,12 @@ from callbacks.functional_callbacks import register_functional_callbacks
 from navbars.sidebar import build_sidebar
 from navbars.navbar import build_navbar
 import dash_html_components as html
-from pages.conduct_audit_page import AuditPage
+#from pages.conduct_audit_page import AuditPage
 from pages.select_record_page import SelectRecordPage
 
 # Instantiate our App and give it a name
 app = dash.Dash("__name__")
-app.title = "GossipAuditor2"
+app.title = "ChatterAuditor2"
 app.config.suppress_callback_exceptions = True
 
 # Grab our main layout components

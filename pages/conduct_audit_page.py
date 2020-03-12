@@ -101,7 +101,8 @@ class AuditPage:
     """Generates our Single Record layout. Build the data card from the sub cards created
     in the build_card function. First we load up the first audit selected item."""
 
-    def __init__(self, authid=return_audit_ids()[0][0]):
+    def __init__(self, authid=7):
+        # FIXME need a better way to handle default authid
         # Pull our record by instantiating the 'Record" class with a record ID argument.
         r = Record(authid)
         # Ensure that we return a record, otherwise trap the error gracefully.
@@ -117,44 +118,40 @@ class AuditPage:
         self.page = html.Div(
             id='audit-page',
             children=[
-                html.Br(),
-                html.Br(),
-                html.H4('Audit Page'),
-                dbc.Progress(id='audit-progress', color='info', className='m-3'),
-                dbc.Row(
-                    dbc.Col(
-                        children=[
-                            dbc.Button('Approve', id='btn-audit-approve', color='success',
-                                       className='mr-2'),
-                            dbc.Button('Reject', id='btn-audit-reject', color='danger'),
-                        ],
-                        className='mb-3'
-                    ),
-                ),
-                dbc.Row(
+                dbc.Card(
                     children=[
-                        dbc.Col(
-                            dbc.Card(
+                        dbc.CardHeader('Header'),
+                        dbc.CardBody(
+                            dbc.Row(
                                 children=[
-                                    build_card(user_card, r),
-                                    build_card(query_card, r),
-                                    build_card(geo_card, r),
+                                    dbc.Col(
+                                        dbc.Card(
+                                            children=[
+                                                build_card(user_card, r),
+                                                build_card(query_card, r),
+                                                build_card(geo_card, r),
+                                            ],
+                                            style={'padding': '0px', 'height': '100%'},
+                                        ),
+                                        width=5,
+                                    ),
+                                    dbc.Col(
+                                        dbc.Card(
+                                            children=[
+                                                build_geo(country_flag, r, polygon),
+                                            ],
+                                            style={'padding': '0px', 'height': '100%'},
+                                        ),
+                                        width=7,
+                                    )
                                 ],
-                                style={'padding': '0px', 'height': '100%'},
                             ),
-                            width=5,
                         ),
-                        dbc.Col(
-                            dbc.Card(
-                                children=[
-                                    build_geo(country_flag, r, polygon),
-                                ],
-                                style={'padding': '0px', 'height': '100%'},
-                            ),
-                            width=7,
-                        )
+                        dbc.CardFooter(
+                            "Footer"
+                        ),
                     ],
                 ),
             ],
             style={'width': '90%', 'margin': 'auto'},
-        )
+        ),

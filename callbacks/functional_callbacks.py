@@ -16,12 +16,10 @@ from datetime import datetime as dt
 import dash
 import os
 import os.path
-from functions.count_audits import return_audit_ids
 from pages.single_record_page import SingleRecordPage
 from pages.select_record_page import SelectRecordPage
 from pages.dashboard_page import Dashboard
-from pages.generate_audit import AuditForm
-from pages.my_audits import MyAudits
+from pages.generate_audit_page_new import AuditForm
 from functions.build_an_audit import Audit
 from functions.modal_template import Modal
 from pages.conduct_audit_page import AuditPage
@@ -47,29 +45,73 @@ def register_functional_callbacks(app, data):
         return True
 
     @app.callback(
-        Output('modal', 'children'),
-        [Input('btn-generate-audit', 'n_clicks')],
-        [State('audit-date-picker-start', 'date'),
-         State('audit-date-picker-end', 'date'),
-         State('audit-percentage', 'value'),
-         State('audit-notes', 'value'),
-         ]
+        Output('audit-progress', 'value'),
+        [Input('change-page', 'children')]
     )
-    def initiate_audit(gen_audit, start, end, percent, note):
-        """Instantiate an audit object with start date, end date and percentage arguments"""
-        audit = Audit(start, end, percent, note)
-        if not audit.proceed:
-            return Modal(header='Audit Creation', body=audit.status).modal
-        else:
-            return None
+    def update_progress_bar(record_number):
+        audit_id, count = return_audit_ids()
+        completion = record_number / count * 100
+        print(completion)
+        return completion
 
     @app.callback(
-        Output('percent-readout', 'children'),
-        [Input('audit-percentage', 'value')]
+        Output('change-page', 'children'),
+        [Input('btn-audit-reject', 'n_clicks'),
+         Input('btn-audit-approve', 'n_clicks')]
     )
-    def update_percentage(percent):
-        """Update the percentage label when you move the slider"""
-        return str(percent) + '%'
+    def register_audit_buttons(reject_click, approve_click):
+        """Update the hidden div in the sidebar when approve or reject buttons pressed"""
+        clicks = (approve_click or 0) + (reject_click or 0)
+        return clicks
+
+    @app.callback(
+        [Output('audit-detail', 'children'),
+         Output('top-collapse', 'is_open'),
+         Output('bottom-collapse', 'is_open'),
+         Output('audit-controls', 'hidden'),],
+        [Input('btn-execute-audit', 'n_clicks'),
+         Input('audit-date-picker-start', 'date'),
+         Input('audit-date-picker-end', 'date'),
+         Input('audit-percentage', 'value'),
+         Input('change-page', 'children')],
+        [State('audit-notes', 'value')]
+    )
+    def load_audit(click_audit, start, stop, percent, next_page, notes):
+        """The user has defined a valid audit, collapse the form cards, build the audit and load the
+        auditing page"""
+        ctx = dash.callback_context
+        btn_id = ctx.triggered[0]['prop_id'].split('.')[0]
+        if btn_id == 'btn-execute-audit':
+            Audit(start, stop, percent, notes)
+            audit_id, count = return_audit_ids()
+            return AuditPage(audit_id[0]).page, False, False, False
+        elif btn_id == 'change-page':
+            audit_id, count = return_audit_ids()
+            return AuditPage(audit_id[next_page]).page, False, False, False
+        else:
+            raise PreventUpdate
+
+    @app.callback(
+        [Output('audit-scope', 'children'),
+         Output('body-bg', 'className'),
+         Output('btn-execute-audit', 'disabled'),
+         Output('btn-execute-audit', 'className')],
+        [Input('audit-date-picker-start', 'date'),
+         Input('audit-date-picker-end', 'date'),
+         Input('audit-percentage', 'value')],
+        [State('audit-notes', 'value')]
+    )
+    def show_audit_scope(start, end, percent, note):
+        """Instantiate an audit object with start date, end date and percentage arguments"""
+        audit = Audit(start, end, percent, note)
+        msg_success = '{} flight plans were conducted between your selected dates. ' \
+                      'With a {}% audit ratio, {} will be subject to audit. '.format(audit.total_count, percent,
+                                                                                     audit.audit_count)
+        msg_failure = msg_success + ' Try broadening your search dates.'
+        if audit.total_count == 0:
+            return msg_failure, 'bg-danger text-white', True, 'float-right'
+        else:
+            return msg_success, None, False, 'bg-success float-right'
 
     @app.callback(
         Output('show-record-from-table', 'disabled'),
@@ -88,7 +130,7 @@ def register_functional_callbacks(app, data):
         [State('dtable', 'selected_row_ids')]
     )
     def show_table_record(n_clicks, table_val):
-        """test"""
+        """Writes the selected Table row from the dashboard to a hidden Div in the Sidebar"""
         return table_val[0]
 
     @app.callback(
@@ -98,11 +140,11 @@ def register_functional_callbacks(app, data):
          Input('sidebar_search', 'value'),
          Input('btn_new_audit', 'n_clicks'),
          Input('placeholder', 'value'),
-         Input('audit_item', 'children')
+         # Input('audit_item', 'children')
          ]
     )
     def load_page(dash_click, flight_click, authid, new_audit_click,
-                  table_val, audit_next):
+                  table_val):
         """Returns the relevant page if user clicks a menu button"""
         ctx = dash.callback_context
         btn_id = ctx.triggered[0]['prop_id'].split('.')[0]
@@ -111,14 +153,12 @@ def register_functional_callbacks(app, data):
             return Dashboard().page
         if btn_id == 'btn_dashboard':
             return Dashboard().page
-        elif btn_id == 'audit_item':
-            return AuditPage(authid=audit_next).page
         elif btn_id == 'btn_flightplan':
             return SelectRecordPage().page
         elif btn_id == 'placeholder':
             return SingleRecordPage(table_val).page
         elif btn_id == 'btn_new_audit':
-            return AuditForm().page
+            return AuditForm().page[0]
         elif btn_id == 'sidebar_search':
             if authid:
                 return SingleRecordPage(authid).page
