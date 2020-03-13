@@ -31,6 +31,8 @@ class Audit:
         self.total_count = len(filtered_data_frame.axes[0])
         # Apply our percentage
         self.audit_count = round(self.total_count * (percentage / 100))
+        if self.total_count and self.audit_count == 0:
+            self.audit_count = 1
         # Sample the data (take a random sample according to 'audit_count' variable
         self.start = start
         self.end = end

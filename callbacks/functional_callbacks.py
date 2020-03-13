@@ -76,6 +76,7 @@ def register_functional_callbacks(app, data):
         flight_plan = audit_id[rec_num]
         key_pair = ('\"' + str(flight_plan) + '\": \"' + choice + '\"')
         # Build a json blob determined by whether audit decision is first, middle or last in sequence
+        # TODO Capture a low number of audit records, ie 1!
         if rec_num:
             if rec_num < count - 1:
                 json_return = key_pair + ','
@@ -129,7 +130,7 @@ def register_functional_callbacks(app, data):
             elif btn_id == 'change-page':
                 audit_id, count, filename = return_audit_ids()
                 return AuditPage(audit_id[next_page]).page, False, False, False
-        except int:
+        except:
             # TODO We've finished the audit - do something
             print()
             raise PreventUpdate
