@@ -16,6 +16,7 @@ from datetime import datetime as dt
 import dash
 import os
 import os.path
+import time
 from pages.single_record_page import SingleRecordPage
 from pages.select_record_page import SelectRecordPage
 from pages.dashboard_page import Dashboard
@@ -68,7 +69,7 @@ def register_functional_callbacks(app, data):
         [Output('audit-detail', 'children'),
          Output('top-collapse', 'is_open'),
          Output('bottom-collapse', 'is_open'),
-         Output('audit-controls', 'hidden'),],
+         Output('audit-controls', 'hidden')],
         [Input('btn-execute-audit', 'n_clicks'),
          Input('audit-date-picker-start', 'date'),
          Input('audit-date-picker-end', 'date'),

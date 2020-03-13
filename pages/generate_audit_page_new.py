@@ -147,19 +147,23 @@ class AuditForm:
                             ],
                             style={'width': '90%', 'margin': 'auto'},
                         ),
-                        html.Br(),
                         html.Div(
                             children=[
-                                dbc.Progress(id='audit-progress', color='info', className='m-3'),
                                 dbc.Row(
-                                    dbc.Col(
-                                        children=[
-                                            dbc.Button('Approve', id='btn-audit-approve', color='success',
-                                                       className='mr-2'),
-                                            dbc.Button('Reject', id='btn-audit-reject', color='danger'),
-                                        ],
-                                        className='mb-3'
-                                    ),
+                                    children=[
+                                        dbc.Col(
+                                            children=[
+                                                dbc.Button('Approve', id='btn-audit-approve', color='success',
+                                                           className='mr-2'),
+                                                dbc.Button('Reject', id='btn-audit-reject', color='danger'),
+                                            ],
+                                            className='mb-3',
+                                            width=2,
+                                        ),
+                                        dbc.Col(
+                                            dbc.Progress(id='audit-progress', color='info', className='m-3'),
+                                        )
+                                    ],
                                 ),
                             ],
                             style={'width': '90%', 'margin': 'auto'},
