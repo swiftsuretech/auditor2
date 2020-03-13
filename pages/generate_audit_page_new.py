@@ -8,8 +8,6 @@ import dash_html_components as html
 import dash_core_components as dcc
 from datetime import datetime as dt, timedelta
 from functions.count_audits import clear_out_audits
-from pages.conduct_audit_page import AuditPage
-from functions.build_an_audit import Audit
 
 
 class AuditForm:
@@ -104,6 +102,12 @@ class AuditForm:
                                             id='top-collapse',
                                             is_open=True
                                         ),
+                                    ],
+                                    className='mt-4'
+                                ),
+                                dbc.Card(
+                                    children=[
+
                                         dbc.CardHeader(
                                             children=[
                                                 html.I(className="fal fa-lg fa-microscope mr-2"),
@@ -142,27 +146,40 @@ class AuditForm:
                                             is_open=True
                                         ),
                                     ],
-                                    className='mt-4'
                                 ),
                             ],
                             style={'width': '90%', 'margin': 'auto'},
                         ),
                         html.Div(
                             children=[
-                                dbc.Row(
+                                dbc.Card(
                                     children=[
-                                        dbc.Col(
+                                        dbc.CardHeader(
                                             children=[
-                                                dbc.Button('Approve', id='btn-audit-approve', color='success',
-                                                           className='mr-2'),
-                                                dbc.Button('Reject', id='btn-audit-reject', color='danger'),
-                                            ],
-                                            className='mb-3',
-                                            width=2,
+                                                html.I(className='fal fa-lg fa-user-hard-hat mr-2'),
+                                                html.I('Conducting Audit'),
+                                            ]
                                         ),
-                                        dbc.Col(
-                                            dbc.Progress(id='audit-progress', color='info', className='m-3'),
-                                        )
+                                        dbc.CardBody(
+                                            dbc.Row(
+                                                children=[
+                                                    dbc.Col(
+                                                        children=[
+                                                            dbc.Button('Approve', id='btn-audit-approve',
+                                                                       color='success',
+                                                                       className='mr-2 '),
+                                                            dbc.Button('Reject', id='btn-audit-reject', color='danger'),
+                                                        ],
+                                                        className='mb-1',
+                                                        width=2,
+                                                    ),
+                                                    dbc.Col(
+                                                        dbc.Progress(id='audit-progress', color='info',
+                                                                     className='m-3'),
+                                                    )
+                                                ],
+                                            ),
+                                        ),
                                     ],
                                 ),
                             ],

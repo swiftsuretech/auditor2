@@ -18,7 +18,7 @@ from functions import get_all_records
 # There should be a single audit file in the 'audits/generated' directory, the return_audit_ids function
 # will read it in as a json and extract a list of indexes of the flight plans we need to audit as well
 # as a count
-audit_ids, id_count = return_audit_ids()
+audit_id, id_count, filename = return_audit_ids()
 
 # Define some styling variables as we are going to iteratively build out our page
 header_style = {'margin-bottom': '5px', 'margin-top': '5px'}
@@ -120,7 +120,6 @@ class AuditPage:
             children=[
                 dbc.Card(
                     children=[
-                        dbc.CardHeader('Header'),
                         dbc.CardBody(
                             dbc.Row(
                                 children=[

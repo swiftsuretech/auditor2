@@ -131,7 +131,7 @@ def build_sidebar():
                     # A placeholder for reload 'My Audits' page
                     html.Div(id='change-page'),
                     html.Div(id='reset-flag'),
-                    html.Div(id='audit_item'),
+                    html.Div(id='finished-audit'),
                     html.Div(id='reset')
                 ],
                 style={'padding-left': '10px', 'padding-right': '10px'}

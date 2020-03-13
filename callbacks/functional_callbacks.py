@@ -15,8 +15,6 @@ import plotly.express as px
 from datetime import datetime as dt
 import dash
 import os
-import os.path
-import time
 from pages.single_record_page import SingleRecordPage
 from pages.select_record_page import SelectRecordPage
 from pages.dashboard_page import Dashboard
@@ -50,20 +48,61 @@ def register_functional_callbacks(app, data):
         [Input('change-page', 'children')]
     )
     def update_progress_bar(record_number):
-        audit_id, count = return_audit_ids()
-        completion = record_number / count * 100
-        print(completion)
+        audit_id, count, filename = return_audit_ids()
+        try:
+            completion = record_number / count * 100
+        except ZeroDivisionError:
+            completion = 100
         return completion
 
     @app.callback(
-        Output('change-page', 'children'),
+        [Output('change-page', 'children'),
+         Output('reset-flag', 'children')],
         [Input('btn-audit-reject', 'n_clicks'),
          Input('btn-audit-approve', 'n_clicks')]
     )
     def register_audit_buttons(reject_click, approve_click):
         """Update the hidden div in the sidebar when approve or reject buttons pressed"""
         clicks = (approve_click or 0) + (reject_click or 0)
-        return clicks
+        cont = True
+        ctx = dash.callback_context
+        btn_id = ctx.triggered[0]['prop_id'].split('.')[0]
+        if btn_id == 'btn-audit-reject':
+            choice = 'rej'
+        else:
+            choice = 'app'
+        audit_id, count, filename = return_audit_ids()
+        rec_num = clicks - 1
+        flight_plan = audit_id[rec_num]
+        key_pair = ('\"' + str(flight_plan) + '\": \"' + choice + '\"')
+        # Build a json blob determined by whether audit decision is first, middle or last in sequence
+        if rec_num:
+            if rec_num < count - 1:
+                json_return = key_pair + ','
+            else:
+                json_return = key_pair + '}'
+                cont = False
+        else:
+            json_return = ', \"results\": {' + key_pair + ','
+        if json_return:
+            f = open(filename, 'a')
+            f.write(json_return)
+            f.close()
+            f = open(filename, 'r')
+            f.close()
+        if cont:
+            return clicks, json_return
+        else:
+            f = open(filename, 'r')
+            original = f.read()
+            f.close()
+            amended = '{\"audit\": ' + original + '}'
+            f = open(filename, 'w')
+            f.write(amended)
+            f.close()
+            new_name = filename.replace('tmp', 'completed')
+            os.rename(filename, new_name)
+            return clicks, json_return
 
     @app.callback(
         [Output('audit-detail', 'children'),
@@ -82,13 +121,18 @@ def register_functional_callbacks(app, data):
         auditing page"""
         ctx = dash.callback_context
         btn_id = ctx.triggered[0]['prop_id'].split('.')[0]
-        if btn_id == 'btn-execute-audit':
-            Audit(start, stop, percent, notes)
-            audit_id, count = return_audit_ids()
-            return AuditPage(audit_id[0]).page, False, False, False
-        elif btn_id == 'change-page':
-            audit_id, count = return_audit_ids()
-            return AuditPage(audit_id[next_page]).page, False, False, False
+        try:
+            if btn_id == 'btn-execute-audit':
+                Audit(start, stop, percent, notes)
+                audit_id, count, filename = return_audit_ids()
+                return AuditPage(audit_id[0]).page, False, False, False
+            elif btn_id == 'change-page':
+                audit_id, count, filename = return_audit_ids()
+                return AuditPage(audit_id[next_page]).page, False, False, False
+        except int:
+            # TODO We've finished the audit - do something
+            print()
+            raise PreventUpdate
         else:
             raise PreventUpdate
 

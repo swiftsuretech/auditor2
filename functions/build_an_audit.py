@@ -48,12 +48,19 @@ class Audit:
             selection = dict(zip(selection, ['gen' for i in selection]))
             timestamp = dt.now().timestamp()
             self.filename = 'audits/generated/G_AUDIT|{}|{}|{}|{}.json'.format(timestamp, self.start, self.end,
-                                                                            percentage)
+                                                                               percentage)
+            self.temp_name = 'audits/tmp/T_AUDIT|{}|{}|{}|{}.json'.format(timestamp, self.start, self.end,
+                                                                                percentage)
             self.audit_file = json.dumps({"filename": self.filename, "status": "gen", "timestamp": timestamp,
                                           "note": self.note,
                                           "start": self.start, "end": self.end, "percentage": percentage,
                                           "selection": selection})
-            f = open(self.filename, 'w+')
+            self.audit_tmp = json.dumps({"filename": self.filename, "status": "gen", "timestamp": timestamp,
+                                         "note": self.note,
+                                         "start": self.start, "end": self.end, "percentage": percentage})
+            f, g = open(self.filename, 'w+'), open(self.temp_name, 'w+')
+            g.write(self.audit_tmp)
             f.write(self.audit_file)
             f.close()
+            g.close()
             self.proceed = True

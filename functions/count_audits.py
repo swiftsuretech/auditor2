@@ -28,6 +28,16 @@ def clear_out_audits():
         files = [path + '/' + name for name in os.listdir(path)]
         for f in files:
             os.remove(f)
+    try:
+        path = '../audits/tmp'
+        files = [path + '/' + name for name in os.listdir(path)]
+        for f in files:
+            os.remove(f)
+    except FileNotFoundError:
+        path = 'audits/tmp'
+        files = [path + '/' + name for name in os.listdir(path)]
+        for f in files:
+            os.remove(f)
 
 
 def return_audit_ids():
@@ -38,12 +48,22 @@ def return_audit_ids():
         audit = [name for name in os.listdir('../audits/generated')][0]
         path = '../audits/generated/'
     except IndexError:
-        return 0, 0
-    audit_file = open(path + audit)
+        return 0, 0, 0
+    audit_path = path + audit
+    try:
+        audit_tmp = [name for name in os.listdir('audits/tmp')][0]
+        path_tmp = 'audits/tmp/'
+    except FileNotFoundError:
+        audit_tmp = [name for name in os.listdir('../audits/tmp')][0]
+        path_tmp = '../audits/tmp/'
+    except IndexError:
+        return 0, 0, 0
+    audit_path_tmp = path_tmp + audit_tmp
+    audit_file = open(audit_path)
     audit_list = json.load(audit_file)['selection']
     ids = [int(key) for key in audit_list]
     count = len(ids)
-    return ids, count
+    return ids, count, audit_path_tmp
 
 
 def count_generated_audits():
