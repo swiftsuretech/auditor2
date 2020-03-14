@@ -1,1 +1,0 @@
-{"audit": {"filename": "audits/generated/G_AUDIT|1584222891.092247|2019-12-15T21:54:47.856060|2020-03-14T21:54:47.869594|10.json", "status": "gen", "timestamp": 1584222891.092247, "note": null, "start": "2019-12-15T21:54:47.856060", "end": "2020-03-14T21:54:47.869594", "percentage": 10}, "results": {"38": "app","1210": "rej","738": "app","655": "rej"}}
