@@ -21,12 +21,3 @@ def reverse_geo(lat, long):
         elif key == "cc":
             cc = value.lower()
     return city, cc
-
-
-"""
-A snippet to demonstrate how you might iterate through a csv
-df = pd.read_csv("./testdata/chatter.csv")
-for index, row in df.iterrows():
-    df['city'] = reverse_geo(row['lat1'], row['long1'])
-print(df.head())
-"""

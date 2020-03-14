@@ -18,7 +18,7 @@ import os
 from pages.single_record_page import SingleRecordPage
 from pages.select_record_page import SelectRecordPage
 from pages.dashboard_page import Dashboard
-from pages.generate_audit_page_new import AuditForm
+from pages.generate_audit_page import AuditForm
 from functions.build_an_audit import Audit
 from functions.modal_template import Modal
 from pages.conduct_audit_page import AuditPage
@@ -48,6 +48,7 @@ def register_functional_callbacks(app, data):
         [Input('change-page', 'children')]
     )
     def update_progress_bar(record_number):
+        """Update the progress bar whilst conducting an audit"""
         audit_id, count, filename = return_audit_ids()
         try:
             completion = record_number / count * 100
@@ -130,12 +131,12 @@ def register_functional_callbacks(app, data):
             elif btn_id == 'change-page':
                 audit_id, count, filename = return_audit_ids()
                 return AuditPage(audit_id[next_page]).page, False, False, False
-        except:
+        except TypeError:
             # TODO We've finished the audit - do something
-            print()
             raise PreventUpdate
         else:
             raise PreventUpdate
+
 
     @app.callback(
         [Output('audit-scope', 'children'),

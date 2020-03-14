@@ -52,7 +52,7 @@ class Audit:
             self.filename = 'audits/generated/G_AUDIT|{}|{}|{}|{}.json'.format(timestamp, self.start, self.end,
                                                                                percentage)
             self.temp_name = 'audits/tmp/T_AUDIT|{}|{}|{}|{}.json'.format(timestamp, self.start, self.end,
-                                                                                percentage)
+                                                                          percentage)
             self.audit_file = json.dumps({"filename": self.filename, "status": "gen", "timestamp": timestamp,
                                           "note": self.note,
                                           "start": self.start, "end": self.end, "percentage": percentage,
