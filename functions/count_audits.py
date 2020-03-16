@@ -38,6 +38,16 @@ def clear_out_audits():
         files = [path + '/' + name for name in os.listdir(path)]
         for f in files:
             os.remove(f)
+    try:
+        path = '../audits/scratch'
+        files = [path + '/' + name for name in os.listdir(path)]
+        for f in files:
+            os.remove(f)
+    except FileNotFoundError:
+        path = 'audits/scratch'
+        files = [path + '/' + name for name in os.listdir(path)]
+        for f in files:
+            os.remove(f)
 
 
 def return_audit_ids():

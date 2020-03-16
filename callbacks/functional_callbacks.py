@@ -115,7 +115,8 @@ def register_functional_callbacks(app, data):
         [Output('audit-detail', 'children'),
          Output('top-collapse', 'is_open'),
          Output('bottom-collapse', 'is_open'),
-         Output('audit-controls', 'hidden')],
+         Output('audit-controls', 'hidden'),
+         Output('tools-collapse', 'is_open')],
         [Input('btn-execute-audit', 'n_clicks'),
          Input('audit-date-picker-start', 'date'),
          Input('audit-date-picker-end', 'date'),
@@ -132,13 +133,15 @@ def register_functional_callbacks(app, data):
             if btn_id == 'btn-execute-audit':
                 Audit(start, stop, percent, notes)
                 audit_id, count, filename = return_audit_ids()
-                return AuditPage(audit_id[0]).page, False, False, False
+                return AuditPage(audit_id[0]).page, False, False, False, True
             elif btn_id == 'change-page':
                 audit_id, count, filename = return_audit_ids()
-                return AuditPage(audit_id[next_page]).page, False, False, False
+                return AuditPage(audit_id[next_page]).page, False, False, False, True
         except TypeError:
             # TODO We've finished the audit - do something
-            raise PreventUpdate
+            audit_id, count, filename = return_audit_ids()
+            return None, False, False, False, False
+
         else:
             raise PreventUpdate
 
