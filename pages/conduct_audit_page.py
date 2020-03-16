@@ -113,7 +113,7 @@ class AuditPage:
         # Change the filed names to something easier on the eye. The mapping file is in settings.py
         r.dict = dict((field_mapping[key], value) for key, value in r.dict.items())
         # Build a url reference to a flag that sits in the 'flags' directory in our site assets
-        country_flag = 'assets/flags/' + str(r.dict['Country Code'][0]) + '.svg'
+        country_flag = 'assets/flags/{0}.svg'.format(str(r.dict['Country Code'][0]))
         self.order = 0
         self.page = html.Div(
             id='audit-page',

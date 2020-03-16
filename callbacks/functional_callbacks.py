@@ -58,7 +58,10 @@ def register_functional_callbacks(app, data):
 
     @app.callback(
         [Output('change-page', 'children'),
-         Output('reset-flag', 'children')],
+         Output('reset-flag', 'children'),
+         Output('alert', 'is_open'),
+         Output('alert', 'children'),
+         Output('alert', 'color')],
         [Input('btn-audit-reject', 'n_clicks'),
          Input('btn-audit-approve', 'n_clicks')]
     )
@@ -75,8 +78,12 @@ def register_functional_callbacks(app, data):
         btn_id = ctx.triggered[0]['prop_id'].split('.')[0]
         if btn_id == 'btn-audit-reject':
             choice = 'rej'
+            alert = 'Flight Plan has been Rejected'
+            color = 'danger'
         else:
             choice = 'app'
+            alert = 'Flight Plan has been Audited Correct'
+            color = 'info'
         audit_id, count, filename = return_audit_ids()
         rec_num = clicks - 1
         flight_plan = audit_id[rec_num]
@@ -92,7 +99,7 @@ def register_functional_callbacks(app, data):
                 f.write(json_return)
         if cont:
             # Not at the last record yet so keep iterating through
-            return clicks, json_return
+            return clicks, json_return, True, alert, color
         else:
             # We have captured the full audit. We will grab the json string we wrote to the scratch file, append
             # it to the original scope as a new dictionary field called 'results' and turn it into valid json.
@@ -109,14 +116,15 @@ def register_functional_callbacks(app, data):
             os.remove(scratch)
             new_name = filename.replace('tmp', 'completed')
             os.rename(filename, new_name)
-            return clicks, json_return
+            return clicks, json_return, True, alert, color
 
     @app.callback(
         [Output('audit-detail', 'children'),
          Output('top-collapse', 'is_open'),
          Output('bottom-collapse', 'is_open'),
          Output('audit-controls', 'hidden'),
-         Output('tools-collapse', 'is_open')],
+         Output('tools-collapse', 'is_open'),
+         Output('finalise-audit', 'hidden')],
         [Input('btn-execute-audit', 'n_clicks'),
          Input('audit-date-picker-start', 'date'),
          Input('audit-date-picker-end', 'date'),
@@ -133,14 +141,13 @@ def register_functional_callbacks(app, data):
             if btn_id == 'btn-execute-audit':
                 Audit(start, stop, percent, notes)
                 audit_id, count, filename = return_audit_ids()
-                return AuditPage(audit_id[0]).page, False, False, False, True
+                return AuditPage(audit_id[0]).page, False, False, False, True, True
             elif btn_id == 'change-page':
                 audit_id, count, filename = return_audit_ids()
-                return AuditPage(audit_id[next_page]).page, False, False, False, True
+                return AuditPage(audit_id[next_page]).page, False, False, False, True, True
         except TypeError:
             # TODO We've finished the audit - do something
-            audit_id, count, filename = return_audit_ids()
-            return None, False, False, False, False
+            return None, False, False, False, False, False
 
         else:
             raise PreventUpdate
@@ -194,7 +201,6 @@ def register_functional_callbacks(app, data):
          Input('sidebar_search', 'value'),
          Input('btn_new_audit', 'n_clicks'),
          Input('placeholder', 'value'),
-         # Input('audit_item', 'children')
          ]
     )
     def load_page(dash_click, flight_click, authid, new_audit_click,

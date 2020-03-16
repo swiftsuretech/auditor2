@@ -123,6 +123,7 @@ class AuditForm:
                                                         style={'text-align': 'center'},
                                                     ),
                                                     id='body-bg',
+                                                    style={'height': '70px'}
                                                 ),
                                                 dbc.CardFooter(
                                                     children=[
@@ -198,6 +199,59 @@ class AuditForm:
                             id='audit-detail'
                         ),
                         html.Div(
-                            id='cont-audit-detail'
-                        )
+                            children=[
+                                dbc.Card(
+                                    children=[
+                                        dbc.CardHeader(
+                                            children=[
+                                                html.I(className='fal fa-lg fa-flag-checkered mr-2'),
+                                                html.I('Finalise Audit'),
+                                            ]
+                                        ),
+                                        dbc.Collapse(
+                                            dbc.CardBody(
+                                                dbc.Row(
+                                                    children=[
+                                                        dbc.Col(
+                                                            html.H5("Finalise this audit? Once this is done it "
+                                                                    "will be saved and you will be unable to change"
+                                                                    " it"),
+                                                            width=9,
+                                                            className='float-left'
+                                                        ),
+                                                        dbc.Col(
+                                                            children=[
+                                                                dbc.Button('Finalise', id='btn-audit-finalise',
+                                                                           color='success',
+                                                                           className='mr-2 float-right'),
+                                                                dbc.Button('Cancel', id='btn-final-cancel',
+                                                                           color='danger',
+                                                                           className='mr-2 float-right'),
+                                                            ],
+                                                            className='float-right'
+                                                        ),
+                                                    ],
+                                                ),
+                                            ),
+                                            id='final-collapse',
+                                            is_open=True
+                                        ),
+                                    ],
+                                ),
+                            ],
+                            style={'width': '90%', 'margin': 'auto'},
+                            id='finalise-audit',
+                            hidden=True,
+                        ),
+                        html.Div(
+                            dbc.Alert(
+                                color='secondary',
+                                id="alert",
+                                is_open=False,
+                                dismissable=True,
+                                duration=2000,
+                                style={'opacity': 0.7}
+                            ),
+                            style={'width': '90%', 'margin': 'auto'},
+                        ),
                     ),
