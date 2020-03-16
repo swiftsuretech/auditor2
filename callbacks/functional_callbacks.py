@@ -83,7 +83,7 @@ def register_functional_callbacks(app, data):
         else:
             choice = 'app'
             alert = 'Flight Plan has been Audited Correct'
-            color = 'info'
+            color = 'success'
         audit_id, count, filename = return_audit_ids()
         rec_num = clicks - 1
         flight_plan = audit_id[rec_num]
@@ -200,8 +200,7 @@ def register_functional_callbacks(app, data):
          Input('btn_flightplan', 'n_clicks'),
          Input('sidebar_search', 'value'),
          Input('btn_new_audit', 'n_clicks'),
-         Input('placeholder', 'value'),
-         ]
+         Input('placeholder', 'value')]
     )
     def load_page(dash_click, flight_click, authid, new_audit_click,
                   table_val):

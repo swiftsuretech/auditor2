@@ -250,7 +250,7 @@ class AuditForm:
                                 is_open=False,
                                 dismissable=True,
                                 duration=2000,
-                                style={'opacity': 0.7}
+                                style={'opacity': 0.6}
                             ),
                             style={'width': '90%', 'margin': 'auto'},
                         ),

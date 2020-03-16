@@ -147,7 +147,8 @@ class AuditPage:
                             ),
                         ),
                         dbc.CardFooter(
-                            dbc.Button('Cancel Audit', color='danger', className='float-right mr-2')
+                            dbc.Button('Cancel Audit', color='danger', className='float-right mr-2',
+                                       id='btn-audit-cancel')
                         ),
                     ],
                 ),
