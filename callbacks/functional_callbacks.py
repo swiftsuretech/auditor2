@@ -64,9 +64,14 @@ def register_functional_callbacks(app, data):
     )
     def register_audit_buttons(reject_click, approve_click):
         """Update the hidden div in the sidebar when approve or reject buttons pressed"""
+        # Calculate the number of flight plans complete regardless of whether they were approved or rejected
         clicks = (approve_click or 0) + (reject_click or 0)
         cont = True
+        # Define a scratch file to build a json string. It will not be valid json until it is complete, hence
+        # we will build it separately in a temporary file.
+        scratch = 'audits/scratch/scratch.txt'
         ctx = dash.callback_context
+        # Determine which button was pushed and assign it to a variable
         btn_id = ctx.triggered[0]['prop_id'].split('.')[0]
         if btn_id == 'btn-audit-reject':
             choice = 'rej'
@@ -75,33 +80,33 @@ def register_functional_callbacks(app, data):
         audit_id, count, filename = return_audit_ids()
         rec_num = clicks - 1
         flight_plan = audit_id[rec_num]
-        key_pair = ('\"' + str(flight_plan) + '\": \"' + choice + '\"')
-        # Build a json blob determined by whether audit decision is first, middle or last in sequence
-        # TODO Capture a low number of audit records, ie 1!
-        if rec_num:
-            if rec_num < count - 1:
-                json_return = key_pair + ','
-            else:
-                json_return = key_pair + '}'
-                cont = False
-        else:
-            json_return = ', \"results\": {' + key_pair + ','
+        # Build the json to append to the tmp file showing the flight plan number as key and auditors decision
+        # as the value (either approve or reject).
+        json_return = ('\"' + str(flight_plan) + '\": \"' + choice + '\",')
+        if clicks >= count:
+            # We have completed our audit, set our cont flag to false
+            cont = False
         if json_return:
-            f = open(filename, 'a')
-            f.write(json_return)
-            f.close()
-            f = open(filename, 'r')
-            f.close()
+            # Append the json we have just built to a scratch file
+            with open(scratch, 'a') as f:
+                f.write(json_return)
         if cont:
+            # Not at the last record yet so keep iterating through
             return clicks, json_return
         else:
-            f = open(filename, 'r')
-            original = f.read()
-            f.close()
-            amended = '{\"audit\": ' + original + '}'
-            f = open(filename, 'w')
-            f.write(amended)
-            f.close()
+            # We have captured the full audit. We will grab the json string we wrote to the scratch file, append
+            # it to the original scope as a new dictionary field called 'results' and turn it into valid json.
+            # Once that's done, delete the scratch file and move our completed audit record to the 'completed'
+            # directory where it will be stored as immutable, but viewable through our 'View Complete Audits'
+            # page.
+            with open(filename, 'r') as f:
+                original = f.read()
+            with open(scratch, 'r') as g:
+                append = g.read()
+            amended = '{\"audit\": ' + original + ', \"results\": {' + append + '}}'
+            with open(filename, 'w') as f:
+                f.write(amended)
+            os.remove(scratch)
             new_name = filename.replace('tmp', 'completed')
             os.rename(filename, new_name)
             return clicks, json_return
@@ -136,7 +141,6 @@ def register_functional_callbacks(app, data):
             raise PreventUpdate
         else:
             raise PreventUpdate
-
 
     @app.callback(
         [Output('audit-scope', 'children'),
