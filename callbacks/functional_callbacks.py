@@ -34,6 +34,26 @@ def register_functional_callbacks(app, data):
     and keep the page files clean"""
 
     @app.callback(
+        Output('reset', 'children'),
+        [Input('btn-cancel-audit', 'n_clicks'),
+         Input('btn-final-cancel', 'n_clicks'),
+         Input('btn-audit-finalise', 'n_clicks'),
+         Input('btn-audit-cancel', 'n_clicks')]
+    )
+    def cancel_audit(cancel_at_scope, final_cancel, finalise, cancel_during_audit):
+        """Captures button click events for 'audit cancel' - The user cancels mid audit. We will need to write
+        to the 'reset' hidden div to divert to the home page. If the user clicks the 'final-cancel' button then
+        we will also need to delete the completed audit we have just written. The finalise button actually does
+        nothing other than divert away from the page as the audit is already saved by that stage."""
+        # Determine which button was pushed and assign it to a variable
+        ctx = dash.callback_context
+        btn_id = ctx.triggered[0]['prop_id'].split('.')[0]
+        if btn_id == 'btn-final-cancel':
+            return 'home__with_delete'
+        else:
+            return 'home only'
+
+    @app.callback(
         Output('modal-open', 'is_open'),
         [Input('close-modal', 'n_clicks')]
     )

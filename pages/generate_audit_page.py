@@ -111,7 +111,7 @@ class AuditForm:
                                         dbc.CardHeader(
                                             children=[
                                                 html.I(className="fal fa-lg fa-microscope mr-2"),
-                                                html.I("Audit Scope"),
+                                                html.I("Define Scope"),
                                             ],
                                             className='border-top',
                                         ),
@@ -161,9 +161,7 @@ class AuditForm:
                                                 html.I('Conducting Audit'),
                                             ]
                                         ),
-
                                         dbc.Collapse(
-
                                             dbc.CardBody(
                                                 dbc.Row(
                                                     children=[
@@ -179,10 +177,22 @@ class AuditForm:
                                                             width=2,
                                                         ),
                                                         dbc.Col(
-                                                            dbc.Progress(id='audit-progress', color='info',
-                                                                         className='m-3'),
+                                                            children=[
+                                                                dbc.Progress(id='audit-progress', color='info',
+                                                                             className='mt-3')
+                                                            ],
+                                                            width=8,
+                                                        ),
+                                                        dbc.Col(
+                                                            children=[
+                                                                dbc.Button('Cancel Audit', color='secondary',
+                                                                           className='mr-2 float-right',
+                                                                           id='btn-audit-cancel')
+                                                            ],
+                                                            width=2,
                                                         )
                                                     ],
+                                                    className='my-auto'
                                                 ),
                                             ),
                                             id='tools-collapse',
@@ -248,8 +258,8 @@ class AuditForm:
                                 color='secondary',
                                 id="alert",
                                 is_open=False,
-                                dismissable=True,
-                                duration=2000,
+                                fade=True,
+                                duration=1000,
                                 style={'opacity': 0.6}
                             ),
                             style={'width': '90%', 'margin': 'auto'},
