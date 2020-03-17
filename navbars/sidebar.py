@@ -132,7 +132,7 @@ def build_sidebar():
                     html.Div(id='change-page', hidden=True),
                     html.Div(id='reset-flag', hidden=True),
                     html.Div(id='finished-audit', hidden=True),
-                    html.Div(id='reset')
+                    html.Div(id='reset', hidden=True)
                 ],
                 style={'padding-left': '10px', 'padding-right': '10px'}
             ),

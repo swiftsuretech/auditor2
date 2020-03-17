@@ -8,80 +8,123 @@ import dash_bootstrap_components as dbc
 import dash_html_components as html
 
 cards = html.Div(
-    dbc.CardGroup(
-        [
-            dbc.Card(
-                children=[
-                    dbc.CardHeader(
-                        html.H5("Dashboards", className="card-title"),
-                    ),
-                    dbc.CardImg(
-                        src='/assets/dash.jpg',
-                        bottom=True,
-                        style={'opacity': 0.5, 'height': '150px'}
-                    ),
-                    dbc.CardBody(
-                        [
+    dbc.Row(
+        children=[
+            dbc.Col(
+                [
+                    dbc.Card(
+                        children=[
+                            dbc.CardHeader(
+                                html.H5("Dashboards", className="card-title"),
+                            ),
+                            dbc.CardImg(
+                                src='/assets/dash.jpg',
+                                bottom=True,
+                                style={'opacity': 0.5, 'height': '150px'}
+                            ),
+                            dbc.CardBody(
+                                [
 
-                            html.P(
-                                "View the access dashboards.",
-                                className="card-text",
-                            ),
-                            dbc.Button(
-                                "Click here", color="success", className="mt-auto"
-                            ),
-                        ]
-                    )
-                ],
-            ),
-            dbc.Card(
-                children=[
-                    dbc.CardHeader(
-                        html.H5("New Audit", className="card-title"),
-                    ),
-                    dbc.CardImg(
-                        src='/assets/create.jpg',
-                        bottom=True,
-                        style={'opacity': 0.5, 'height': '150px', 'background-size': 'contain'}
-                    ),
-                    dbc.CardBody(
-                        [
-                            html.P(
-                                "Generate a new audit.",
-                                className="card-text",
-                            ),
-                            dbc.Button(
-                                "Click here", color="warning", className="mt-auto"
-                            ),
-                        ]
+                                    html.P(
+                                        "View the access dashboards.",
+                                        className="card-text",
+                                    ),
+                                    dbc.Button(
+                                        "Click here", color="success", className="mt-auto"
+                                    ),
+                                ]
+                            )
+                        ],
+                        className='shadow'
                     ),
                 ],
             ),
-            dbc.Card(
-                children=[
-                    dbc.CardHeader(
-                        html.H5("Completed Audits", className="card-title"),
-                    ),
-                    dbc.CardImg(
-                        src='/assets/complete.jpg',
-                        bottom=True,
-                        style={'opacity': 0.5, 'height': '150px'}
-                    ),
-                    dbc.CardBody(
-                        [
-                            html.P(
-                                "View previously completed audits",
-                                className="card-text",
+            dbc.Col(
+                [
+                    dbc.Card(
+                        children=[
+                            dbc.CardHeader(
+                                html.H5("New Audit", className="card-title"),
                             ),
-                            dbc.Button(
-                                "Click here", color="danger", className="mt-auto"
+                            dbc.CardImg(
+                                src='/assets/create.jpg',
+                                bottom=True,
+                                style={'opacity': 0.5, 'height': '150px', 'background-size': 'contain'}
                             ),
-                        ]
+                            dbc.CardBody(
+                                [
+                                    html.P(
+                                        "Generate a new audit.",
+                                        className="card-text",
+                                    ),
+                                    dbc.Button(
+                                        "Click here", color="warning", className="mt-auto"
+                                    ),
+                                ]
+                            ),
+                        ],
+                        className='shadow'
+                    ),
+                ],
+            ),
+            dbc.Col(
+                [
+                    dbc.Card(
+                        children=[
+                            dbc.CardHeader(
+                                html.H5("Completed Audits", className="card-title"),
+                            ),
+                            dbc.CardImg(
+                                src='/assets/complete.jpg',
+                                bottom=True,
+                                style={'opacity': 0.5, 'height': '150px'}
+                            ),
+                            dbc.CardBody(
+                                [
+                                    html.P(
+                                        "View previously completed audits",
+                                        className="card-text",
+                                    ),
+                                    dbc.Button(
+                                        "Click here", color="danger", className="mt-auto"
+                                    ),
+                                ]
+                            ),
+                        ],
+                        className='shadow'
+                    ),
+                ],
+            ),
+            dbc.Col(
+                [
+                    dbc.Card(
+                        children=[
+                            dbc.CardHeader(
+                                html.H5("About", className="card-title"),
+                            ),
+                            dbc.CardImg(
+                                src='/assets/dash.jpg',
+                                bottom=True,
+                                style={'opacity': 0.5, 'height': '150px'}
+                            ),
+                            dbc.CardBody(
+                                [
+
+                                    html.P(
+                                        "About this application",
+                                        className="card-text",
+                                    ),
+                                    dbc.Button(
+                                        "Click here", color="secondary", className="mt-auto"
+                                    ),
+                                ]
+                            )
+                        ],
+                        className='shadow'
                     ),
                 ],
             ),
         ],
-        className='shadow',
     ),
     className='mt-3',
     style={'width': '90%', 'margin': 'auto'},
@@ -105,7 +148,7 @@ class Home:
                                                'float': 'left'},
                                         className='ml-5'),
                                     html.P(
-                                        "Chatter Auditor 2",
+                                        "ChatterAuditor2",
                                         className='ml-2'),
                                 ],
                                 className="display-4 ml-20"),
