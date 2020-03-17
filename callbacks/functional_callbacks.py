@@ -20,10 +20,11 @@ from pages.select_record_page import SelectRecordPage
 from pages.dashboard_page import Dashboard
 from pages.generate_audit_page import AuditForm
 from functions.build_an_audit import Audit
+from pages.home import Home
 from functions.modal_template import Modal
 from pages.conduct_audit_page import AuditPage
 from dash.exceptions import PreventUpdate
-from functions.count_audits import return_audit_ids
+from functions.count_audits import return_audit_ids, bin_last_audit
 
 # Import some externalised settings
 from settings.settings import main_hist_settings, diagMargins, hist_day_settings, hist_hour_settings
@@ -48,10 +49,7 @@ def register_functional_callbacks(app, data):
         # Determine which button was pushed and assign it to a variable
         ctx = dash.callback_context
         btn_id = ctx.triggered[0]['prop_id'].split('.')[0]
-        if btn_id == 'btn-final-cancel':
-            return 'home__with_delete'
-        else:
-            return 'home only'
+        return btn_id
 
     @app.callback(
         Output('modal-open', 'is_open'),
@@ -217,23 +215,27 @@ def register_functional_callbacks(app, data):
     @app.callback(
         Output('main_page', 'children'),
         [Input('btn_dashboard', 'n_clicks'),
-         Input('btn_flightplan', 'n_clicks'),
+         #Input('btn_flightplan', 'n_clicks'),
          Input('sidebar_search', 'value'),
          Input('btn_new_audit', 'n_clicks'),
-         Input('placeholder', 'value')]
+         Input('placeholder', 'value'),
+         Input('reset', 'children'),
+         Input('btn_home', 'n_clicks')]
     )
-    def load_page(dash_click, flight_click, authid, new_audit_click,
-                  table_val):
+    def load_page(dash_click, authid, new_audit_click,
+                  table_val, reset, home_click):
         """Returns the relevant page if user clicks a menu button"""
         ctx = dash.callback_context
         btn_id = ctx.triggered[0]['prop_id'].split('.')[0]
         if ctx.triggered[0]['value'] is None:
             # The app is newly loaded. Define the start page
-            return Dashboard().page
+            return Home().page
         if btn_id == 'btn_dashboard':
             return Dashboard().page
-        elif btn_id == 'btn_flightplan':
-            return SelectRecordPage().page
+        elif btn_id == 'btn_home':
+            return Home().page
+        # elif btn_id == 'btn_flightplan':
+        #     return SelectRecordPage().page
         elif btn_id == 'placeholder':
             return SingleRecordPage(table_val).page
         elif btn_id == 'btn_new_audit':
@@ -244,8 +246,11 @@ def register_functional_callbacks(app, data):
             else:
                 return SelectRecordPage().page
         # Another event has been triggered which we have not captured.
+        elif btn_id == 'reset' and reset == 'btn-final-cancel':
+            bin_last_audit()
+            return Home().page
         else:
-            return Dashboard().page
+            return Home().page
 
     @app.callback(
         # Define our getters and setters

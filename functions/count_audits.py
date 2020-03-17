@@ -16,6 +16,18 @@ class Audits:
         self.generated_list = build_generated_audits()
 
 
+def bin_last_audit():
+    """Delete the last modified complete audit"""
+    try:
+        path = '../audits/completed'
+        files = [path + '/' + name for name in os.listdir(path)]
+    except FileNotFoundError:
+        path = 'audits/completed'
+        files = [path + '/' + name for name in os.listdir(path)]
+    last_file = max(files, key=os.path.getctime)
+    os.remove(last_file)
+
+
 def clear_out_audits():
     """Bin all the incomplete audits"""
     try:

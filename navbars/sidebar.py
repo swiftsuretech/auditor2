@@ -92,14 +92,14 @@ def build_sidebar():
                             style=button_style, className=button_class
                         )
                     ),
-                    dbc.Row(
-                        dbc.Button(
-                            (html.I(className='fal fa-lge fa-fw fa-plane-departure mr-2'),
-                             " Flight Plans"),
-                            id='btn_flightplan',
-                            style=button_style, className=button_class
-                        )
-                    ),
+                    # dbc.Row(
+                    #     dbc.Button(
+                    #         (html.I(className='fal fa-lge fa-fw fa-plane-departure mr-2'),
+                    #          " Flight Plans"),
+                    #         id='btn_flightplan',
+                    #         style=button_style, className=button_class
+                    #     )
+                    # ),
                 ],
                 style={'padding-left': '10px', 'padding-right': '10px'}
             ),
