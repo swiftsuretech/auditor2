@@ -35,6 +35,14 @@ def register_functional_callbacks(app, data):
     and keep the page files clean"""
 
     @app.callback(
+        Output('finished-audit', 'children'),
+        [Input('test', 'loading_state')]
+    )
+    def loading_state(loading):
+        """Discover loading state of single audit record"""
+        return loading
+
+    @app.callback(
         Output('reset', 'children'),
         [Input('btn-cancel-audit', 'n_clicks'),
          Input('btn-final-cancel', 'n_clicks'),

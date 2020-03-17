@@ -18,9 +18,9 @@ cards = html.Div(
                                 html.H5("Dashboards", className="card-title"),
                             ),
                             dbc.CardImg(
-                                src='/assets/dash.jpg',
+                                src='/assets/dashboard.png',
                                 bottom=True,
-                                style={'opacity': 0.5, 'height': '150px'}
+                                style={'opacity': 0.5, 'width': '100px', 'height': '100px'}
                             ),
                             dbc.CardBody(
                                 [
@@ -47,9 +47,9 @@ cards = html.Div(
                                 html.H5("New Audit", className="card-title"),
                             ),
                             dbc.CardImg(
-                                src='/assets/create.jpg',
+                                src='/assets/new.png',
                                 bottom=True,
-                                style={'opacity': 0.5, 'height': '150px', 'background-size': 'contain'}
+                                style={'opacity': 0.5, 'width': '100px', 'height': '100px'}
                             ),
                             dbc.CardBody(
                                 [
@@ -75,9 +75,9 @@ cards = html.Div(
                                 html.H5("Completed Audits", className="card-title"),
                             ),
                             dbc.CardImg(
-                                src='/assets/complete.jpg',
+                                src='/assets/completed.png',
                                 bottom=True,
-                                style={'opacity': 0.5, 'height': '150px'}
+                                style={'opacity': 0.5, 'width': '100px', 'height': '100px'}
                             ),
                             dbc.CardBody(
                                 [
@@ -103,9 +103,10 @@ cards = html.Div(
                                 html.H5("About", className="card-title"),
                             ),
                             dbc.CardImg(
-                                src='/assets/dash.jpg',
+                                src='/assets/about.png',
                                 bottom=True,
-                                style={'opacity': 0.5, 'height': '150px'}
+                                style={'opacity': 0.5, 'width': '100px', 'height': '100px'},
+                                className='align-center'
                             ),
                             dbc.CardBody(
                                 [

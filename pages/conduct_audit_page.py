@@ -13,6 +13,7 @@ from functions.get_all_records import DataSet
 from functions.build_map import MapBox
 from functions.count_audits import return_audit_ids
 import dash_bootstrap_components as dbc
+import dash_core_components as dcc
 from functions import get_all_records
 
 # There should be a single audit file in the 'audits/generated' directory, the return_audit_ids function
@@ -92,7 +93,7 @@ def build_geo(flag, r, polygon):
             dbc.CardBody(
                 MapBox(polygon).map
             )
-        ]
+        ],
     )
     return card
 
@@ -150,4 +151,4 @@ class AuditPage:
                 ),
             ],
             style={'width': '90%', 'margin': 'auto'},
-        ),
+        )
