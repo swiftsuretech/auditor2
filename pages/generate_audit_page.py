@@ -98,7 +98,7 @@ class AuditForm:
                                                                                 [
                                                                                     dbc.Textarea(
                                                                                         id="audit-notes",
-                                                                                        rows=2,
+                                                                                        rows=1,
                                                                                         placeholder="Write a note",
                                                                                     ),
                                                                                 ],
