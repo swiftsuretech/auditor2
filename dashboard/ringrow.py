@@ -58,7 +58,8 @@ def build_ring_row(df):
                                 style={'margin-top': '0rem'},
                             )
                         )
-                    ]
+                    ],
+                    className='shadow',
                 ),
                 width={"size": 4, 'order': 2}
             ),
@@ -82,7 +83,8 @@ def build_ring_row(df):
                                 style={'margin-top': '0rem'},
                             )
                         )
-                    ]
+                    ],
+                    className='shadow',
                 ),
                 width={"size": 4, 'order': 1}
             ),
@@ -108,7 +110,8 @@ def build_ring_row(df):
                                 style={'margin-top': '0rem'},
                             )
                         )
-                    ]
+                    ],
+                    className='shadow',
                 ),
                 width={"size": 4, 'order': 3}
             ),

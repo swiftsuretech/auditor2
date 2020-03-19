@@ -65,7 +65,8 @@ def build_data_table(df):
                             dbc.Button('View Flight Plan', id='show-record-from-table', disabled=True),
                         ],
                     ),
-                ]
+                ],
+                className='shadow',
             ),
             width={'size': 12}
         )

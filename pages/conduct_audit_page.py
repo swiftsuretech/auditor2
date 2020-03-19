@@ -119,13 +119,13 @@ class AuditPage:
         self.page = html.Div(
             id='audit-page',
             children=[
-                dbc.Card(
+                dbc.Card(className='shadow', 
                     children=[
                         dbc.CardBody(
                             dbc.Row(
                                 children=[
                                     dbc.Col(
-                                        dbc.Card(
+                                        dbc.Card(className='shadow', 
                                             children=[
                                                 build_card(user_card, r),
                                                 build_card(query_card, r),
@@ -136,7 +136,7 @@ class AuditPage:
                                         width=5,
                                     ),
                                     dbc.Col(
-                                        dbc.Card(
+                                        dbc.Card(className='shadow', 
                                             children=[
                                                 build_geo(country_flag, r, polygon),
                                             ],

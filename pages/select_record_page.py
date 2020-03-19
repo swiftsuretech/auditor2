@@ -27,7 +27,7 @@ class SelectRecordPage:
                                         html.H4('Select a Flight Plan from the search box on the left to continue'),
                                     ),
                                 ],
-                                className="ml-5"
+                                className="ml-5 shadow",
                             ),
                         ),
                     ),

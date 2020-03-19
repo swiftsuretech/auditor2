@@ -11,7 +11,7 @@ cards = html.Div(
     dbc.Row(
         dbc.CardDeck(
             children=[
-                dbc.Card(
+                dbc.Card(className='shadow', 
                     children=[
                         dbc.CardHeader(
                             html.H5("Dashboards", className="card-title"),
@@ -41,9 +41,8 @@ cards = html.Div(
                             ),
                         ),
                     ],
-                    className='shadow',
                 ),
-                dbc.Card(
+                dbc.Card(className='shadow', 
                     children=[
                         dbc.CardHeader(
                             html.H5("New Audit", className="card-title"),
@@ -75,9 +74,8 @@ cards = html.Div(
                             ),
                         ),
                     ],
-                    className='shadow',
                 ),
-                dbc.Card(
+                dbc.Card(className='shadow', 
                     children=[
                         dbc.CardHeader(
                             html.H5("Completed Audits", className="card-title"),
@@ -107,9 +105,8 @@ cards = html.Div(
                             ),
                         ),
                     ],
-                    className='shadow',
                 ),
-                dbc.Card(
+                dbc.Card(className='shadow', 
                     children=[
                         dbc.CardHeader(
                             html.H5("About", className="card-title"),
@@ -137,7 +134,6 @@ cards = html.Div(
                             ),
                         ),
                     ],
-                    className='shadow',
                 ),
             ],
         ),

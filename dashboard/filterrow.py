@@ -52,7 +52,8 @@ def build_filter_row(users, platforms, ip):
                                 placeholder="Select Operator to Filter by"
                             )
                         )
-                    ]
+                    ],
+                    className='shadow',
                 ),
                 width={'size': 4}
             ),
@@ -73,7 +74,8 @@ def build_filter_row(users, platforms, ip):
                                 placeholder="Select Platform to Filter by"
                             )
                         )
-                    ]
+                    ],
+                    className='shadow',
                 ),
                 width={'size': 4}
             ),
@@ -94,7 +96,8 @@ def build_filter_row(users, platforms, ip):
                                 placeholder="Select IP Address to Filter by"
                             )
                         )
-                    ]
+                    ],
+                    className='shadow',
                 ),
                 width={'size': 4}
             ),

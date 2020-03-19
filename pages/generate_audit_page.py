@@ -113,7 +113,7 @@ class AuditForm:
                                                         is_open=True
                                                     ),
                                                 ],
-                                                className='mt-4 mb-4'
+                                                className='mt-4 mb-4 shadow'
                                             ),
                                         ),
                                         dbc.Col(
@@ -158,7 +158,7 @@ class AuditForm:
                                                         is_open=True
                                                     ),
                                                 ],
-                                                className='mb-4 mt-4',
+                                                className='mb-4 mt-4 shadow',
                                             ),
                                         ),
                                     ],
@@ -215,7 +215,7 @@ class AuditForm:
                                             is_open=True
                                         ),
                                     ],
-                                    className='mb-4'
+                                    className='mb-4 shadow'
                                 ),
                             ],
                             style={'width': '90%', 'margin': 'auto'},
@@ -264,7 +264,7 @@ class AuditForm:
                                             is_open=True
                                         ),
                                     ],
-                                    className='mb-4'
+                                    className='mb-4 shadow'
                                 ),
                             ],
                             style={'width': '90%', 'margin': 'auto'},

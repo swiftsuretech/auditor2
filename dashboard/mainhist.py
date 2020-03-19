@@ -42,7 +42,8 @@ def build_main_histogram(df, spread):
                             ],
                         ),
                     )
-                ]
+                ],
+                className='shadow',
             ),
             width={"size": 12},
         ),

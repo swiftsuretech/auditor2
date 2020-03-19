@@ -112,7 +112,7 @@ class SingleRecordPage:
                 dbc.Row(
                     children=[
                         dbc.Col(
-                            dbc.Card(
+                            dbc.Card(className='shadow', 
                                 children=[
                                     build_card(user_card, r),
                                     build_card(query_card, r),
@@ -123,7 +123,7 @@ class SingleRecordPage:
                             width=5,
                         ),
                         dbc.Col(
-                            dbc.Card(
+                            dbc.Card(className='shadow', 
                                 children=[
                                     build_geo(country_flag, r, polygon),
                                 ],

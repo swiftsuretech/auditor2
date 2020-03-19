@@ -52,7 +52,8 @@ def build_time_row(df, start_date, end_date, count):
                                 style={'margin-top': '0rem'},
                             )
                         )
-                    ]
+                    ],
+                    className='shadow',
                 ),
                 width={"size": 4, 'order': 1}
             ),
@@ -77,7 +78,8 @@ def build_time_row(df, start_date, end_date, count):
                                 style={'margin-top': '0rem'},
                             )
                         )
-                    ]
+                    ],
+                    className='shadow',
                 ),
                 width={"size": 4, 'order': 3}
             ),
@@ -106,7 +108,8 @@ def build_time_row(df, start_date, end_date, count):
                                     style={'text-align': 'center'},
                                 ),
                             )
-                        ]
+                        ],
+                        className='shadow',
                     ),
                     html.Br(),
                     dbc.Card(
@@ -131,7 +134,8 @@ def build_time_row(df, start_date, end_date, count):
                                     ),
                                 ),
                             ),
-                        ]
+                        ],
+                        className='shadow',
                     ),
                 ],
                 width={"size": 4, 'order': 2}
