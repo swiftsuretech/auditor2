@@ -35,6 +35,20 @@ def register_functional_callbacks(app, data):
     and keep the page files clean"""
 
     @app.callback(
+        Output('homepage-select', 'children'),
+        [Input('btn-home-dashboards', 'n_clicks'),
+         Input('btn-home-new-audit', 'n_clicks'),
+         Input('btn-home-completed-audits', 'n_clicks'),
+         Input('btn-home-about', 'n_clicks')]
+    )
+    def homepage_select(home_dash_click, home_new_click,
+                        home_complete_click, home_about_click):
+        ctx = dash.callback_context
+        # Determine which button was pushed and assign it to a variable
+        btn_id = ctx.triggered[0]['prop_id'].split('.')[0]
+        return btn_id
+
+    @app.callback(
         Output('finished-audit', 'children'),
         [Input('test', 'loading_state')]
     )
@@ -227,10 +241,12 @@ def register_functional_callbacks(app, data):
          Input('btn_new_audit', 'n_clicks'),
          Input('placeholder', 'value'),
          Input('reset', 'children'),
-         Input('btn_home', 'n_clicks')]
+         Input('btn_home', 'n_clicks'),
+         Input('homepage-select', 'children'),
+         ]
     )
     def load_page(dash_click, authid, new_audit_click,
-                  table_val, reset, home_click):
+                  table_val, reset, home_click, home_page_select):
         """Returns the relevant page if user clicks a menu button"""
         ctx = dash.callback_context
         btn_id = ctx.triggered[0]['prop_id'].split('.')[0]
@@ -239,10 +255,17 @@ def register_functional_callbacks(app, data):
             return Home().page
         if btn_id == 'btn_dashboard':
             return Dashboard().page
+        elif btn_id == 'homepage-select':
+            if home_page_select == 'btn-home-dashboards':
+                return Dashboard().page
+            elif home_page_select == 'btn-home-new-audit':
+                return AuditForm().page[0]
+            elif home_page_select == 'btn-home-completed-audits':
+                return Home().page
+            elif home_page_select == 'btn-home-about':
+                return Home().page
         elif btn_id == 'btn_home':
             return Home().page
-        # elif btn_id == 'btn_flightplan':
-        #     return SelectRecordPage().page
         elif btn_id == 'placeholder':
             return SingleRecordPage(table_val).page
         elif btn_id == 'btn_new_audit':

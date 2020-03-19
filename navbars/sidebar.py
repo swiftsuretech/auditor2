@@ -92,14 +92,6 @@ def build_sidebar():
                             style=button_style, className=button_class
                         )
                     ),
-                    # dbc.Row(
-                    #     dbc.Button(
-                    #         (html.I(className='fal fa-lge fa-fw fa-plane-departure mr-2'),
-                    #          " Flight Plans"),
-                    #         id='btn_flightplan',
-                    #         style=button_style, className=button_class
-                    #     )
-                    # ),
                 ],
                 style={'padding-left': '10px', 'padding-right': '10px'}
             ),
@@ -132,7 +124,8 @@ def build_sidebar():
                     html.Div(id='change-page', hidden=True),
                     html.Div(id='reset-flag', hidden=True),
                     html.Div(id='finished-audit', hidden=True),
-                    html.Div(id='reset', hidden=True)
+                    html.Div(id='reset', hidden=True),
+                    html.Div(id='homepage-select', hidden=True)
                 ],
                 style={'padding-left': '10px', 'padding-right': '10px'}
             ),
