@@ -7,6 +7,8 @@ import dash_core_components as dcc
 import dash_bootstrap_components as dbc
 import dash_html_components as html
 
+check = html.I(className='fal fa-lge fa-check-circle mr-2', style={'color': 'green'})
+
 cards = html.Div(
     dbc.Row(
         dbc.CardDeck(
@@ -27,10 +29,21 @@ cards = html.Div(
                                      ),
                                      html.P(
                                          children=[
-                                             html.P('View all flight plans'),
-                                             html.P('High level Overview'),
-                                             html.P('Usage Monitoring'),
-                                             html.P('Advanced Filtering and Analytics'),
+                                             html.Br(),
+                                             check,
+                                             html.B('View all flight plans'),
+                                             html.Br(),
+                                             html.Br(),
+                                             check,
+                                             html.B('High level overview'),
+                                             html.Br(),
+                                             html.Br(),
+                                             check,
+                                             html.B('Usage monitoring'),
+                                             html.Br(),
+                                             html.Br(),
+                                             check,
+                                             html.B('Advanced filtering and analytics'),
                                          ],
                                      ),
                                  ]
@@ -60,13 +73,23 @@ cards = html.Div(
                                          className='mb-4 mt-3'
                                      ),
                                      html.P(
-                                         "Generates an audit based upon user selection of date range and percentage of "
-                                         "records to audit.",
-                                     ),
-                                     html.P(
-                                         "Presents an auditor with a random selection of flight plans "
-                                         "to audit based upon all search criteria, augmented with a map display and "
-                                         "other information regarding geographical location.",
+                                         children=[
+                                             html.Br(),
+                                             check,
+                                             html.B('Create new audits'),
+                                             html.Br(),
+                                             html.Br(),
+                                             check,
+                                             html.B('Select date ranges'),
+                                             html.Br(),
+                                             html.Br(),
+                                             check,
+                                             html.B('Determine audit percentages'),
+                                             html.Br(),
+                                             html.Br(),
+                                             check,
+                                             html.B('View enhanced geo data'),
+                                         ],
                                      ),
 
                                  ]
@@ -96,12 +119,17 @@ cards = html.Div(
                                          className='mb-4 mt-3'
                                      ),
                                      html.P(
-                                         "All completed audits are stored in the system and, once finalised, are not "
-                                         "editable.",
-                                     ),
-                                     html.P(
-                                         "Completed records contain details of date range, percentage and selected "
-                                         "flight plans for audit purposes.",
+                                         children=[
+                                             html.Br(),
+                                             check,
+                                             html.B('View completed audits'),
+                                             html.Br(),
+                                             html.Br(),
+                                             check,
+                                             html.B('Check audited flight plans'),
+                                             html.Br(),
+                                             html.Br()
+                                         ],
                                      ),
                                  ]
                              ),
@@ -130,11 +158,18 @@ cards = html.Div(
                                          className='mb-4 mt-3'
                                      ),
                                      html.P(
-                                         "Further information about the application, including instructions for "
-                                         "getting support.",
-                                         className="card-text",
+                                         children=[
+                                             html.Br(),
+                                             check,
+                                             html.B('Get application help'),
+                                             html.Br(),
+                                             html.Br(),
+                                             check,
+                                             html.B('View support details'),
+                                             html.Br(),
+                                             html.Br(),
+                                         ],
                                      ),
-
                                  ]
                              ),
                              dbc.CardFooter(
@@ -144,10 +179,11 @@ cards = html.Div(
                                      className="mt-auto float-right",
                                      id='btn-home-about'
                                  ),
-                             ),
+                                 ()),
                          ],
                          ),
             ],
+            style={'width': '100%', 'margin': 'auto'}
         ),
         className='mt-3',
         style={'width': '95%', 'margin': 'auto'},
@@ -173,14 +209,16 @@ class Home:
                                         className='ml-5 mr-3'),
                                     html.P(
                                         " ChatterAuditor2",
-                                        className='ml-5'),
+                                        className='ml-5'
+                                    ),
                                 ],
                                 className="display-4 ml-20"),
                             html.Hr(
-                                className="m-2"
+                                className="m-2 mr-5",
+                                style={'width': '600px'}
                             ),
                             html.P(
-                                "A Chatter flight plan audit and log analysis tool",
+                                "< A Chatter flight plan auditing and log analysis tool >",
                                 className="lead ml-5",
                             ),
                         ],

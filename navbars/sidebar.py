@@ -23,11 +23,6 @@ separator = html.Hr(style={'color': '#95a5a6', 'background-color': '#95a5a6', 'p
 def build_sidebar():
     """Build the sidebar of the app."""
     # Count the number of audits ready to go. If there are none, we can make the notification badge invisible
-    file_count = len([name for name in os.listdir('audits/generated')])
-    if file_count == 0:
-        badge_show = 'invisible'
-    else:
-        badge_show = 'visible ml-2'
     sidebar = html.Div(
         children=[
             # Logo and app name
@@ -35,10 +30,10 @@ def build_sidebar():
                 html.Div(
                     children=[
                         html.Img(src='../assets/logos/atom.svg', style={'height': '40px', 'vertical-align': 'middle',
-                                                                        'float': 'left', 'padding-left': '7px'}),
+                                                                        'float': 'left', 'padding-left': '9px'}),
                         html.Span(html.H4("ChatterAuditor2"),
                                   style={'color': 'white', 'float': 'left', 'margin-top': '7px',
-                                         'margin-left': '15px'},
+                                         'margin-left': '12px'},
                                   ),
                     ],
                 ),
@@ -95,12 +90,14 @@ def build_sidebar():
                 ],
                 style={'padding-left': '10px', 'padding-right': '10px'}
             ),
+            # Audit Buttons
             html.Div(
                 children=[
                     separator,
                     dbc.Row(
                         "Audit Functions",
-                        id='lbl_audit', style=button_style, className='text-secondary'
+                        id='lbl_audit',
+                        style=button_style, className='text-secondary'
                     ),
                     dbc.Row(
                         dbc.Button(
@@ -120,7 +117,7 @@ def build_sidebar():
                     ),
                     # Hidden inputs
                     dcc.Input(value=None, type='number', id='placeholder', style={'display': 'none'}),
-                    # A placeholder for reload 'My Audits' page
+                    # Hidden Divs containing text to trigger callbacks
                     html.Div(id='change-page', hidden=True),
                     html.Div(id='reset-flag', hidden=True),
                     html.Div(id='finished-audit', hidden=True),
@@ -129,6 +126,29 @@ def build_sidebar():
                 ],
                 style={'padding-left': '10px', 'padding-right': '10px'}
             ),
+            # Help Buttons
+            html.Div(
+                children=[
+                    separator,
+                    dbc.Row(
+                        "Help",
+                        style=button_style, className='text-secondary'
+                    ),
+                    dbc.Row(
+                        dbc.Button(
+                            (html.I(className='fal fa-lge fa-fw fa-question-circle mr-2'),
+                             " Help Me"),
+                            id='btn_help',
+                            style=button_style, className=button_class
+                        )
+                    ),
+                ],
+                style={'padding-left': '10px', 'padding-right': '10px'}
+            ),
+            html.Div(
+                html.Img(src='assets/logos/cii-logo-white.png', height=80, className='mb-3'),
+                style={'position': 'absolute', 'bottom': 0}
+            )
         ],
         style={'margin': '20px'}
     ),

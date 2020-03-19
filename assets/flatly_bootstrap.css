@@ -5598,6 +5598,9 @@ a.badge-dark:focus, a.badge-dark.focus {
   margin-bottom: 2rem;
   background-color: #ecf0f1;
   border-radius: 0.3rem;
+  background-image: url("logos/gossip2.png");
+  background-repeat: no-repeat;
+  background-position: right;
 }
 
 @media (min-width: 576px) {
