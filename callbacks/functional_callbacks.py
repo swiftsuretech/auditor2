@@ -223,7 +223,6 @@ def register_functional_callbacks(app, data):
     @app.callback(
         Output('main_page', 'children'),
         [Input('btn_dashboard', 'n_clicks'),
-         #Input('btn_flightplan', 'n_clicks'),
          Input('sidebar_search', 'value'),
          Input('btn_new_audit', 'n_clicks'),
          Input('placeholder', 'value'),
