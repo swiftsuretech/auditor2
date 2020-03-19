@@ -9,155 +9,141 @@ import dash_html_components as html
 
 cards = html.Div(
     dbc.Row(
-        children=[
-            dbc.Col(
-                [
-                    dbc.Card(
-                        children=[
-                            dbc.CardHeader(
-                                html.H5("Dashboards", className="card-title"),
-                            ),
-                            dbc.CardBody(
-                                [
-                                    html.Div(
-                                        html.I(className='fad fa-chart-pie-alt fa-10x'),
-                                        style={'text-align': 'center',
-                                               '--fa-secondary-color': '#149A80',
-                                               '--fa-secondary-opacity': '0.5'},
-                                        className='mb-4 mt-3'
-                                    ),
-                                    html.P(
-                                        "View all Chatter requests and flight plans captured by logging. Filter "
-                                        "activity by operator, date range, IP address and various other criteria. "
-                                    ),
-                                    html.P(
-                                        "Renders a high level dashboard overview of activity to provide advanced "
-                                        "filtering and analysis",
-                                    ),
-                                ]
-                            ),
-                            dbc.CardFooter(
-                                dbc.Button(
-                                    "Click here", color="success", className="mt-auto float-right"
+        dbc.CardDeck(
+            children=[
+                dbc.Card(
+                    children=[
+                        dbc.CardHeader(
+                            html.H5("Dashboards", className="card-title"),
+                        ),
+                        dbc.CardBody(
+                            [
+                                html.Div(
+                                    html.I(className='fad fa-chart-pie-alt fa-10x'),
+                                    style={'text-align': 'center',
+                                           '--fa-secondary-color': '#149A80',
+                                           '--fa-secondary-opacity': '0.5'},
+                                    className='mb-4 mt-3'
                                 ),
+                                html.P(
+                                    children=[
+                                        html.P('View all flight plans'),
+                                        html.P('High level Overview'),
+                                        html.P('Usage Monitoring'),
+                                        html.P('Advanced Filtering and Analytics'),
+                                    ],
+                                ),
+                            ]
+                        ),
+                        dbc.CardFooter(
+                            dbc.Button(
+                                "Click here", color="success", className="mt-auto float-right"
                             ),
-                        ],
-                        className='shadow',
-                    ),
-                ],
-            ),
-            dbc.Col(
-                [
-                    dbc.Card(
-                        children=[
-                            dbc.CardHeader(
-                                html.H5("New Audit", className="card-title"),
-                            ),
-                            dbc.CardBody(
-                                [
-                                    html.Div(
-                                        html.I(className='fad fa-check fa-10x'),
-                                        style={'text-align': 'center',
-                                               '--fa-secondary-color': '#D4860B',
-                                               '--fa-secondary-opacity': '0.5'},
-                                        className='mb-4 mt-3'
-                                    ),
-                                    html.P(
-                                        "Generates an audit based upon user selection of date range and percentage of "
-                                        "records to audit.",
-                                    ),
-                                    html.P(
-                                        "Presents an auditor with a random selection of flight plans "
-                                        "to audit based upon all search criteria, augmented with a map display and "
-                                        "other information regarding geographical location.",
-                                    ),
+                        ),
+                    ],
+                    className='shadow',
+                ),
+                dbc.Card(
+                    children=[
+                        dbc.CardHeader(
+                            html.H5("New Audit", className="card-title"),
+                        ),
+                        dbc.CardBody(
+                            [
+                                html.Div(
+                                    html.I(className='fad fa-check fa-10x'),
+                                    style={'text-align': 'center',
+                                           '--fa-secondary-color': '#D4860B',
+                                           '--fa-secondary-opacity': '0.5'},
+                                    className='mb-4 mt-3'
+                                ),
+                                html.P(
+                                    "Generates an audit based upon user selection of date range and percentage of "
+                                    "records to audit.",
+                                ),
+                                html.P(
+                                    "Presents an auditor with a random selection of flight plans "
+                                    "to audit based upon all search criteria, augmented with a map display and "
+                                    "other information regarding geographical location.",
+                                ),
 
-                                ]
+                            ]
+                        ),
+                        dbc.CardFooter(
+                            dbc.Button(
+                                "Click here", color="warning", className="mt-auto float-right"
                             ),
-                            dbc.CardFooter(
-                                dbc.Button(
-                                    "Click here", color="warning", className="mt-auto float-right"
+                        ),
+                    ],
+                    className='shadow',
+                ),
+                dbc.Card(
+                    children=[
+                        dbc.CardHeader(
+                            html.H5("Completed Audits", className="card-title"),
+                        ),
+                        dbc.CardBody(
+                            [
+                                html.Div(
+                                    html.I(className='fad fa-flag-checkered fa-10x'),
+                                    style={'text-align': 'center',
+                                           '--fa-secondary-color': '#E12E1C',
+                                           '--fa-secondary-opacity': '0.5'},
+                                    className='mb-4 mt-3'
                                 ),
-                            ),
-                        ],
-                        className='shadow',
-                    ),
-                ],
-            ),
-            dbc.Col(
-                [
-                    dbc.Card(
-                        children=[
-                            dbc.CardHeader(
-                                html.H5("Completed Audits", className="card-title"),
-                            ),
-                            dbc.CardBody(
-                                [
-                                    html.Div(
-                                        html.I(className='fad fa-flag-checkered fa-10x'),
-                                        style={'text-align': 'center',
-                                               '--fa-secondary-color': '#E12E1C',
-                                               '--fa-secondary-opacity': '0.5'},
-                                        className='mb-4 mt-3'
-                                    ),
-                                    html.P(
-                                        "All completed audits are stored in the system and, once finalised, are not "
-                                        "editable.",
-                                    ),
-                                    html.P(
-                                        "Completed records contain details of date range, percentage and selected "
-                                        "flight plans for audit purposes.",
-                                    ),
-                                ]
-                            ),
-                            dbc.CardFooter(
-                                dbc.Button(
-                                    "Click here", color="danger", className="mt-auto float-right"
+                                html.P(
+                                    "All completed audits are stored in the system and, once finalised, are not "
+                                    "editable.",
                                 ),
+                                html.P(
+                                    "Completed records contain details of date range, percentage and selected "
+                                    "flight plans for audit purposes.",
+                                ),
+                            ]
+                        ),
+                        dbc.CardFooter(
+                            dbc.Button(
+                                "Click here", color="danger", className="mt-auto float-right"
                             ),
-                        ],
-                        className='shadow',
-                    ),
-                ],
-            ),
-            dbc.Col(
-                [
-                    dbc.Card(
-                        children=[
-                            dbc.CardHeader(
-                                html.H5("About", className="card-title"),
-                            ),
-                            dbc.CardBody(
-                                [
-                                    html.Div(
-                                        html.I(className='fad fa-question fa-10x'),
-                                        style={'text-align': 'center',
-                                               '--fa-secondary-color': '#2384C6',
-                                               '--fa-secondary-opacity': '0.5'},
-                                        className='mb-4 mt-3'
-                                    ),
-                                    html.P(
-                                        "Further information about the application, including instructions for "
-                                        "getting support.",
-                                        className="card-text",
-                                    ),
+                        ),
+                    ],
+                    className='shadow',
+                ),
+                dbc.Card(
+                    children=[
+                        dbc.CardHeader(
+                            html.H5("About", className="card-title"),
+                        ),
+                        dbc.CardBody(
+                            [
+                                html.Div(
+                                    html.I(className='fad fa-question fa-10x'),
+                                    style={'text-align': 'center',
+                                           '--fa-secondary-color': '#2384C6',
+                                           '--fa-secondary-opacity': '0.5'},
+                                    className='mb-4 mt-3'
+                                ),
+                                html.P(
+                                    "Further information about the application, including instructions for "
+                                    "getting support.",
+                                    className="card-text",
+                                ),
 
-                                ]
+                            ]
+                        ),
+                        dbc.CardFooter(
+                            dbc.Button(
+                                "Click here", color="info", className="mt-auto float-right"
                             ),
-                            dbc.CardFooter(
-                                dbc.Button(
-                                    "Click here", color="info", className="mt-auto float-right"
-                                ),
-                            ),
-                        ],
-                        className='shadow',
-                    ),
-                ],
-            ),
-        ],
+                        ),
+                    ],
+                    className='shadow',
+                ),
+            ],
+        ),
+        className='mt-3',
+        style={'width': '95%', 'margin': 'auto'},
     ),
-    className='mt-3',
-    style={'width': '90%', 'margin': 'auto'},
 )
 
 
@@ -178,7 +164,7 @@ class Home:
                                                'float': 'left'},
                                         className='ml-5 mr-3'),
                                     html.P(
-                                        "ChatterAuditor2",
+                                        " ChatterAuditor2",
                                         className='ml-5'),
                                 ],
                                 className="display-4 ml-20"),
