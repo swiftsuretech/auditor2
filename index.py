@@ -6,7 +6,7 @@ Run the app from here. Defines a flask application based upon the dash framework
 3 - Run the server.
 Callbacks are put in a separate file to avoid clutter. I call these callback with a function called
 "register_callbacks"
-"""
+"""""
 
 # Import our Dash bits and pieces and some settings etc.
 import dash
