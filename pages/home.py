@@ -1,5 +1,5 @@
 """
-Auditor2 by Dave Whitehouse | CGI Data Engineer | CII IDOT Team
+Auditor2 by Dave Whitehouse | CGI Data Engineer
 The home page gives an overview of the application and some links to the functional pages
 """
 
