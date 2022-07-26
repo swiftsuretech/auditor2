@@ -1,5 +1,5 @@
 """
-Auditor2 by Dave Whitehouse | CGI Data Engineer | CII IDOT Team
+Auditor2 by Dave Whitehouse | CGI Data Engineer
 This page leads the user through a pre-defined audit. For each selected record in the audit, the user will
 be shown the flight plan details and plot. They will be given the opportunity to tick or cross each flight
 plan in the audit. Each audit is represented by a file stored in 'audits' directory which is a simple json
