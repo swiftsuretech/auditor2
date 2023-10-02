@@ -17,7 +17,7 @@ eland==7.6.0a3
 elasticsearch==7.5.1
 entrypoints==0.3
 es-pandas==0.0.10
-Flask==1.1.1
+Flask==2.2.5
 Flask-Compress==1.4.0
 future==0.18.2
 geojson==2.5.0
